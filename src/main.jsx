@@ -5,13 +5,11 @@ import {
   ArrowLeft,
   ArrowRight,
   X,
+  MessageCircle,
   Phone,
-  Mail,
   MapPin,
   Instagram,
-  MessageCircle,
   Check,
-  Sparkles,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./styles.css";
@@ -19,17 +17,12 @@ import "./styles.css";
 import logo from "./logo.jpg";
 import founder from "./founder.jpg";
 
-const WHATSAPP_NUMBER = "919940277984";
-const PHONE_NUMBER = "+91 99402 77984";
-
-const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}`;
+const WHATSAPP = "https://wa.me/919940277984";
 
 const services = [
   {
-    number: "01",
     title: "Carpentry Works",
-    description:
-      "Precision-built interiors for kitchens, wardrobes, doors, furniture and custom spaces.",
+    text: "Precision-built interiors for kitchens, wardrobes, furniture and custom spaces.",
     items: [
       "PVC Modular Kitchen",
       "PVC Wardrobes & Doors",
@@ -41,13 +34,11 @@ const services = [
       "CNC Cutting & Partition",
     ],
     image:
-      "https://images.unsplash.com/photo-1556912173-46c336c7fd55?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1556912173-46c336c7fd55?auto=format&fit=crop&w=1600&q=90",
   },
   {
-    number: "02",
     title: "Painting & Waterproofing",
-    description:
-      "Beautiful finishes with protection that keeps your interiors and exteriors looking refined.",
+    text: "Premium finishes combined with practical protection for beautiful, long-lasting spaces.",
     items: [
       "Interior Painting",
       "3D Painting",
@@ -57,13 +48,11 @@ const services = [
       "Terrace Damp Proofing",
     ],
     image:
-      "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1600&q=90",
   },
   {
-    number: "03",
     title: "Civil Works",
-    description:
-      "Complete civil and finishing solutions that bring the design together from floor to ceiling.",
+    text: "Complete civil and finishing solutions that bring your interior vision together.",
     items: [
       "Tiles & Wooden Flooring",
       "Granite Works",
@@ -73,13 +62,11 @@ const services = [
       "PVC False Ceiling",
     ],
     image:
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=90",
   },
   {
-    number: "04",
     title: "Electrical & Plumbing",
-    description:
-      "Reliable infrastructure designed around modern comfort, safety and everyday convenience.",
+    text: "Modern infrastructure designed around safety, comfort and everyday convenience.",
     items: [
       "CCTV Installation",
       "Inverter Wiring",
@@ -89,13 +76,11 @@ const services = [
       "Copper Gas Pipe Work",
     ],
     image:
-      "https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=1600&q=90",
   },
   {
-    number: "05",
     title: "Metal Fabrication",
-    description:
-      "Strong, clean and contemporary metal solutions for homes, offices and outdoor spaces.",
+    text: "Strong and contemporary metal solutions for homes, offices and outdoor spaces.",
     items: [
       "SS Grille Gates",
       "MS Grille Gates",
@@ -104,186 +89,119 @@ const services = [
       "Aluminium Partitions",
     ],
     image:
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1400&q=90",
-  },
-  {
-    number: "06",
-    title: "Landscape & Other Works",
-    description:
-      "Thoughtful outdoor additions that extend the character of your interior into the surroundings.",
-    items: [
-      "Terrace Garden",
-      "Water Landscape",
-      "Garden Works",
-      "Pigeon Net",
-      "Outdoor Improvements",
-    ],
-    image:
-      "https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1400&q=90",
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=90",
   },
 ];
 
 const projects = [
   {
     title: "Contemporary Living",
-    type: "Residential",
+    category: "Residential",
     image:
       "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
   },
   {
     title: "Modern Kitchen",
-    type: "Kitchen",
+    category: "Kitchen",
     image:
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=90",
   },
   {
     title: "Quiet Luxury Bedroom",
-    type: "Bedroom",
+    category: "Bedroom",
     image:
       "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=90",
   },
   {
     title: "Modern Workspace",
-    type: "Commercial",
+    category: "Commercial",
     image:
       "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=90",
   },
 ];
 
-const reveal = {
-  hidden: {
-    opacity: 0,
-    y: 45,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-};
-
-function Reveal({ children, className = "", delay = 0 }) {
-  return (
-    <motion.div
-      className={className}
-      variants={reveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{
-        once: true,
-        amount: 0.15,
-      }}
-      transition={{
-        delay,
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [serviceIndex, setServiceIndex] = useState(0);
+  const [menu, setMenu] = useState(false);
+  const [service, setService] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setServiceIndex((current) => (current + 1) % services.length);
-    }, 5500);
+    const timer = setInterval(() => {
+      setService((current) => (current + 1) % services.length);
+    }, 5000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, []);
 
-  const nextService = () => {
-    setServiceIndex((current) => (current + 1) % services.length);
-  };
-
-  const previousService = () => {
-    setServiceIndex(
-      (current) => (current - 1 + services.length) % services.length
-    );
-  };
-
   const scrollTo = (id) => {
-    setMenuOpen(false);
+    setMenu(false);
 
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 100);
   };
 
-  const openWhatsApp = (message) => {
-    const finalMessage =
-      message ||
-      "Hi Gururag Interior, I would like to discuss an interior project.";
-
+  const whatsapp = (message) => {
     window.open(
-      `${whatsappLink}?text=${encodeURIComponent(finalMessage)}`,
+      `${WHATSAPP}?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   };
 
-  const service = services[serviceIndex];
+  const nextService = () => {
+    setService((current) => (current + 1) % services.length);
+  };
+
+  const previousService = () => {
+    setService(
+      (current) =>
+        (current - 1 + services.length) % services.length
+    );
+  };
+
+  const currentService = services[service];
 
   return (
-    <div className="site">
+    <div className="website">
 
-      {/* ================= NAVBAR ================= */}
+      {/* NAVBAR */}
 
       <header className="navbar">
 
         <button
           className="brand"
           onClick={() => scrollTo("home")}
-          aria-label="Gururag Interior Home"
         >
-          <div className="logo-container">
+          <span className="logo-box">
             <img
               src={logo}
-              alt="Gururag Interior Logo"
-              className="company-logo"
+              alt="Gururag Interior"
             />
-          </div>
+          </span>
 
-          <div className="brand-text">
+          <span className="brand-name">
             <strong>GURURAG</strong>
-            <span>INTERIOR</span>
-          </div>
+            <small>INTERIOR</small>
+          </span>
         </button>
 
-        <div className="nav-right">
+        <div className="nav-actions">
 
           <button
-            className="navbar-whatsapp"
+            className="whatsapp-button"
             onClick={() =>
-              openWhatsApp(
-                "Hi Gururag Interior, I would like to get a free quote."
-              )
-            }
-            aria-label="Contact Gururag Interior on WhatsApp"
-          >
-            <MessageCircle size={21} />
-          </button>
-
-          <button
-            className="quote-button"
-            onClick={() =>
-              openWhatsApp(
+              whatsapp(
                 "Hi Gururag Interior, I would like to get a free quote."
               )
             }
           >
-            Get Free Quote
-            <ArrowUpRight size={16} />
+            <MessageCircle size={20} />
           </button>
 
           <button
             className="menu-button"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Open Menu"
+            onClick={() => setMenu(true)}
           >
             <span />
             <span />
@@ -291,398 +209,290 @@ function App() {
           </button>
 
         </div>
+
       </header>
 
-      {/* ================= MENU ================= */}
+      {/* MENU */}
 
       <AnimatePresence>
-        {menuOpen && (
+        {menu && (
           <motion.div
-            className="menu-overlay"
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
+            className="menu-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
 
-            <motion.aside
+            <motion.div
               className="menu-panel"
-              initial={{
-                x: "100%",
-              }}
-              animate={{
-                x: 0,
-              }}
-              exit={{
-                x: "100%",
-              }}
-              transition={{
-                duration: 0.55,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
             >
 
-              <div className="menu-top">
-
+              <div className="menu-header">
                 <span>GURURAG INTERIOR</span>
 
-                <button
-                  onClick={() => setMenuOpen(false)}
-                  aria-label="Close Menu"
-                >
+                <button onClick={() => setMenu(false)}>
                   <X />
                 </button>
-
               </div>
 
-              <nav className="menu-links">
+              <nav>
 
-                {[
-                  ["home", "Home"],
-                  ["about", "About Us"],
-                  ["services", "Our Services"],
-                  ["projects", "Our Projects"],
-                  ["contact", "Contact"],
-                ].map(([id, title], index) => (
-                  <button
-                    key={id}
-                    onClick={() => scrollTo(id)}
-                  >
-                    <small>
-                      0{index + 1}
-                    </small>
+                <button onClick={() => scrollTo("home")}>
+                  <small>01</small>
+                  Home
+                  <ArrowUpRight />
+                </button>
 
-                    <span>
-                      {title}
-                    </span>
+                <button onClick={() => scrollTo("about")}>
+                  <small>02</small>
+                  About Us
+                  <ArrowUpRight />
+                </button>
 
-                    <ArrowUpRight size={20} />
-                  </button>
-                ))}
+                <button onClick={() => scrollTo("services")}>
+                  <small>03</small>
+                  Our Services
+                  <ArrowUpRight />
+                </button>
+
+                <button onClick={() => scrollTo("projects")}>
+                  <small>04</small>
+                  Our Projects
+                  <ArrowUpRight />
+                </button>
+
+                <button onClick={() => scrollTo("contact")}>
+                  <small>05</small>
+                  Contact
+                  <ArrowUpRight />
+                </button>
 
               </nav>
 
-              <div className="menu-bottom">
-
+              <div className="menu-footer">
                 <p>
                   Thoughtful interiors.
                   <br />
-                  Crafted for everyday living.
+                  Crafted with character.
                 </p>
 
-                <a href={`tel:${WHATSAPP_NUMBER}`}>
-                  {PHONE_NUMBER}
+                <a href="tel:+919940277984">
+                  +91 99402 77984
                 </a>
-
               </div>
 
-            </motion.aside>
+            </motion.div>
+
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ================= HERO ================= */}
+      {/* HERO */}
 
       <section id="home" className="hero">
 
-        <motion.div
-          className="hero-background"
-          initial={{
-            scale: 1.08,
-          }}
-          animate={{
-            scale: 1,
-          }}
-          transition={{
-            duration: 2,
-            ease: "easeOut",
-          }}
-        />
+        <div className="hero-image" />
 
-        <div className="hero-shade" />
+        <div className="hero-overlay" />
 
         <div className="hero-content">
 
-          <Reveal>
+          <motion.div
+            className="eyebrow"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            INTERIOR DESIGN • TURNKEY SOLUTIONS
+          </motion.div>
 
-            <div className="hero-kicker">
-              <span />
-              INTERIOR DESIGN • TURNKEY SOLUTIONS
-            </div>
+          <motion.h1
+            initial={{ opacity: 0, y: 45 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.9 }}
+          >
+            Spaces that
+            <br />
+            <em>feel like home.</em>
+          </motion.h1>
 
-          </Reveal>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.65 }}
+          >
+            We create refined residential and commercial interiors
+            where thoughtful design, skilled craftsmanship and
+            everyday functionality come together.
+          </motion.p>
 
-          <Reveal delay={0.08}>
+          <motion.div
+            className="hero-buttons"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
 
-            <h1>
-              Spaces that
-              <br />
-              <em>feel like home.</em>
-            </h1>
+            <button
+              className="yellow-button"
+              onClick={() => scrollTo("projects")}
+            >
+              Explore Projects
+              <ArrowUpRight />
+            </button>
 
-          </Reveal>
+            <button
+              className="line-button"
+              onClick={() =>
+                whatsapp(
+                  "Hi Gururag Interior, I would like to start an interior project."
+                )
+              }
+            >
+              Start a Project
+              <ArrowUpRight />
+            </button>
 
-          <Reveal delay={0.14}>
-
-            <p className="hero-description">
-              Gururag Interior creates refined residential and commercial
-              spaces where thoughtful design, quality craftsmanship and
-              everyday functionality come together.
-            </p>
-
-          </Reveal>
-
-          <Reveal delay={0.2}>
-
-            <div className="hero-actions">
-
-              <button
-                className="primary-button"
-                onClick={() => scrollTo("projects")}
-              >
-                Explore Projects
-                <ArrowUpRight size={18} />
-              </button>
-
-              <button
-                className="minimal-button"
-                onClick={() =>
-                  openWhatsApp(
-                    "Hi Gururag Interior, I would like to start an interior project."
-                  )
-                }
-              >
-                Start a Project
-                <span>↗</span>
-              </button>
-
-            </div>
-
-          </Reveal>
+          </motion.div>
 
         </div>
 
         <div className="hero-bottom">
-
-          <span>
-            SCROLL TO EXPLORE
-          </span>
-
-          <div className="hero-scroll-line">
-            <span />
-          </div>
-
-          <span>
-            CHENNAI • INDIA
-          </span>
-
-        </div>
-
-        <div className="hero-orbit">
-
-          <Sparkles size={17} />
-
-          <span>
-            DESIGN
-            <br />
-            CRAFT
-            <br />
-            DETAIL
-          </span>
-
+          <span>SCROLL TO EXPLORE</span>
+          <div />
+          <span>CHENNAI • INDIA</span>
         </div>
 
       </section>
 
-      {/* ================= INTRO ================= */}
+      {/* INTRO */}
 
       <section className="intro section">
 
-        <div className="section-number">
+        <div className="label">
           01 — THE STUDIO
         </div>
 
         <div className="intro-grid">
 
-          <Reveal>
+          <motion.h2
+            initial={{ opacity: 0, y: 45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Interiors with
+            <br />
+            <em>meaning.</em>
+          </motion.h2>
 
-            <h2>
-              Interiors with
-              <br />
-              <em>meaning.</em>
-            </h2>
+          <motion.div
+            className="intro-text"
+            initial={{ opacity: 0, y: 45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
 
-          </Reveal>
+            <p>
+              At Gururag Interior, we believe a beautiful space
+              should do more than look good. It should feel natural,
+              work effortlessly and reflect the people who live or
+              work inside it.
+            </p>
 
-          <Reveal delay={0.1}>
+            <p>
+              From detailed carpentry and modern kitchens to civil
+              works, finishing and complete turnkey solutions,
+              we bring every layer together with one clear vision.
+            </p>
 
-            <div className="intro-copy">
+            <button
+              className="dark-link"
+              onClick={() => scrollTo("about")}
+            >
+              Discover our story
+              <ArrowUpRight />
+            </button>
 
-              <p>
-                At Gururag Interior, we believe a beautiful space should do
-                more than look good. It should feel natural, work effortlessly
-                and reflect the people who live or work inside it.
-              </p>
-
-              <p>
-                From detailed carpentry and modern kitchens to civil works,
-                finishing, electrical solutions and outdoor spaces, we bring
-                every layer together with one clear vision.
-              </p>
-
-              <button
-                className="text-link"
-                onClick={() => scrollTo("about")}
-              >
-                Discover our story
-                <ArrowUpRight size={16} />
-              </button>
-
-            </div>
-
-          </Reveal>
+          </motion.div>
 
         </div>
 
-        <div className="visual-intro">
+        <div className="intro-images">
 
-          <motion.div
-            className="visual-large"
-            initial={{
-              clipPath: "inset(15% 0 15% 0)",
-            }}
-            whileInView={{
-              clipPath: "inset(0 0 0 0)",
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 1.1,
-            }}
-          >
+          <motion.img
+            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90"
+            alt="Luxury interior"
+            initial={{ scale: 1.1 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.1 }}
+          />
 
-            <img
-              src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90"
-              alt="Luxury interior"
-            />
-
-          </motion.div>
-
-          <motion.div
-            className="visual-small"
-            initial={{
-              y: 80,
-              opacity: 0,
-            }}
-            whileInView={{
-              y: 0,
-              opacity: 1,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.9,
-              delay: 0.15,
-            }}
-          >
-
-            <img
-              src="https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&w=1000&q=90"
-              alt="Modern interior detail"
-            />
-
-          </motion.div>
+          <motion.img
+            className="small-image"
+            src="https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&w=1000&q=90"
+            alt="Interior detail"
+            initial={{ y: 80, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+          />
 
         </div>
 
       </section>
 
-      {/* ================= ABOUT / FOUNDER ================= */}
+      {/* ABOUT */}
 
-      <section
-        id="about"
-        className="about-section section dark"
-      >
+      <section id="about" className="about section">
 
-        <div className="section-number light">
+        <div className="label light">
           02 — ABOUT US
         </div>
 
-        <div className="about-grid">
+        <div className="about-heading">
 
-          <Reveal>
+          <h2>
+            Designed around
+            <br />
+            <em>your life.</em>
+          </h2>
 
-            <div className="about-title">
-
-              <span className="mini-label">
-                THE VISION
-              </span>
-
-              <h2>
-                Designed around
-                <br />
-                <em>your life.</em>
-              </h2>
-
-            </div>
-
-          </Reveal>
-
-          <Reveal delay={0.12}>
-
-            <div className="about-text">
-
-              <p>
-                Gururag Interior is built around a simple idea — every space
-                deserves its own character.
-              </p>
-
-              <p>
-                We combine practical planning, clean aesthetics and skilled
-                execution to create interiors that remain beautiful long after
-                the project is complete.
-              </p>
-
-            </div>
-
-          </Reveal>
+          <p>
+            Gururag Interior is built around a simple idea —
+            every space deserves its own character.
+          </p>
 
         </div>
 
         {/* FOUNDER */}
 
-        <div className="founder-card">
+        <div className="founder">
 
-          <div className="founder-visual">
+          <div className="founder-photo">
 
             <img
               src={founder}
-              alt="Saran Raj - Founder of Gururag Interior"
-              className="founder-photo"
+              alt="Saran Raj"
             />
 
-            <div className="founder-overlay" />
+            <div className="photo-gradient" />
 
-            <div className="founder-visual-label">
+            <span>
               FOUNDER
               <br />
               GURURAG INTERIOR
-            </div>
+            </span>
 
           </div>
 
-          <div className="founder-content">
+          <div className="founder-info">
 
-            <span className="mini-label">
+            <div className="label mint">
               THE PERSON BEHIND THE VISION
-            </span>
+            </div>
 
             <h3>
               Saran
@@ -690,46 +500,35 @@ function App() {
               <em>Raj.</em>
             </h3>
 
-            <div className="founder-stats">
+            <div className="stats">
 
               <div>
-                <strong>
-                  13+
-                </strong>
-
-                <span>
-                  Years Experience
-                </span>
+                <strong>13+</strong>
+                <span>Years Experience</span>
               </div>
 
               <div>
-                <strong>
-                  1,500+
-                </strong>
-
-                <span>
-                  Completed Projects
-                </span>
+                <strong>1,500+</strong>
+                <span>Completed Projects</span>
               </div>
 
             </div>
 
             <p>
-              With more than a decade of experience in interior, construction
-              and renovation solutions, Saran Raj leads Gururag Interior with
-              a strong focus on craftsmanship, detail and client satisfaction.
-              His approach brings design thinking and practical execution
-              together to create spaces that are both distinctive and
-              comfortable to live in.
+              With over 13 years of experience across interior,
+              construction and renovation solutions, Saran Raj
+              leads Gururag Interior with a strong focus on
+              craftsmanship, detail and client satisfaction.
             </p>
 
             <p>
-              From the first conversation to the final finishing touch,
-              the vision is simple — create spaces that feel personal,
-              purposeful and built to last.
+              His approach combines thoughtful design with
+              practical execution, creating spaces that are
+              distinctive, comfortable and built around the
+              people who use them.
             </p>
 
-            <div className="founder-sign">
+            <div className="signature">
               Saran Raj
             </div>
 
@@ -739,37 +538,26 @@ function App() {
 
       </section>
 
-      {/* ================= SERVICES ================= */}
+      {/* SERVICES */}
 
-      <section
-        id="services"
-        className="services section dark"
-      >
+      <section id="services" className="services section">
 
-        <div className="section-number light">
+        <div className="label light">
           03 — OUR SERVICES
         </div>
 
         <div className="services-heading">
 
-          <Reveal>
+          <h2>
+            From concept
+            <br />
+            to <em>completion.</em>
+          </h2>
 
-            <h2>
-              From concept
-              <br />
-              to <em>completion.</em>
-            </h2>
-
-          </Reveal>
-
-          <Reveal delay={0.1}>
-
-            <p>
-              A complete range of interior, renovation, civil and allied
-              services — managed with one design vision.
-            </p>
-
-          </Reveal>
+          <p>
+            Complete interior, renovation, civil and allied
+            solutions managed with one design vision.
+          </p>
 
         </div>
 
@@ -778,74 +566,58 @@ function App() {
           <AnimatePresence mode="wait">
 
             <motion.div
-              key={service.number}
+              key={currentService.title}
               className="service-card"
-              initial={{
-                opacity: 0,
-                x: 70,
-              }}
-              animate={{
-                opacity: 1,
-                x: 0,
-              }}
-              exit={{
-                opacity: 0,
-                x: -70,
-              }}
-              transition={{
-                duration: 0.55,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -60 }}
+              transition={{ duration: 0.5 }}
             >
 
               <div className="service-image">
 
                 <img
-                  src={service.image}
-                  alt={service.title}
+                  src={currentService.image}
+                  alt={currentService.title}
                 />
-
-                <div className="service-image-number">
-                  {service.number}
-                </div>
 
               </div>
 
-              <div className="service-info">
+              <div className="service-content">
 
-                <span className="service-small">
-                  SERVICE {service.number}
+                <span className="service-number">
+                  SERVICE 0{service + 1}
                 </span>
 
                 <h3>
-                  {service.title}
+                  {currentService.title}
                 </h3>
 
                 <p>
-                  {service.description}
+                  {currentService.text}
                 </p>
 
-                <div className="service-items">
+                <div className="service-list">
 
-                  {service.items.map((item) => (
+                  {currentService.items.map((item) => (
                     <div key={item}>
-                      <Check size={15} />
-                      <span>{item}</span>
+                      <Check />
+                      {item}
                     </div>
                   ))}
 
                 </div>
 
                 <button
-                  className="service-quote"
+                  className="service-link"
                   onClick={() =>
-                    openWhatsApp(
-                      `Hi Gururag Interior, I am interested in your ${service.title} service.`
+                    whatsapp(
+                      `Hi Gururag Interior, I am interested in ${currentService.title}.`
                     )
                   }
                 >
                   Enquire About This Service
-                  <ArrowUpRight size={17} />
+                  <ArrowUpRight />
                 </button>
 
               </div>
@@ -856,37 +628,26 @@ function App() {
 
           <div className="carousel-controls">
 
-            <button
-              onClick={previousService}
-              aria-label="Previous Service"
-            >
-              <ArrowLeft size={19} />
+            <button onClick={previousService}>
+              <ArrowLeft />
             </button>
 
-            <div className="carousel-dots">
+            <div className="dots">
 
               {services.map((item, index) => (
                 <button
-                  key={item.number}
+                  key={item.title}
                   className={
-                    index === serviceIndex
-                      ? "active"
-                      : ""
+                    index === service ? "active" : ""
                   }
-                  onClick={() =>
-                    setServiceIndex(index)
-                  }
-                  aria-label={`Service ${index + 1}`}
+                  onClick={() => setService(index)}
                 />
               ))}
 
             </div>
 
-            <button
-              onClick={nextService}
-              aria-label="Next Service"
-            >
-              <ArrowRight size={19} />
+            <button onClick={nextService}>
+              <ArrowRight />
             </button>
 
           </div>
@@ -895,103 +656,87 @@ function App() {
 
       </section>
 
-      {/* ================= PROJECTS ================= */}
+      {/* PROJECTS */}
 
-      <section
-        id="projects"
-        className="projects section"
-      >
+      <section id="projects" className="projects section">
 
-        <div className="section-number">
+        <div className="label">
           04 — OUR PROJECTS
         </div>
 
         <div className="projects-heading">
 
-          <Reveal>
+          <h2>
+            Spaces made
+            <br />
+            to be <em>lived in.</em>
+          </h2>
 
-            <h2>
-              Spaces made
-              <br />
-              to be <em>lived in.</em>
-            </h2>
-
-          </Reveal>
-
-          <Reveal delay={0.1}>
-
-            <p>
-              A visual direction for homes and spaces shaped by comfort,
-              proportion and timeless detailing.
-            </p>
-
-          </Reveal>
+          <p>
+            A collection of modern interior directions shaped
+            by comfort, proportion and timeless detailing.
+          </p>
 
         </div>
 
         <div className="project-grid">
 
           {projects.map((project, index) => (
-            <Reveal
+            <motion.article
+              className={
+                index === 0
+                  ? "project project-large"
+                  : "project"
+              }
               key={project.title}
-              delay={index * 0.06}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.08 }}
             >
 
-              <article
-                className={
-                  `project ${
-                    index === 0
-                      ? "project-tall"
-                      : ""
-                  }`
-                }
-              >
+              <div className="project-image">
 
-                <div className="project-image">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                />
 
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                  />
-
-                  <div className="project-hover">
-                    <ArrowUpRight size={22} />
-                  </div>
-
+                <div className="project-arrow">
+                  <ArrowUpRight />
                 </div>
 
-                <div className="project-meta">
+              </div>
 
-                  <span>
-                    {project.type}
-                  </span>
+              <div className="project-info">
 
-                  <h3>
-                    {project.title}
-                  </h3>
+                <span>
+                  {project.category}
+                </span>
 
-                </div>
+                <h3>
+                  {project.title}
+                </h3>
 
-              </article>
+              </div>
 
-            </Reveal>
+            </motion.article>
           ))}
 
         </div>
 
       </section>
 
-      {/* ================= CTA ================= */}
+      {/* CTA */}
 
-      <section className="big-cta">
+      <section className="cta">
 
-        <div className="big-cta-image" />
+        <div className="cta-image" />
+        <div className="cta-overlay" />
 
-        <div className="big-cta-shade" />
+        <div className="cta-content">
 
-        <div className="big-cta-content">
-
-          <span className="mini-label">
+          <span className="label mint">
             YOUR SPACE. YOUR STORY.
           </span>
 
@@ -1002,150 +747,123 @@ function App() {
           </h2>
 
           <button
-            className="primary-button"
+            className="yellow-button"
             onClick={() =>
-              openWhatsApp(
+              whatsapp(
                 "Hi Gururag Interior, I would like to discuss my interior project."
               )
             }
           >
             Start Your Project
-            <ArrowUpRight size={18} />
+            <ArrowUpRight />
           </button>
 
         </div>
 
       </section>
 
-      {/* ================= CONTACT ================= */}
+      {/* CONTACT */}
 
-      <section
-        id="contact"
-        className="contact section"
-      >
+      <section id="contact" className="contact section">
 
-        <div className="section-number">
+        <div className="label">
           05 — CONTACT
         </div>
 
         <div className="contact-grid">
 
-          <Reveal>
+          <div>
 
-            <div>
+            <h2>
+              Let's talk
+              <br />
+              <em>interiors.</em>
+            </h2>
 
-              <h2>
-                Let's talk
-                <br />
-                <em>interiors.</em>
-              </h2>
+            <p>
+              Have a home, office or renovation project in mind?
+              Tell us what you are planning and let's build
+              something around it.
+            </p>
 
-              <p className="contact-intro">
-                Have a home, office or renovation project in mind?
-                Tell us what you are planning and let's build something
-                around it.
-              </p>
+            <div className="contact-details">
 
-              <div className="contact-details">
+              <a href="tel:+919940277984">
+                <Phone />
+                +91 99402 77984
+              </a>
 
-                <a href={`tel:${WHATSAPP_NUMBER}`}>
-                  <Phone size={18} />
-                  {PHONE_NUMBER}
-                </a>
+              <a
+                href={WHATSAPP}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <MessageCircle />
+                WhatsApp
+              </a>
 
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <MessageCircle size={18} />
-                  WhatsApp
-                </a>
-
-                <a href="mailto:hello@gururaginterior.com">
-                  <Mail size={18} />
-                  Email Us
-                </a>
-
-                <div>
-                  <MapPin size={18} />
-                  Chennai, Tamil Nadu
-                </div>
-
+              <div>
+                <MapPin />
+                Chennai, Tamil Nadu
               </div>
 
             </div>
 
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.12}>
+          <div className="quote-card">
 
-            <div className="quote-box">
+            <span className="label mint">
+              GET A FREE QUOTE
+            </span>
 
-              <span className="mini-label">
-                GET A FREE QUOTE
-              </span>
+            <h3>
+              Tell us about
+              <br />
+              your project.
+            </h3>
 
-              <h3>
-                Tell us about
-                <br />
-                your project.
-              </h3>
+            <p>
+              Send your project type, location and reference
+              images directly through WhatsApp.
+            </p>
 
-              <p>
-                The fastest way to start is through WhatsApp.
-                Send us your project type, location and a few
-                reference images.
-              </p>
+            <button
+              className="yellow-button"
+              onClick={() =>
+                whatsapp(
+                  "Hi Gururag Interior, I would like a free quote."
+                )
+              }
+            >
+              WhatsApp Us
+              <ArrowUpRight />
+            </button>
 
-              <button
-                className="primary-button"
-                onClick={() =>
-                  openWhatsApp(
-                    "Hi Gururag Interior, I would like a free quote. Project type: "
-                  )
-                }
-              >
-                WhatsApp Us
-                <ArrowUpRight size={18} />
-              </button>
-
-            </div>
-
-          </Reveal>
+          </div>
 
         </div>
 
       </section>
 
-      {/* ================= FOOTER ================= */}
+      {/* FOOTER */}
 
       <footer>
 
-        <div className="footer-main">
+        <div className="footer-top">
 
           <div className="footer-brand">
 
-            <div className="footer-logo-container">
-
+            <span className="footer-logo">
               <img
                 src={logo}
                 alt="Gururag Interior"
-                className="footer-logo"
               />
-
-            </div>
+            </span>
 
             <div>
-
-              <strong>
-                GURURAG
-              </strong>
-
-              <span>
-                INTERIOR
-              </span>
-
+              <strong>GURURAG</strong>
+              <small>INTERIOR</small>
             </div>
 
           </div>
@@ -1156,18 +874,18 @@ function App() {
             crafted with character.
           </p>
 
-          <div className="footer-social">
+          <div className="socials">
 
             <a href="#">
-              <Instagram size={18} />
+              <Instagram />
             </a>
 
             <a
-              href={whatsappLink}
+              href={WHATSAPP}
               target="_blank"
               rel="noreferrer"
             >
-              <MessageCircle size={18} />
+              <MessageCircle />
             </a>
 
           </div>
@@ -1192,8 +910,6 @@ function App() {
   );
 }
 
-createRoot(
-  document.getElementById("root")
-).render(
+createRoot(document.getElementById("root")).render(
   <App />
 );
