@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowUpRight,
@@ -26,6 +26,26 @@ const services = [
     text: "Precision-built interiors for kitchens, wardrobes, furniture and custom spaces.",
     chatbotDescription:
       "Complete carpentry solutions designed around your space, lifestyle and storage needs.",
+    keywords: [
+      "carpentry",
+      "kitchen",
+      "modular kitchen",
+      "modular",
+      "pvc kitchen",
+      "wardrobe",
+      "wardrobes",
+      "cupboard",
+      "door",
+      "doors",
+      "furniture",
+      "custom furniture",
+      "wpc",
+      "upvc",
+      "glass partition",
+      "glass",
+      "cnc",
+      "office furniture",
+    ],
     pros: [
       "Custom-built to match your space",
       "Wide range of kitchen and wardrobe solutions",
@@ -55,6 +75,24 @@ const services = [
     text: "Premium finishes combined with practical protection for beautiful, long-lasting spaces.",
     chatbotDescription:
       "Interior and exterior painting combined with waterproofing solutions for better protection and finish.",
+    keywords: [
+      "painting",
+      "paint",
+      "colour",
+      "color",
+      "wall paint",
+      "3d painting",
+      "elevation painting",
+      "waterproofing",
+      "water proofing",
+      "leakage",
+      "leak",
+      "damp",
+      "damp proof",
+      "terrace",
+      "heat reflection",
+      "bathroom waterproofing",
+    ],
     pros: [
       "Improves the overall appearance",
       "Multiple finish and colour options",
@@ -82,6 +120,23 @@ const services = [
     text: "Complete civil and finishing solutions that bring your interior vision together.",
     chatbotDescription:
       "Civil, flooring and finishing work coordinated as part of your interior or renovation project.",
+    keywords: [
+      "civil",
+      "civil work",
+      "renovation",
+      "renovate",
+      "tiles",
+      "tile",
+      "flooring",
+      "wooden flooring",
+      "granite",
+      "demolition",
+      "wallpaper",
+      "wall paper",
+      "false ceiling",
+      "ceiling",
+      "pvc ceiling",
+    ],
     pros: [
       "Complete execution under one service",
       "Suitable for renovation and new interiors",
@@ -109,6 +164,24 @@ const services = [
     text: "Modern infrastructure designed around safety, comfort and everyday convenience.",
     chatbotDescription:
       "Electrical and plumbing solutions planned to support safe, practical and comfortable interiors.",
+    keywords: [
+      "electrical",
+      "electric",
+      "wiring",
+      "plumbing",
+      "plumber",
+      "cctv",
+      "camera",
+      "inverter",
+      "inverter wiring",
+      "automation",
+      "smart home",
+      "switch",
+      "switches",
+      "motor",
+      "gas pipe",
+      "gas pipeline",
+    ],
     pros: [
       "Better planning before finishing work",
       "Supports modern appliances and automation",
@@ -136,6 +209,23 @@ const services = [
     text: "Strong and contemporary metal solutions for homes, offices and outdoor spaces.",
     chatbotDescription:
       "Custom metal, aluminium and grille solutions for security, partitions, ventilation and modern design.",
+    keywords: [
+      "metal",
+      "fabrication",
+      "grill",
+      "grille",
+      "gate",
+      "gates",
+      "ss gate",
+      "ms gate",
+      "aluminium",
+      "aluminum",
+      "mosquito net",
+      "sliding door",
+      "sliding doors",
+      "aluminium partition",
+      "partition",
+    ],
     pros: [
       "Strong and durable solutions",
       "Custom sizes and designs",
@@ -213,45 +303,601 @@ function WhatsAppIcon({ size = 22 }) {
 }
 
 /* -------------------------------------------------------
+   CHATBOT HELPERS
+------------------------------------------------------- */
+
+function normalizeText(text = "") {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s₹.]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function includesAny(text, words) {
+  return words.some((word) => text.includes(word));
+}
+
+function findService(text) {
+  const normalized = normalizeText(text);
+
+  let bestService = null;
+  let bestScore = 0;
+
+  services.forEach((service) => {
+    let score = 0;
+
+    service.keywords.forEach((keyword) => {
+      const key = normalizeText(keyword);
+
+      if (normalized.includes(key)) {
+        score += key.includes(" ")
+          ? 4
+          : 2;
+      }
+    });
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestService = service;
+    }
+  });
+
+  return bestScore > 0 ? bestService : null;
+}
+
+function isGreeting(text) {
+  return includesAny(normalizeText(text), [
+    "hi",
+    "hello",
+    "hey",
+    "hii",
+    "hlo",
+    "vanakkam",
+    "good morning",
+    "good evening",
+    "good afternoon",
+  ]);
+}
+
+function isAboutQuestion(text) {
+  const normalized = normalizeText(text);
+
+  return includesAny(normalized, [
+    "about you",
+    "about us",
+    "about gururag",
+    "who are you",
+    "founder",
+    "owner",
+    "saran",
+    "experience",
+    "how many years",
+    "years experience",
+    "projects completed",
+  ]);
+}
+
+function isPriceQuestion(text) {
+  const normalized = normalizeText(text);
+
+  return includesAny(normalized, [
+    "price",
+    "pricing",
+    "cost",
+    "budget",
+    "rate",
+    "rates",
+    "quotation",
+    "quote",
+    "estimate",
+    "how much",
+    "evlo",
+    "evalo",
+    "amount",
+    "lakh",
+    "lakhs",
+    "rs",
+    "₹",
+  ]);
+}
+
+function isContactQuestion(text) {
+  const normalized = normalizeText(text);
+
+  return includesAny(normalized, [
+    "contact",
+    "phone",
+    "call",
+    "number",
+    "whatsapp",
+    "talk to designer",
+    "designer",
+    "human",
+    "person",
+    "team",
+  ]);
+}
+
+function isEnquiryRequest(text) {
+  const normalized = normalizeText(text);
+
+  return includesAny(normalized, [
+    "enquire",
+    "enquiry",
+    "enquire now",
+    "quote venum",
+    "quote",
+    "book",
+    "booking",
+    "start project",
+    "project venum",
+    "contact me",
+    "talk to someone",
+    "yes",
+    "okay",
+    "ok",
+    "sure",
+  ]);
+}
+
+function detectBudget(text) {
+  const normalized = normalizeText(text);
+
+  const match = normalized.match(
+    /(?:rs|₹)?\s*(\d+(?:\.\d+)?)\s*(lakh|lakhs|k|thousand)?/
+  );
+
+  if (!match) return null;
+
+  const number = Number(match[1]);
+  const unit = match[2];
+
+  if (!number) return null;
+
+  if (unit === "lakh" || unit === "lakhs") {
+    return `₹${number} lakh`;
+  }
+
+  if (unit === "k" || unit === "thousand") {
+    return `₹${number}k`;
+  }
+
+  if (
+    normalized.includes("budget") ||
+    normalized.includes("price") ||
+    normalized.includes("cost")
+  ) {
+    return `₹${number}`;
+  }
+
+  return null;
+}
+
+/* -------------------------------------------------------
    CHATBOT
 ------------------------------------------------------- */
 
 function Chatbot({ onWhatsApp }) {
   const [open, setOpen] = useState(false);
-  const [step, setStep] = useState("home");
-  const [selectedService, setSelectedService] = useState(null);
-  const [name, setName] = useState("");
+
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      role: "bot",
+      type: "text",
+      text:
+        "Hi there! 👋 Welcome to Gururag Interior. Tell me what you're planning for your space — you can type naturally, like “I need a modular kitchen” or “2 lakh budget kitchen possible ah?”",
+    },
+  ]);
+
+  const [input, setInput] = useState("");
+  const [activeService, setActiveService] = useState(null);
+  const [leadName, setLeadName] = useState("");
+  const [waitingForName, setWaitingForName] = useState(false);
+
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages]);
+
+  const addBotMessage = (text, extra = {}) => {
+    setMessages((current) => [
+      ...current,
+      {
+        id: Date.now() + Math.random(),
+        role: "bot",
+        type: "text",
+        text,
+        ...extra,
+      },
+    ]);
+  };
+
+  const addUserMessage = (text) => {
+    setMessages((current) => [
+      ...current,
+      {
+        id: Date.now() + Math.random(),
+        role: "user",
+        type: "text",
+        text,
+      },
+    ]);
+  };
+
+  const showServiceCard = (service) => {
+    setActiveService(service);
+
+    setMessages((current) => [
+      ...current,
+      {
+        id: Date.now() + Math.random(),
+        role: "bot",
+        type: "service",
+        service,
+      },
+    ]);
+  };
 
   const resetChat = () => {
-    setStep("home");
-    setSelectedService(null);
-    setName("");
+    setMessages([
+      {
+        id: Date.now(),
+        role: "bot",
+        type: "text",
+        text:
+          "Hi there! 👋 Welcome to Gururag Interior. Tell me what you're planning for your space.",
+      },
+    ]);
+
+    setInput("");
+    setActiveService(null);
+    setLeadName("");
+    setWaitingForName(false);
   };
 
-  const chooseService = (item) => {
-    setSelectedService(item);
-    setStep("service-detail");
+  const startEnquiry = (service = activeService) => {
+    if (service) {
+      addBotMessage(
+        `Absolutely. I can help you enquire about ${service.title}. Before I connect you with Gururag Interior, may I know your name?`
+      );
+    } else {
+      addBotMessage(
+        "Sure! I'd be happy to connect you with the Gururag Interior team. May I know your name first?"
+      );
+    }
+
+    setWaitingForName(true);
+
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
   };
 
-  const startBooking = () => {
-    setSelectedService(null);
-    setName("");
-    setStep("booking-name");
-  };
+  const sendWhatsAppEnquiry = () => {
+    const serviceName =
+      activeService?.title || "Interior Services";
 
-  const chooseBookingService = (item) => {
-    setSelectedService(item);
-    setStep("booking-confirm");
-  };
+    const customerName =
+      leadName.trim() || "Customer";
 
-  const sendEnquiry = () => {
-    const customerName = name.trim() || "Customer";
-    const serviceName = selectedService?.title || "Interior Services";
-
-    const message = `Hi Sir, I'm ${customerName}. I'm interested in ${serviceName} services from Gururag Interior. I would like to know more and get a quotation.`;
+    const message =
+      `Hi Sir, I'm ${customerName}. ` +
+      `I'm interested in ${serviceName} from Gururag Interior. ` +
+      `I discussed my requirement with the website assistant and would like to know more and get a quotation.`;
 
     onWhatsApp(message);
   };
+
+  const handleBotResponse = (rawText) => {
+    const text = normalizeText(rawText);
+
+    if (!text) return;
+
+    /* NAME COLLECTION */
+    if (waitingForName) {
+      const cleanedName = rawText
+        .replace(
+          /^(my name is|i am|i'm|im|name is)\s+/i,
+          ""
+        )
+        .trim();
+
+      const finalName =
+        cleanedName.length > 1
+          ? cleanedName
+          : rawText.trim();
+
+      setLeadName(finalName);
+      setWaitingForName(false);
+
+      if (activeService) {
+        addBotMessage(
+          `Nice to meet you, ${finalName}! 😊 You're enquiring about ${activeService.title}.`
+        );
+
+        setTimeout(() => {
+          addBotMessage(
+            "You can continue asking me about the design, materials or budget. If you're ready, tap “Send Enquiry on WhatsApp” below."
+          );
+        }, 250);
+      } else {
+        addBotMessage(
+          `Nice to meet you, ${finalName}! 😊 Which service are you looking for? You can simply type something like “modular kitchen”, “wardrobe”, “painting” or “false ceiling”.`
+        );
+      }
+
+      return;
+    }
+
+    /* GREETING */
+    if (isGreeting(text)) {
+      addBotMessage(
+        "Hello! 👋 What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."
+      );
+
+      return;
+    }
+
+    /* ABOUT */
+    if (isAboutQuestion(text)) {
+      addBotMessage(
+        "Gururag Interior is led by Saran Raj, with 13+ years of experience and 1,500+ completed projects. The team handles interior design, carpentry, civil works, finishing and allied solutions for residential and commercial spaces."
+      );
+
+      return;
+    }
+
+    /* CONTACT */
+    if (isContactQuestion(text)) {
+      addBotMessage(
+        "Sure 👍 You can contact Gururag Interior directly on WhatsApp at +91 99402 77984. If you tell me your requirement first, I can also prepare the enquiry for you."
+      );
+
+      setTimeout(() => {
+        addBotMessage(
+          "For example: “I need a 2BHK interior”, “modular kitchen”, or “false ceiling for my living room”."
+        );
+      }, 250);
+
+      return;
+    }
+
+    /* ENQUIRY / YES */
+    if (isEnquiryRequest(text)) {
+      startEnquiry();
+      return;
+    }
+
+    /* BUDGET */
+    const budget = detectBudget(text);
+
+    if (budget) {
+      if (activeService) {
+        addBotMessage(
+          `Got it 👍 You're considering around ${budget} for ${activeService.title}. The final cost depends on the size, materials, finish, hardware and site requirements.`
+        );
+
+        setTimeout(() => {
+          addBotMessage(
+            "I don't want to give you a misleading fixed price without seeing the actual requirement. The Gururag team can check the site/details and give you a proper quotation."
+          );
+        }, 300);
+
+        setTimeout(() => {
+          addBotMessage(
+            "If you'd like, I can prepare a WhatsApp enquiry for this service."
+          );
+        }, 550);
+      } else {
+        addBotMessage(
+          `₹${budget.replace("₹", "")} budget noted 👍 Which space are you planning — kitchen, wardrobe, full home interior, office, painting or something else?`
+        );
+      }
+
+      return;
+    }
+
+    /* SERVICE DETECTION */
+    const detectedService = findService(text);
+
+    if (detectedService) {
+      showServiceCard(detectedService);
+
+      setTimeout(() => {
+        addBotMessage(
+          `Yes 👍 ${detectedService.title} is something Gururag Interior can help with. You can ask me about options, advantages, materials, budget considerations, or how to enquire.`
+        );
+      }, 350);
+
+      return;
+    }
+
+    /* ACTIVE SERVICE FOLLOW-UP */
+    if (activeService) {
+      if (
+        includesAny(text, [
+          "advantage",
+          "advantages",
+          "benefit",
+          "benefits",
+          "pros",
+          "good",
+          "why",
+        ])
+      ) {
+        addBotMessage(
+          `For ${activeService.title}, some key advantages are:\n\n• ${activeService.pros.join(
+            "\n• "
+          )}`
+        );
+
+        return;
+      }
+
+      if (
+        includesAny(text, [
+          "consider",
+          "cons",
+          "disadvantage",
+          "problem",
+          "things to know",
+          "before",
+        ])
+      ) {
+        addBotMessage(
+          `A few things to consider for ${activeService.title}:\n\n• ${activeService.considerations.join(
+            "\n• "
+          )}`
+        );
+
+        return;
+      }
+
+      if (
+        includesAny(text, [
+          "option",
+          "options",
+          "types",
+          "what do you provide",
+          "what you provide",
+          "what is available",
+          "available",
+          "items",
+        ])
+      ) {
+        addBotMessage(
+          `For ${activeService.title}, we can provide:\n\n• ${activeService.items.join(
+            "\n• "
+          )}`
+        );
+
+        return;
+      }
+
+      if (
+        includesAny(text, [
+          "quote",
+          "quotation",
+          "estimate",
+          "enquiry",
+          "enquire",
+          "book",
+        ])
+      ) {
+        startEnquiry(activeService);
+        return;
+      }
+
+      addBotMessage(
+        `Sure 👍 I can help with ${activeService.title}. Are you looking for information about the options, advantages, things to consider, budget, or a quotation?`
+      );
+
+      return;
+    }
+
+    /* COMMON COMPLETE INTERIOR QUESTIONS */
+    if (
+      includesAny(text, [
+        "full interior",
+        "home interior",
+        "house interior",
+        "complete interior",
+        "interior design",
+        "interior work",
+        "interior works",
+        "2bhk",
+        "3bhk",
+        "4bhk",
+        "flat interior",
+        "apartment interior",
+      ])
+    ) {
+      addBotMessage(
+        "Absolutely 👍 Gururag Interior can coordinate multiple parts of a home interior — carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."
+      );
+
+      setTimeout(() => {
+        addBotMessage(
+          "If you tell me your home type, like “3BHK”, and your approximate budget, I can guide you on what to discuss with the designer."
+        );
+      }, 300);
+
+      return;
+    }
+
+    /* OFFICE */
+    if (
+      includesAny(text, [
+        "office",
+        "commercial interior",
+        "shop interior",
+        "showroom",
+        "workspace",
+      ])
+    ) {
+      addBotMessage(
+        "Yes 👍 Gururag Interior also provides commercial interior solutions such as office furniture, partitions, electrical planning, painting, civil work and custom spaces."
+      );
+
+      setTimeout(() => {
+        addBotMessage(
+          "Tell me what type of space you have — office, showroom, shop or workspace — and I can guide you further."
+        );
+      }, 300);
+
+      return;
+    }
+
+    /* FALLBACK */
+    addBotMessage(
+      "I can help you with that 😊 Tell me a little more about what you're planning. For example:\n\n• “I need a modular kitchen”\n• “wardrobe venum”\n• “false ceiling for hall”\n• “2 lakh budget kitchen”\n• “3BHK full interior”\n• “painting work venum”"
+    );
+  };
+
+  const sendMessage = () => {
+    const value = input.trim();
+
+    if (!value) return;
+
+    addUserMessage(value);
+    setInput("");
+
+    setTimeout(() => {
+      handleBotResponse(value);
+    }, 350);
+  };
+
+  const quickAsk = (text) => {
+    addUserMessage(text);
+
+    setTimeout(() => {
+      handleBotResponse(text);
+    }, 300);
+  };
+
+  const quickSuggestions = useMemo(() => {
+    if (activeService) {
+      return [
+        "What options do you have?",
+        "What are the advantages?",
+        "What should I consider?",
+        "I want a quotation",
+      ];
+    }
+
+    return [
+      "I need a modular kitchen",
+      "I need a wardrobe",
+      "False ceiling venum",
+      "3BHK full interior",
+    ];
+  }, [activeService]);
 
   return (
     <>
@@ -260,9 +906,20 @@ function Chatbot({ onWhatsApp }) {
           <motion.button
             className="chatbot-launcher"
             onClick={() => setOpen(true)}
-            initial={{ opacity: 0, scale: 0.7, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.5 }}
+            initial={{
+              opacity: 0,
+              scale: 0.7,
+              y: 30,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 1,
+              duration: 0.5,
+            }}
           >
             <span className="chatbot-live-dot" />
             <Bot size={23} />
@@ -275,11 +932,27 @@ function Chatbot({ onWhatsApp }) {
         {open && (
           <motion.div
             className="chatbot-window"
-            initial={{ opacity: 0, y: 30, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.94 }}
-            transition={{ duration: 0.25 }}
+            initial={{
+              opacity: 0,
+              y: 30,
+              scale: 0.94,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            exit={{
+              opacity: 0,
+              y: 30,
+              scale: 0.94,
+            }}
+            transition={{
+              duration: 0.25,
+            }}
           >
+            {/* HEADER */}
+
             <div className="chatbot-header">
               <div className="chatbot-agent">
                 <div className="chatbot-avatar">
@@ -299,381 +972,262 @@ function Chatbot({ onWhatsApp }) {
               <button
                 className="chatbot-close"
                 onClick={() => setOpen(false)}
+                aria-label="Close chatbot"
               >
                 <X size={19} />
               </button>
             </div>
 
+            {/* CHAT BODY */}
+
             <div className="chatbot-body">
-              {step === "home" && (
-                <motion.div
-                  className="chatbot-screen"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <div className="chat-message bot-message">
-                    <strong>Hi there! 👋</strong>
+              <div className="chatbot-conversation">
+                {messages.map((message) => {
+                  if (message.type === "service") {
+                    const item = message.service;
 
-                    <p>
-                      Welcome to Gururag Interior. I can help you
-                      explore our services, know about our team, or
-                      start an enquiry.
-                    </p>
-                  </div>
-
-                  <div className="chat-question-label">
-                    How can I help you?
-                  </div>
-
-                  <div className="chat-options">
-                    <button
-                      onClick={() => setStep("services")}
-                    >
-                      <span>01</span>
-                      Explore Our Services
-                      <ArrowRight size={17} />
-                    </button>
-
-                    <button
-                      onClick={() => setStep("about")}
-                    >
-                      <span>02</span>
-                      Know About Us
-                      <ArrowRight size={17} />
-                    </button>
-
-                    <button
-                      onClick={startBooking}
-                    >
-                      <span>03</span>
-                      Book / Enquire Now
-                      <ArrowRight size={17} />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-
-              {step === "services" && (
-                <motion.div
-                  className="chatbot-screen"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <button
-                    className="chat-back"
-                    onClick={resetChat}
-                  >
-                    <ArrowLeft size={16} />
-                    Back
-                  </button>
-
-                  <h4>Our Services</h4>
-
-                  <p className="chat-subtitle">
-                    Choose a service to explore what we offer.
-                  </p>
-
-                  <div className="chat-service-list">
-                    {services.map((item) => (
-                      <button
-                        key={item.title}
-                        onClick={() => chooseService(item)}
+                    return (
+                      <motion.div
+                        key={message.id}
+                        className="chat-service-card"
+                        initial={{
+                          opacity: 0,
+                          y: 15,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                        }}
                       >
-                        <div>
-                          <strong>{item.title}</strong>
-                          <span>{item.text}</span>
+                        <div className="chat-service-image">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                          />
                         </div>
-                        <ArrowRight size={17} />
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
 
-              {step === "service-detail" && selectedService && (
-                <motion.div
-                  className="chatbot-screen"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <button
-                    className="chat-back"
-                    onClick={() => setStep("services")}
-                  >
-                    <ArrowLeft size={16} />
-                    All Services
-                  </button>
+                        <div className="chat-service-card-content">
+                          <span className="chat-mini-label">
+                            GURURAG INTERIOR
+                          </span>
 
-                  <div className="chat-service-image">
-                    <img
-                      src={selectedService.image}
-                      alt={selectedService.title}
-                    />
-                  </div>
+                          <h4>{item.title}</h4>
 
-                  <h4>{selectedService.title}</h4>
+                          <p>
+                            {item.chatbotDescription}
+                          </p>
 
-                  <p className="chat-description">
-                    {selectedService.chatbotDescription}
-                  </p>
+                          <div className="chat-detail-section">
+                            <strong>
+                              What you get
+                            </strong>
 
-                  <div className="chat-detail-section">
-                    <strong>What you get</strong>
+                            {item.items
+                              .slice(0, 5)
+                              .map((serviceItem) => (
+                                <div
+                                  key={serviceItem}
+                                >
+                                  <Check size={14} />
+                                  {serviceItem}
+                                </div>
+                              ))}
+                          </div>
 
-                    {selectedService.items.map((item) => (
-                      <div key={item}>
-                        <Check size={14} />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
+                          <div className="chat-detail-section">
+                            <strong>
+                              Advantages
+                            </strong>
 
-                  <div className="chat-detail-section">
-                    <strong>Advantages</strong>
+                            {item.pros
+                              .slice(0, 4)
+                              .map((pros) => (
+                                <div key={pros}>
+                                  <Check size={14} />
+                                  {pros}
+                                </div>
+                              ))}
+                          </div>
 
-                    {selectedService.pros.map((item) => (
-                      <div key={item}>
-                        <Check size={14} />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
+                          <div className="chat-detail-section consideration">
+                            <strong>
+                              Things to consider
+                            </strong>
 
-                  <div className="chat-detail-section consideration">
-                    <strong>Things to consider</strong>
+                            {item.considerations
+                              .slice(0, 3)
+                              .map(
+                                (consideration) => (
+                                  <div
+                                    key={
+                                      consideration
+                                    }
+                                  >
+                                    <span>•</span>
+                                    {consideration}
+                                  </div>
+                                )
+                              )}
+                          </div>
 
-                    {selectedService.considerations.map(
-                      (item) => (
-                        <div key={item}>
-                          <span>•</span>
-                          {item}
+                          <button
+                            className="chat-primary-button"
+                            onClick={() =>
+                              startEnquiry(item)
+                            }
+                          >
+                            Enquire About This
+                            <ArrowUpRight
+                              size={17}
+                            />
+                          </button>
                         </div>
-                      )
-                    )}
-                  </div>
+                      </motion.div>
+                    );
+                  }
 
-                  <button
-                    className="chat-primary-button"
-                    onClick={() => {
-                      setName("");
-                      setStep("booking-name");
-                    }}
-                  >
-                    Enquire About This
-                    <ArrowUpRight size={17} />
-                  </button>
-                </motion.div>
-              )}
+                  return (
+                    <motion.div
+                      key={message.id}
+                      className={`chat-message ${
+                        message.role === "user"
+                          ? "user-message"
+                          : "bot-message"
+                      }`}
+                      initial={{
+                        opacity: 0,
+                        y: 10,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                    >
+                      {message.role === "bot" && (
+                        <div className="message-avatar">
+                          <Bot size={14} />
+                        </div>
+                      )}
 
-              {step === "about" && (
-                <motion.div
-                  className="chatbot-screen"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <button
-                    className="chat-back"
-                    onClick={resetChat}
-                  >
-                    <ArrowLeft size={16} />
-                    Back
-                  </button>
+                      <div className="message-bubble">
+                        {message.text
+                          .split("\n")
+                          .map((line, index) => (
+                            <React.Fragment
+                              key={index}
+                            >
+                              {line}
 
-                  <div className="chat-about-image">
-                    <img
-                      src={founder}
-                      alt="Saran Raj"
-                    />
-                  </div>
+                              {index <
+                                message.text.split(
+                                  "\n"
+                                ).length -
+                                  1 && <br />}
+                            </React.Fragment>
+                          ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
 
-                  <span className="chat-mini-label">
-                    ABOUT GURURAG INTERIOR
-                  </span>
+                <div ref={messagesEndRef} />
+              </div>
 
-                  <h4>
-                    Designed around
-                    <br />
-                    your life.
-                  </h4>
+              {/* QUICK SUGGESTIONS */}
 
-                  <p className="chat-description">
-                    Gururag Interior creates refined residential
-                    and commercial spaces where thoughtful design,
-                    skilled craftsmanship and everyday
-                    functionality come together.
-                  </p>
+              <div className="chat-quick-area">
+                <span>Try asking</span>
 
-                  <div className="chat-stats">
-                    <div>
-                      <strong>13+</strong>
-                      <span>Years Experience</span>
-                    </div>
-
-                    <div>
-                      <strong>1,500+</strong>
-                      <span>Completed Projects</span>
-                    </div>
-                  </div>
-
-                  <p className="chat-description">
-                    Founded and led by{" "}
-                    <strong>Saran Raj</strong>, Gururag Interior
-                    brings together interior design, carpentry,
-                    civil works, finishing and allied solutions
-                    with a focus on quality and client
-                    satisfaction.
-                  </p>
-
-                  <button
-                    className="chat-primary-button"
-                    onClick={startBooking}
-                  >
-                    Start an Enquiry
-                    <ArrowUpRight size={17} />
-                  </button>
-                </motion.div>
-              )}
-
-              {step === "booking-name" && (
-                <motion.div
-                  className="chatbot-screen"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <button
-                    className="chat-back"
-                    onClick={resetChat}
-                  >
-                    <ArrowLeft size={16} />
-                    Back
-                  </button>
-
-                  <div className="chat-step-number">
-                    STEP 1 OF 2
-                  </div>
-
-                  <h4>Let's get started.</h4>
-
-                  <p className="chat-subtitle">
-                    First, may I know your name?
-                  </p>
-
-                  <input
-                    className="chat-input"
-                    type="text"
-                    placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && name.trim()) {
-                        setStep("booking-service");
-                      }
-                    }}
-                    autoFocus
-                  />
-
-                  <button
-                    className="chat-primary-button"
-                    disabled={!name.trim()}
-                    onClick={() => setStep("booking-service")}
-                  >
-                    Continue
-                    <ArrowRight size={17} />
-                  </button>
-                </motion.div>
-              )}
-
-              {step === "booking-service" && (
-                <motion.div
-                  className="chatbot-screen"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <button
-                    className="chat-back"
-                    onClick={() => setStep("booking-name")}
-                  >
-                    <ArrowLeft size={16} />
-                    Back
-                  </button>
-
-                  <div className="chat-step-number">
-                    STEP 2 OF 2
-                  </div>
-
-                  <h4>
-                    Nice to meet you,{" "}
-                    {name.trim()}.
-                  </h4>
-
-                  <p className="chat-subtitle">
-                    Which service are you interested in?
-                  </p>
-
-                  <div className="chat-service-list compact">
-                    {services.map((item) => (
+                <div className="chat-quick-buttons">
+                  {quickSuggestions.map(
+                    (suggestion) => (
                       <button
-                        key={item.title}
+                        key={suggestion}
                         onClick={() =>
-                          chooseBookingService(item)
+                          quickAsk(suggestion)
                         }
                       >
-                        <div>
-                          <strong>{item.title}</strong>
-                        </div>
-
-                        <ArrowRight size={17} />
+                        {suggestion}
                       </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+                    )
+                  )}
+                </div>
+              </div>
 
-              {step === "booking-confirm" && selectedService && (
-                <motion.div
-                  className="chatbot-screen"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
+              {/* ENQUIRY ACTION */}
+
+              {leadName && (
+                <button
+                  className="chat-whatsapp-button"
+                  onClick={
+                    sendWhatsAppEnquiry
+                  }
                 >
-                  <div className="chat-success-icon">
-                    <Check size={25} />
-                  </div>
-
-                  <h4>
-                    Thanks, {name.trim()}!
-                  </h4>
-
-                  <p className="chat-description">
-                    You've selected{" "}
-                    <strong>
-                      {selectedService.title}
-                    </strong>
-                    .
-                  </p>
-
-                  <p className="chat-description">
-                    Click below and we'll open WhatsApp so you
-                    can directly enquire with Gururag Interior
-                    and request a quotation.
-                  </p>
-
-                  <button
-                    className="chat-whatsapp-button"
-                    onClick={sendEnquiry}
-                  >
-                    <WhatsAppIcon size={21} />
-                    Click to Enquire
-                  </button>
-
-                  <button
-                    className="chat-start-over"
-                    onClick={resetChat}
-                  >
-                    Start Over
-                  </button>
-                </motion.div>
+                  <WhatsAppIcon size={20} />
+                  Send Enquiry on WhatsApp
+                </button>
               )}
+
+              {/* INPUT */}
+
+              <div className="chat-input-wrap">
+                <input
+                  ref={inputRef}
+                  className="chat-input"
+                  type="text"
+                  value={input}
+                  placeholder={
+                    waitingForName
+                      ? "Type your name..."
+                      : "Type your message..."
+                  }
+                  onChange={(e) =>
+                    setInput(e.target.value)
+                  }
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Enter" &&
+                      !e.shiftKey
+                    ) {
+                      e.preventDefault();
+                      sendMessage();
+                    }
+                  }}
+                />
+
+                <button
+                  className="chat-send-button"
+                  onClick={sendMessage}
+                  disabled={!input.trim()}
+                  aria-label="Send message"
+                >
+                  <Send size={17} />
+                </button>
+              </div>
+
+              <div className="chat-bottom-actions">
+                <button
+                  onClick={() => {
+                    resetChat();
+                    setTimeout(() => {
+                      inputRef.current?.focus();
+                    }, 100);
+                  }}
+                >
+                  Start New Chat
+                </button>
+
+                <button
+                  onClick={() =>
+                    startEnquiry()
+                  }
+                >
+                  Talk to Designer
+                </button>
+              </div>
             </div>
+
+            {/* FOOTER */}
 
             <div className="chatbot-footer">
               <span>GURURAG INTERIOR</span>
@@ -696,7 +1250,10 @@ function App() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setService((current) => (current + 1) % services.length);
+      setService(
+        (current) =>
+          (current + 1) % services.length
+      );
     }, 5000);
 
     return () => clearInterval(timer);
@@ -706,29 +1263,35 @@ function App() {
     setMenu(false);
 
     setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: "smooth",
-      });
+      document
+        .getElementById(id)
+        ?.scrollIntoView({
+          behavior: "smooth",
+        });
     }, 100);
   };
 
   const whatsapp = (message) => {
     window.open(
-      `${WHATSAPP}?text=${encodeURIComponent(message)}`,
+      `${WHATSAPP}?text=${encodeURIComponent(
+        message
+      )}`,
       "_blank"
     );
   };
 
   const nextService = () => {
     setService(
-      (current) => (current + 1) % services.length
+      (current) =>
+        (current + 1) % services.length
     );
   };
 
   const previousService = () => {
     setService(
       (current) =>
-        (current - 1 + services.length) % services.length
+        (current - 1 + services.length) %
+        services.length
     );
   };
 
@@ -788,21 +1351,37 @@ function App() {
         {menu && (
           <motion.div
             className="menu-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
           >
             <motion.div
               className="menu-panel"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              initial={{
+                x: "100%",
+              }}
+              animate={{
+                x: 0,
+              }}
+              exit={{
+                x: "100%",
+              }}
             >
               <div className="menu-header">
-                <span>GURURAG INTERIOR</span>
+                <span>
+                  GURURAG INTERIOR
+                </span>
 
                 <button
-                  onClick={() => setMenu(false)}
+                  onClick={() =>
+                    setMenu(false)
+                  }
                 >
                   <X />
                 </button>
@@ -810,7 +1389,9 @@ function App() {
 
               <nav>
                 <button
-                  onClick={() => scrollTo("home")}
+                  onClick={() =>
+                    scrollTo("home")
+                  }
                 >
                   <small>01</small>
                   Home
@@ -818,7 +1399,9 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() => scrollTo("about")}
+                  onClick={() =>
+                    scrollTo("about")
+                  }
                 >
                   <small>02</small>
                   About Us
@@ -826,7 +1409,9 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() => scrollTo("services")}
+                  onClick={() =>
+                    scrollTo("services")
+                  }
                 >
                   <small>03</small>
                   Our Services
@@ -834,7 +1419,9 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() => scrollTo("projects")}
+                  onClick={() =>
+                    scrollTo("projects")
+                  }
                 >
                   <small>04</small>
                   Our Projects
@@ -842,7 +1429,9 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() => scrollTo("contact")}
+                  onClick={() =>
+                    scrollTo("contact")
+                  }
                 >
                   <small>05</small>
                   Contact
@@ -868,23 +1457,41 @@ function App() {
 
       {/* HERO */}
 
-      <section id="home" className="hero">
+      <section
+        id="home"
+        className="hero"
+      >
         <div className="hero-image" />
         <div className="hero-overlay" />
 
         <div className="hero-content">
           <motion.div
             className="eyebrow"
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.3,
+            }}
           >
-            INTERIOR DESIGN • TURNKEY SOLUTIONS
+            INTERIOR DESIGN • TURNKEY
+            SOLUTIONS
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 45 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{
+              opacity: 0,
+              y: 45,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
             transition={{
               delay: 0.45,
               duration: 0.9,
@@ -896,25 +1503,44 @@ function App() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65 }}
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.65,
+            }}
           >
-            We create refined residential and commercial
-            interiors where thoughtful design, skilled
-            craftsmanship and everyday functionality come
+            We create refined residential and
+            commercial interiors where thoughtful
+            design, skilled craftsmanship and
+            everyday functionality come
             together.
           </motion.p>
 
           <motion.div
             className="hero-buttons"
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.8,
+            }}
           >
             <button
               className="yellow-button"
-              onClick={() => scrollTo("projects")}
+              onClick={() =>
+                scrollTo("projects")
+              }
             >
               Explore Projects
               <ArrowUpRight />
@@ -982,22 +1608,27 @@ function App() {
             }}
           >
             <p>
-              At Gururag Interior, we believe a beautiful
-              space should do more than look good. It should
-              feel natural, work effortlessly and reflect the
-              people who live or work inside it.
+              At Gururag Interior, we believe
+              a beautiful space should do more
+              than look good. It should feel
+              natural, work effortlessly and
+              reflect the people who live or
+              work inside it.
             </p>
 
             <p>
-              From detailed carpentry and modern kitchens to
-              civil works, finishing and complete turnkey
-              solutions, we bring every layer together with
-              one clear vision.
+              From detailed carpentry and
+              modern kitchens to civil works,
+              finishing and complete turnkey
+              solutions, we bring every layer
+              together with one clear vision.
             </p>
 
             <button
               className="dark-link"
-              onClick={() => scrollTo("about")}
+              onClick={() =>
+                scrollTo("about")
+              }
             >
               Discover our story
               <ArrowUpRight />
@@ -1060,8 +1691,9 @@ function App() {
           </h2>
 
           <p>
-            Gururag Interior is built around a simple idea —
-            every space deserves its own character.
+            Gururag Interior is built around
+            a simple idea — every space
+            deserves its own character.
           </p>
         </div>
 
@@ -1097,27 +1729,33 @@ function App() {
             <div className="stats">
               <div>
                 <strong>13+</strong>
-                <span>Years Experience</span>
+                <span>
+                  Years Experience
+                </span>
               </div>
 
               <div>
                 <strong>1,500+</strong>
-                <span>Completed Projects</span>
+                <span>
+                  Completed Projects
+                </span>
               </div>
             </div>
 
             <p>
-              With over 13 years of experience across
-              interior, construction and renovation
-              solutions, Saran Raj leads Gururag Interior
-              with a strong focus on craftsmanship, detail
-              and client satisfaction.
+              With over 13 years of experience
+              across interior, construction and
+              renovation solutions, Saran Raj
+              leads Gururag Interior with a
+              strong focus on craftsmanship,
+              detail and client satisfaction.
             </p>
 
             <p>
-              His approach combines thoughtful design with
-              practical execution, creating spaces that are
-              distinctive, comfortable and built around the
+              His approach combines thoughtful
+              design with practical execution,
+              creating spaces that are distinctive,
+              comfortable and built around the
               people who use them.
             </p>
 
@@ -1146,8 +1784,9 @@ function App() {
           </h2>
 
           <p>
-            Complete interior, renovation, civil and allied
-            solutions managed with one design vision.
+            Complete interior, renovation,
+            civil and allied solutions managed
+            with one design vision.
           </p>
         </div>
 
@@ -1175,7 +1814,9 @@ function App() {
               <div className="service-image">
                 <img
                   src={currentService.image}
-                  alt={currentService.title}
+                  alt={
+                    currentService.title
+                  }
                 />
               </div>
 
@@ -1219,27 +1860,33 @@ function App() {
           </AnimatePresence>
 
           <div className="carousel-controls">
-            <button onClick={previousService}>
+            <button
+              onClick={previousService}
+            >
               <ArrowLeft />
             </button>
 
             <div className="dots">
-              {services.map((item, index) => (
-                <button
-                  key={item.title}
-                  className={
-                    index === service
-                      ? "active"
-                      : ""
-                  }
-                  onClick={() =>
-                    setService(index)
-                  }
-                />
-              ))}
+              {services.map(
+                (item, index) => (
+                  <button
+                    key={item.title}
+                    className={
+                      index === service
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setService(index)
+                    }
+                  />
+                )
+              )}
             </div>
 
-            <button onClick={nextService}>
+            <button
+              onClick={nextService}
+            >
               <ArrowRight />
             </button>
           </div>
@@ -1264,57 +1911,62 @@ function App() {
           </h2>
 
           <p>
-            A collection of modern interior directions shaped
-            by comfort, proportion and timeless detailing.
+            A collection of modern interior
+            directions shaped by comfort,
+            proportion and timeless detailing.
           </p>
         </div>
 
         <div className="project-grid">
-          {projects.map((project, index) => (
-            <motion.article
-              className={
-                index === 0
-                  ? "project project-large"
-                  : "project"
-              }
-              key={project.title}
-              initial={{
-                opacity: 0,
-                y: 50,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                delay: index * 0.08,
-              }}
-            >
-              <div className="project-image">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                />
+          {projects.map(
+            (project, index) => (
+              <motion.article
+                className={
+                  index === 0
+                    ? "project project-large"
+                    : "project"
+                }
+                key={project.title}
+                initial={{
+                  opacity: 0,
+                  y: 50,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  delay: index * 0.08,
+                }}
+              >
+                <div className="project-image">
+                  <img
+                    src={project.image}
+                    alt={
+                      project.title
+                    }
+                  />
 
-                <div className="project-arrow">
-                  <ArrowUpRight />
+                  <div className="project-arrow">
+                    <ArrowUpRight />
+                  </div>
                 </div>
-              </div>
 
-              <div className="project-info">
-                <span>
-                  {project.category}
-                </span>
+                <div className="project-info">
+                  <span>
+                    {project.category}
+                  </span>
 
-                <h3>
-                  {project.title}
-                </h3>
-              </div>
-            </motion.article>
-          ))}
+                  <h3>
+                    {project.title}
+                  </h3>
+                </div>
+              </motion.article>
+            )
+          )}
         </div>
       </section>
 
@@ -1332,7 +1984,8 @@ function App() {
           <h2>
             Let's create
             <br />
-            something <em>beautiful.</em>
+            something{" "}
+            <em>beautiful.</em>
           </h2>
 
           <button
@@ -1368,9 +2021,10 @@ function App() {
             </h2>
 
             <p>
-              Have a home, office or renovation project in
-              mind? Tell us what you are planning and let's
-              build something around it.
+              Have a home, office or renovation
+              project in mind? Tell us what you
+              are planning and let's build
+              something around it.
             </p>
 
             <div className="contact-details">
@@ -1407,8 +2061,9 @@ function App() {
             </h3>
 
             <p>
-              Send your project type, location and reference
-              images directly through WhatsApp.
+              Send your project type, location
+              and reference images directly
+              through WhatsApp.
             </p>
 
             <button
@@ -1451,7 +2106,7 @@ function App() {
           </p>
 
           <div className="socials">
-            <a href="#">
+            <a href="#" aria-label="Instagram">
               <Instagram />
             </a>
 
@@ -1477,15 +2132,15 @@ function App() {
         </div>
       </footer>
 
-      {/* AI-STYLE CHAT ASSISTANT */}
+      {/* CONVERSATIONAL CHAT ASSISTANT */}
 
-      <Chatbot onWhatsApp={whatsapp} />
+      <Chatbot
+        onWhatsApp={whatsapp}
+      />
     </div>
   );
 }
 
 createRoot(
   document.getElementById("root")
-).render(
-  <App />
-);
+).render(<App />);
