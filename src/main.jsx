@@ -19,6 +19,7 @@ import logo from "./logo.jpg";
 import founder from "./founder.jpg";
 
 const WHATSAPP = "https://wa.me/919940277984";
+const INSTAGRAM = "https://www.instagram.com/sgr_decors_interior_designer?stkn=bDNyaWVleDY2dDI=";
 
 const services = [
   {
@@ -309,7 +310,7 @@ function WhatsAppIcon({ size = 22 }) {
 function normalizeText(text = "") {
   return text
     .toLowerCase()
-    .replace(/[^\w\s₹.]/g, " ")
+    .replace(/[^\w\s鈧�.]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -398,7 +399,7 @@ function isPriceQuestion(text) {
     "lakh",
     "lakhs",
     "rs",
-    "₹",
+    "鈧�",
   ]);
 }
 
@@ -445,7 +446,7 @@ function detectBudget(text) {
   const normalized = normalizeText(text);
 
   const match = normalized.match(
-    /(?:rs|₹)?\s*(\d+(?:\.\d+)?)\s*(lakh|lakhs|k|thousand)?/
+    /(?:rs|鈧�)?\s*(\d+(?:\.\d+)?)\s*(lakh|lakhs|k|thousand)?/
   );
 
   if (!match) return null;
@@ -456,11 +457,11 @@ function detectBudget(text) {
   if (!number) return null;
 
   if (unit === "lakh" || unit === "lakhs") {
-    return `₹${number} lakh`;
+    return `鈧�${number} lakh`;
   }
 
   if (unit === "k" || unit === "thousand") {
-    return `₹${number}k`;
+    return `鈧�${number}k`;
   }
 
   if (
@@ -468,7 +469,7 @@ function detectBudget(text) {
     normalized.includes("price") ||
     normalized.includes("cost")
   ) {
-    return `₹${number}`;
+    return `鈧�${number}`;
   }
 
   return null;
@@ -487,7 +488,7 @@ function Chatbot({ onWhatsApp }) {
       role: "bot",
       type: "text",
       text:
-        "Hi there! 👋 Welcome to Gururag Interior. Tell me what you're planning for your space — you can type naturally, like “I need a modular kitchen” or “2 lakh budget kitchen possible ah?”",
+        "Hi there! 馃憢 Welcome to Gururag Interior. Tell me what you're planning for your space 鈥� you can type naturally, like 鈥淚 need a modular kitchen鈥� or 鈥�2 lakh budget kitchen possible ah?鈥�",
     },
   ]);
 
@@ -551,7 +552,7 @@ function Chatbot({ onWhatsApp }) {
         role: "bot",
         type: "text",
         text:
-          "Hi there! 👋 Welcome to Gururag Interior. Tell me what you're planning for your space.",
+          "Hi there! 馃憢 Welcome to Gururag Interior. Tell me what you're planning for your space.",
       },
     ]);
 
@@ -618,17 +619,17 @@ function Chatbot({ onWhatsApp }) {
 
       if (activeService) {
         addBotMessage(
-          `Nice to meet you, ${finalName}! 😊 You're enquiring about ${activeService.title}.`
+          `Nice to meet you, ${finalName}! 馃槉 You're enquiring about ${activeService.title}.`
         );
 
         setTimeout(() => {
           addBotMessage(
-            "You can continue asking me about the design, materials or budget. If you're ready, tap “Send Enquiry on WhatsApp” below."
+            "You can continue asking me about the design, materials or budget. If you're ready, tap 鈥淪end Enquiry on WhatsApp鈥� below."
           );
         }, 250);
       } else {
         addBotMessage(
-          `Nice to meet you, ${finalName}! 😊 Which service are you looking for? You can simply type something like “modular kitchen”, “wardrobe”, “painting” or “false ceiling”.`
+          `Nice to meet you, ${finalName}! 馃槉 Which service are you looking for? You can simply type something like 鈥渕odular kitchen鈥�, 鈥渨ardrobe鈥�, 鈥減ainting鈥� or 鈥渇alse ceiling鈥�.`
         );
       }
 
@@ -638,7 +639,7 @@ function Chatbot({ onWhatsApp }) {
     /* GREETING */
     if (isGreeting(text)) {
       addBotMessage(
-        "Hello! 👋 What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."
+        "Hello! 馃憢 What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."
       );
 
       return;
@@ -656,12 +657,12 @@ function Chatbot({ onWhatsApp }) {
     /* CONTACT */
     if (isContactQuestion(text)) {
       addBotMessage(
-        "Sure 👍 You can contact Gururag Interior directly on WhatsApp at +91 99402 77984. If you tell me your requirement first, I can also prepare the enquiry for you."
+        "Sure 馃憤 You can contact Gururag Interior directly on WhatsApp at +91 99402 77984. If you tell me your requirement first, I can also prepare the enquiry for you."
       );
 
       setTimeout(() => {
         addBotMessage(
-          "For example: “I need a 2BHK interior”, “modular kitchen”, or “false ceiling for my living room”."
+          "For example: 鈥淚 need a 2BHK interior鈥�, 鈥渕odular kitchen鈥�, or 鈥渇alse ceiling for my living room鈥�."
         );
       }, 250);
 
@@ -680,7 +681,7 @@ function Chatbot({ onWhatsApp }) {
     if (budget) {
       if (activeService) {
         addBotMessage(
-          `Got it 👍 You're considering around ${budget} for ${activeService.title}. The final cost depends on the size, materials, finish, hardware and site requirements.`
+          `Got it 馃憤 You're considering around ${budget} for ${activeService.title}. The final cost depends on the size, materials, finish, hardware and site requirements.`
         );
 
         setTimeout(() => {
@@ -696,7 +697,7 @@ function Chatbot({ onWhatsApp }) {
         }, 550);
       } else {
         addBotMessage(
-          `₹${budget.replace("₹", "")} budget noted 👍 Which space are you planning — kitchen, wardrobe, full home interior, office, painting or something else?`
+          `鈧�${budget.replace("鈧�", "")} budget noted 馃憤 Which space are you planning 鈥� kitchen, wardrobe, full home interior, office, painting or something else?`
         );
       }
 
@@ -711,7 +712,7 @@ function Chatbot({ onWhatsApp }) {
 
       setTimeout(() => {
         addBotMessage(
-          `Yes 👍 ${detectedService.title} is something Gururag Interior can help with. You can ask me about options, advantages, materials, budget considerations, or how to enquire.`
+          `Yes 馃憤 ${detectedService.title} is something Gururag Interior can help with. You can ask me about options, advantages, materials, budget considerations, or how to enquire.`
         );
       }, 350);
 
@@ -732,8 +733,8 @@ function Chatbot({ onWhatsApp }) {
         ])
       ) {
         addBotMessage(
-          `For ${activeService.title}, some key advantages are:\n\n• ${activeService.pros.join(
-            "\n• "
+          `For ${activeService.title}, some key advantages are:\n\n鈥� ${activeService.pros.join(
+            "\n鈥� "
           )}`
         );
 
@@ -751,8 +752,8 @@ function Chatbot({ onWhatsApp }) {
         ])
       ) {
         addBotMessage(
-          `A few things to consider for ${activeService.title}:\n\n• ${activeService.considerations.join(
-            "\n• "
+          `A few things to consider for ${activeService.title}:\n\n鈥� ${activeService.considerations.join(
+            "\n鈥� "
           )}`
         );
 
@@ -772,8 +773,8 @@ function Chatbot({ onWhatsApp }) {
         ])
       ) {
         addBotMessage(
-          `For ${activeService.title}, we can provide:\n\n• ${activeService.items.join(
-            "\n• "
+          `For ${activeService.title}, we can provide:\n\n鈥� ${activeService.items.join(
+            "\n鈥� "
           )}`
         );
 
@@ -795,7 +796,7 @@ function Chatbot({ onWhatsApp }) {
       }
 
       addBotMessage(
-        `Sure 👍 I can help with ${activeService.title}. Are you looking for information about the options, advantages, things to consider, budget, or a quotation?`
+        `Sure 馃憤 I can help with ${activeService.title}. Are you looking for information about the options, advantages, things to consider, budget, or a quotation?`
       );
 
       return;
@@ -819,12 +820,12 @@ function Chatbot({ onWhatsApp }) {
       ])
     ) {
       addBotMessage(
-        "Absolutely 👍 Gururag Interior can coordinate multiple parts of a home interior — carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."
+        "Absolutely 馃憤 Gururag Interior can coordinate multiple parts of a home interior 鈥� carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."
       );
 
       setTimeout(() => {
         addBotMessage(
-          "If you tell me your home type, like “3BHK”, and your approximate budget, I can guide you on what to discuss with the designer."
+          "If you tell me your home type, like 鈥�3BHK鈥�, and your approximate budget, I can guide you on what to discuss with the designer."
         );
       }, 300);
 
@@ -842,12 +843,12 @@ function Chatbot({ onWhatsApp }) {
       ])
     ) {
       addBotMessage(
-        "Yes 👍 Gururag Interior also provides commercial interior solutions such as office furniture, partitions, electrical planning, painting, civil work and custom spaces."
+        "Yes 馃憤 Gururag Interior also provides commercial interior solutions such as office furniture, partitions, electrical planning, painting, civil work and custom spaces."
       );
 
       setTimeout(() => {
         addBotMessage(
-          "Tell me what type of space you have — office, showroom, shop or workspace — and I can guide you further."
+          "Tell me what type of space you have 鈥� office, showroom, shop or workspace 鈥� and I can guide you further."
         );
       }, 300);
 
@@ -856,7 +857,7 @@ function Chatbot({ onWhatsApp }) {
 
     /* FALLBACK */
     addBotMessage(
-      "I can help you with that 😊 Tell me a little more about what you're planning. For example:\n\n• “I need a modular kitchen”\n• “wardrobe venum”\n• “false ceiling for hall”\n• “2 lakh budget kitchen”\n• “3BHK full interior”\n• “painting work venum”"
+      "I can help you with that 馃槉 Tell me a little more about what you're planning. For example:\n\n鈥� 鈥淚 need a modular kitchen鈥漒n鈥� 鈥渨ardrobe venum鈥漒n鈥� 鈥渇alse ceiling for hall鈥漒n鈥� 鈥�2 lakh budget kitchen鈥漒n鈥� 鈥�3BHK full interior鈥漒n鈥� 鈥減ainting work venum鈥�"
     );
   };
 
@@ -923,7 +924,7 @@ function Chatbot({ onWhatsApp }) {
           >
             <span className="chatbot-live-dot" />
             <Bot size={23} />
-            <span>We’re Live</span>
+            <span>We鈥檙e Live</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -964,7 +965,7 @@ function Chatbot({ onWhatsApp }) {
 
                   <span>
                     <i />
-                    We’re Live • 24/7
+                    We鈥檙e Live 鈥� 24/7
                   </span>
                 </div>
               </div>
@@ -1063,7 +1064,7 @@ function Chatbot({ onWhatsApp }) {
                                       consideration
                                     }
                                   >
-                                    <span>•</span>
+                                    <span>鈥�</span>
                                     {consideration}
                                   </div>
                                 )
@@ -1241,12 +1242,418 @@ function Chatbot({ onWhatsApp }) {
 }
 
 /* -------------------------------------------------------
+   NEW MENU PAGES
+------------------------------------------------------- */
+
+function TypewriterText({ lines }) {
+  const [lineIndex, setLineIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = lines[lineIndex] || "";
+    const speed = deleting ? 38 : 72;
+
+    const timer = setTimeout(() => {
+      if (!deleting) {
+        const next = current.slice(0, text.length + 1);
+        setText(next);
+        if (next === current) {
+          setTimeout(() => setDeleting(true), 1400);
+        }
+      } else {
+        const next = current.slice(0, Math.max(0, text.length - 1));
+        setText(next);
+        if (!next) {
+          setDeleting(false);
+          setLineIndex((index) => (index + 1) % lines.length);
+        }
+      }
+    }, speed);
+
+    return () => clearTimeout(timer);
+  }, [text, deleting, lineIndex, lines]);
+
+  return (
+    <span className="new-page-typewriter">
+      {text}
+      <span className="typewriter-cursor">|</span>
+    </span>
+  );
+}
+
+function NewPageOverlay({ page, onClose, onWhatsApp }) {
+  const pageData = {
+    about: {
+      number: "02",
+      eyebrow: "THE PERSON BEHIND THE VISION",
+      title: "Built on experience.\nDesigned with purpose.",
+    },
+    services: {
+      number: "03",
+      eyebrow: "WHAT WE CREATE",
+      title: "From first idea\nto final detail.",
+    },
+    projects: {
+      number: "04",
+      eyebrow: "SELECTED DIRECTIONS",
+      title: "Spaces made\nto be lived in.",
+    },
+    contact: {
+      number: "05",
+      eyebrow: "LET'S TALK",
+      title: "Your space.\nOur next conversation.",
+    },
+  };
+
+  const data = pageData[page];
+  if (!data) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="new-page-overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <motion.div
+          className="new-page-shell"
+          initial={{ y: 45, scale: 0.985 }}
+          animate={{ y: 0, scale: 1 }}
+          exit={{ y: 30, scale: 0.985 }}
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="new-page-topbar">
+            <button className="new-page-brand" onClick={onClose}>
+              <span className="new-page-logo">
+                <img src={logo} alt="Gururag Interior" />
+              </span>
+              <span>
+                <strong>GURURAG</strong>
+                <small>INTERIOR</small>
+              </span>
+            </button>
+
+            <div className="new-page-top-actions">
+              <a
+                className="new-page-top-whatsapp"
+                href={WHATSAPP}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="WhatsApp Gururag Interior"
+              >
+                <WhatsAppIcon size={19} />
+                <span>WhatsApp</span>
+              </a>
+              <button
+                className="new-page-close"
+                onClick={onClose}
+                aria-label="Close page"
+              >
+                <X size={21} />
+              </button>
+            </div>
+          </div>
+
+          <div className="new-page-scroll">
+            <div className="new-page-hero-copy">
+              <div>
+                <span className="new-page-eyebrow">
+                  {data.number} 鈥� {data.eyebrow}
+                </span>
+                <h2>
+                  {data.title.split("\n").map((line, index) => (
+                    <React.Fragment key={line}>
+                      {index > 0 && <br />}
+                      {index === data.title.split("\n").length - 1 ? (
+                        <em>{line}</em>
+                      ) : (
+                        line
+                      )}
+                    </React.Fragment>
+                  ))}
+                </h2>
+              </div>
+
+              {page === "about" && (
+                <p>
+                  <TypewriterText
+                    lines={[
+                      "13+ years of experience.",
+                      "1,500+ completed projects.",
+                      "One clear vision for every space.",
+                    ]}
+                  />
+                </p>
+              )}
+
+              {page === "contact" && (
+                <p>
+                  <TypewriterText
+                    lines={[
+                      "Let's turn your idea into a space.",
+                      "Tell Saran Raj what you are planning.",
+                      "Your project can start with one message.",
+                    ]}
+                  />
+                </p>
+              )}
+
+              {page === "services" && (
+                <p>
+                  <TypewriterText
+                    lines={[
+                      "Carpentry. Civil. Painting. Electrical.",
+                      "Every layer, thoughtfully coordinated.",
+                      "Residential and commercial solutions.",
+                    ]}
+                  />
+                </p>
+              )}
+
+              {page === "projects" && (
+                <p>
+                  <TypewriterText
+                    lines={[
+                      "Contemporary living spaces.",
+                      "Modern kitchens and bedrooms.",
+                      "Workspaces with character.",
+                    ]}
+                  />
+                </p>
+              )}
+            </div>
+
+            {page === "about" && (
+              <div className="new-about-grid">
+                <div className="new-founder-card">
+                  <div className="new-founder-image-wrap">
+                    <img src={founder} alt="Saran Raj" />
+                    <div className="new-founder-image-overlay" />
+                    <span>FOUNDER 鈥� GURURAG INTERIOR</span>
+                  </div>
+
+                  <div className="new-founder-content">
+                    <span className="new-page-label">FOUNDER / DESIGN VISION</span>
+                    <h3>Saran <em>Raj.</em></h3>
+                    <p>
+                      With over 13 years of experience across interior,
+                      construction and renovation solutions, Saran Raj leads
+                      Gururag Interior with a strong focus on craftsmanship,
+                      detail and client satisfaction.
+                    </p>
+                    <p>
+                      His approach brings design and practical execution
+                      together, creating spaces that feel distinctive,
+                      comfortable and personal.
+                    </p>
+
+                    <div className="new-stat-row">
+                      <div>
+                        <strong>13+</strong>
+                        <span>Years Experience</span>
+                      </div>
+                      <div>
+                        <strong>1,500+</strong>
+                        <span>Completed Projects</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="new-about-side">
+                  <div className="new-info-card">
+                    <span>OUR APPROACH</span>
+                    <h4>Thoughtful interiors. Crafted with character.</h4>
+                    <p>
+                      From detailed carpentry and modern kitchens to civil
+                      works, finishing and turnkey solutions, every layer is
+                      planned around the way you use your space.
+                    </p>
+                  </div>
+
+                  <div className="new-contact-mini">
+                    <span>CONNECT WITH SARAN</span>
+                    <a href="tel:+919940277984">
+                      <Phone size={19} />
+                      <span>+91 99402 77984</span>
+                      <ArrowUpRight size={17} />
+                    </a>
+                    <a href={WHATSAPP} target="_blank" rel="noreferrer">
+                      <WhatsAppIcon size={20} />
+                      <span>WhatsApp Saran Raj</span>
+                      <ArrowUpRight size={17} />
+                    </a>
+                    <a href={INSTAGRAM} target="_blank" rel="noreferrer">
+                      <Instagram size={20} />
+                      <span>Instagram Profile</span>
+                      <ArrowUpRight size={17} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {page === "services" && (
+              <div className="new-service-grid">
+                {services.map((item, index) => (
+                  <motion.article
+                    className="new-service-page-card"
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.07 }}
+                  >
+                    <div className="new-service-page-image">
+                      <img src={item.image} alt={item.title} />
+                      <span>0{index + 1}</span>
+                    </div>
+                    <div>
+                      <span className="new-page-label">SERVICE 0{index + 1}</span>
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                      <button
+                        className="new-outline-button"
+                        onClick={() =>
+                          onWhatsApp(
+                            `Hi Gururag Interior, I am interested in ${item.title}.`
+                          )
+                        }
+                      >
+                        Enquire About This <ArrowUpRight size={17} />
+                      </button>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            )}
+
+            {page === "projects" && (
+              <div className="new-project-page-grid">
+                {projects.map((project, index) => (
+                  <motion.article
+                    className="new-project-page-card"
+                    key={project.title}
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.08 }}
+                  >
+                    <div className="new-project-page-image">
+                      <img src={project.image} alt={project.title} />
+                      <div className="new-project-page-arrow">
+                        <ArrowUpRight size={18} />
+                      </div>
+                    </div>
+                    <span>{project.category}</span>
+                    <h3>{project.title}</h3>
+                  </motion.article>
+                ))}
+              </div>
+            )}
+
+            {page === "contact" && (
+              <div className="new-contact-page">
+                <div className="new-contact-intro">
+                  <span className="new-page-label">GURURAG INTERIOR 鈥� CHENNAI</span>
+                  <h3>
+                    <TypewriterText
+                      lines={[
+                        "Let's create something beautiful.",
+                        "Let's plan your next interior.",
+                        "Let's talk about your space.",
+                      ]}
+                    />
+                  </h3>
+                  <p>
+                    Share your home, office or renovation requirement with us.
+                    One message is enough to start the conversation.
+                  </p>
+                </div>
+
+                <div className="new-contact-actions">
+                  <a className="new-contact-action phone" href="tel:+919940277984">
+                    <span className="new-action-icon"><Phone size={22} /></span>
+                    <span className="new-action-copy">
+                      <small>CALL DIRECTLY</small>
+                      <strong>+91 99402 77984</strong>
+                    </span>
+                    <ArrowUpRight size={19} />
+                  </a>
+
+                  <a
+                    className="new-contact-action whatsapp"
+                    href={WHATSAPP}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="new-action-icon"><WhatsAppIcon size={23} /></span>
+                    <span className="new-action-copy">
+                      <small>CHAT ON WHATSAPP</small>
+                      <strong>Send Your Requirement</strong>
+                    </span>
+                    <ArrowUpRight size={19} />
+                  </a>
+
+                  <a
+                    className="new-contact-action instagram"
+                    href={INSTAGRAM}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="new-action-icon"><Instagram size={23} /></span>
+                    <span className="new-action-copy">
+                      <small>FOLLOW OUR WORK</small>
+                      <strong>@sgr_decors_interior_designer</strong>
+                    </span>
+                    <ArrowUpRight size={19} />
+                  </a>
+                </div>
+
+                <div className="new-contact-bottom-row">
+                  <span>Available for residential & commercial enquiries</span>
+                  <span>Chennai 鈥� Tamil Nadu</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* -------------------------------------------------------
+   NEW MENU / PAGE STYLES
+------------------------------------------------------- */
+
+function NewPageStyles() {
+  return (
+    <style>{`
+      .new-page-overlay{position:fixed;inset:0;z-index:1200;background:rgba(5,16,29,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:14px;display:flex;align-items:center;justify-content:center}
+      .new-page-shell{width:min(1180px,100%);height:min(94vh,900px);overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:#071827;color:#f7f5ed;box-shadow:0 35px 100px rgba(0,0,0,.48);position:relative}
+      .new-page-topbar{height:78px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(7,24,39,.92);position:sticky;top:0;z-index:5}
+      .new-page-brand{border:0;background:transparent;color:#fff;display:flex;align-items:center;gap:11px;cursor:pointer;padding:0;text-align:left}.new-page-brand>span:last-child{display:flex;flex-direction:column}.new-page-brand strong{font-size:14px;letter-spacing:.18em}.new-page-brand small{font-size:8px;letter-spacing:.28em;color:#9ee7cf;margin-top:2px}.new-page-logo{width:34px;height:34px;border-radius:8px;overflow:hidden;display:block;border:1px solid rgba(255,255,255,.18)}.new-page-logo img{width:100%;height:100%;object-fit:cover}
+      .new-page-top-actions{display:flex;align-items:center;gap:10px}.new-page-top-whatsapp{display:flex;align-items:center;gap:8px;text-decoration:none;color:#dff8ef;border:1px solid rgba(158,231,207,.25);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:700;transition:.25s}.new-page-top-whatsapp:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 24px rgba(158,231,207,.22)}.new-page-close{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;display:grid;place-items:center;cursor:pointer;transition:.25s}.new-page-close:hover{transform:rotate(90deg);background:#f3d36a;color:#071827;box-shadow:0 0 28px rgba(243,211,106,.28)}
+      .new-page-scroll{height:calc(100% - 78px);overflow:auto;padding:48px clamp(20px,5vw,64px) 60px;scroll-behavior:smooth}.new-page-scroll::-webkit-scrollbar{width:5px}.new-page-scroll::-webkit-scrollbar-thumb{background:rgba(158,231,207,.35);border-radius:20px}
+      .new-page-hero-copy{display:grid;grid-template-columns:1.2fr .8fr;gap:35px;align-items:end;margin-bottom:42px}.new-page-eyebrow,.new-page-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9ee7cf;font-weight:800}.new-page-hero-copy h2{font-size:clamp(38px,6vw,76px);line-height:.98;letter-spacing:-.045em;margin:15px 0 0;font-weight:500}.new-page-hero-copy h2 em{font-family:Georgia,serif;font-weight:400;color:#f3d36a}.new-page-hero-copy p{margin:0;color:rgba(255,255,255,.68);font-size:16px;line-height:1.8;max-width:390px}.new-page-typewriter{display:inline}.typewriter-cursor{color:#f3d36a;font-weight:800;margin-left:2px;animation:typeBlink .8s infinite}@keyframes typeBlink{0%,45%{opacity:1}46%,100%{opacity:0}}
+      .new-about-grid{display:grid;grid-template-columns:1.6fr .75fr;gap:22px}.new-founder-card{display:grid;grid-template-columns:.82fr 1.18fr;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden}.new-founder-image-wrap{min-height:500px;position:relative;overflow:hidden}.new-founder-image-wrap img{width:100%;height:100%;object-fit:cover;display:block}.new-founder-image-overlay{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.78))}.new-founder-image-wrap>span{position:absolute;left:22px;bottom:20px;font-size:9px;letter-spacing:.17em;line-height:1.6;color:#fff}.new-founder-content{padding:34px;display:flex;flex-direction:column;justify-content:center}.new-founder-content h3{font-size:46px;line-height:.95;margin:13px 0 22px}.new-founder-content h3 em{font-family:Georgia,serif;color:#f3d36a;font-weight:400}.new-founder-content p{color:rgba(255,255,255,.68);line-height:1.75;font-size:14px;margin:0 0 15px}.new-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.new-stat-row>div{padding:17px;border-radius:15px;background:rgba(158,231,207,.07);border:1px solid rgba(158,231,207,.12)}.new-stat-row strong{display:block;font-size:28px;color:#9ee7cf}.new-stat-row span{display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-top:5px}.new-about-side{display:flex;flex-direction:column;gap:22px}.new-info-card,.new-contact-mini{border-radius:24px;padding:28px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}.new-info-card>span,.new-contact-mini>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;font-weight:800}.new-info-card h4{font-size:25px;line-height:1.2;margin:14px 0}.new-info-card p{color:rgba(255,255,255,.63);line-height:1.7;font-size:13px}.new-contact-mini{display:flex;flex-direction:column;gap:10px}.new-contact-mini>a{display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff;padding:14px;border-radius:13px;border:1px solid rgba(255,255,255,.09);transition:.25s}.new-contact-mini>a span{flex:1;font-size:12px;font-weight:700}.new-contact-mini>a:hover{transform:translateX(4px);border-color:rgba(243,211,106,.42);background:rgba(243,211,106,.07);box-shadow:0 0 25px rgba(243,211,106,.08)}
+      .new-service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.new-service-page-card{display:grid;grid-template-columns:.9fr 1.1fr;min-height:240px;border-radius:22px;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)}.new-service-page-image{position:relative;min-height:240px}.new-service-page-image img{width:100%;height:100%;object-fit:cover}.new-service-page-image>span{position:absolute;top:14px;left:14px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827;font-size:10px;font-weight:900}.new-service-page-card>div:last-child{padding:24px}.new-service-page-card h3{font-size:23px;margin:9px 0}.new-service-page-card p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.62);margin-bottom:17px}.new-outline-button{border:1px solid rgba(158,231,207,.28);background:transparent;color:#9ee7cf;padding:10px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;cursor:pointer;transition:.25s}.new-outline-button:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 25px rgba(158,231,207,.2)}
+      .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}
+      .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+      @media(max-width:800px){.new-page-overlay{padding:0}.new-page-shell{height:100vh;border-radius:0;border:0}.new-page-topbar{height:70px;padding:0 16px}.new-page-top-whatsapp span{display:none}.new-page-scroll{height:calc(100% - 70px);padding:34px 17px 50px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}}
+    `}</style>
+  );
+}
+
+/* -------------------------------------------------------
    MAIN APP
 ------------------------------------------------------- */
 
 function App() {
   const [menu, setMenu] = useState(false);
   const [service, setService] = useState(0);
+  const [newPage, setNewPage] = useState(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -1269,6 +1676,17 @@ function App() {
           behavior: "smooth",
         });
     }, 100);
+  };
+
+  const openPage = (page) => {
+    setMenu(false);
+    setNewPage(page);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeNewPage = () => {
+    setNewPage(null);
+    document.body.style.overflow = "";
   };
 
   const whatsapp = (message) => {
@@ -1399,9 +1817,7 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() =>
-                    scrollTo("about")
-                  }
+                  onClick={() => openPage("about")}
                 >
                   <small>02</small>
                   About Us
@@ -1409,9 +1825,7 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() =>
-                    scrollTo("services")
-                  }
+                  onClick={() => openPage("services")}
                 >
                   <small>03</small>
                   Our Services
@@ -1419,9 +1833,7 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() =>
-                    scrollTo("projects")
-                  }
+                  onClick={() => openPage("projects")}
                 >
                   <small>04</small>
                   Our Projects
@@ -1429,9 +1841,7 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() =>
-                    scrollTo("contact")
-                  }
+                  onClick={() => openPage("contact")}
                 >
                   <small>05</small>
                   Contact
@@ -1479,7 +1889,7 @@ function App() {
               delay: 0.3,
             }}
           >
-            INTERIOR DESIGN • TURNKEY
+            INTERIOR DESIGN 鈥� TURNKEY
             SOLUTIONS
           </motion.div>
 
@@ -1563,7 +1973,7 @@ function App() {
         <div className="hero-bottom">
           <span>SCROLL TO EXPLORE</span>
           <div />
-          <span>CHENNAI • INDIA</span>
+          <span>CHENNAI 鈥� INDIA</span>
         </div>
       </section>
 
@@ -1571,7 +1981,7 @@ function App() {
 
       <section className="intro section">
         <div className="label">
-          01 — THE STUDIO
+          01 鈥� THE STUDIO
         </div>
 
         <div className="intro-grid">
@@ -1680,7 +2090,7 @@ function App() {
         className="about section"
       >
         <div className="label light">
-          02 — ABOUT US
+          02 鈥� ABOUT US
         </div>
 
         <div className="about-heading">
@@ -1692,7 +2102,7 @@ function App() {
 
           <p>
             Gururag Interior is built around
-            a simple idea — every space
+            a simple idea 鈥� every space
             deserves its own character.
           </p>
         </div>
@@ -1773,7 +2183,7 @@ function App() {
         className="services section"
       >
         <div className="label light">
-          03 — OUR SERVICES
+          03 鈥� OUR SERVICES
         </div>
 
         <div className="services-heading">
@@ -1900,7 +2310,7 @@ function App() {
         className="projects section"
       >
         <div className="label">
-          04 — OUR PROJECTS
+          04 鈥� OUR PROJECTS
         </div>
 
         <div className="projects-heading">
@@ -2009,7 +2419,7 @@ function App() {
         className="contact section"
       >
         <div className="label">
-          05 — CONTACT
+          05 鈥� CONTACT
         </div>
 
         <div className="contact-grid">
@@ -2106,7 +2516,7 @@ function App() {
           </p>
 
           <div className="socials">
-            <a href="#" aria-label="Instagram">
+            <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram">
               <Instagram />
             </a>
 
@@ -2123,14 +2533,24 @@ function App() {
 
         <div className="footer-bottom">
           <span>
-            © 2026 Gururag Interior
+            漏 2026 Gururag Interior
           </span>
 
           <span>
-            Saran Raj • Founder
+            Saran Raj 鈥� Founder
           </span>
         </div>
       </footer>
+
+      <NewPageStyles />
+
+      {newPage && (
+        <NewPageOverlay
+          page={newPage}
+          onClose={closeNewPage}
+          onWhatsApp={whatsapp}
+        />
+      )}
 
       {/* CONVERSATIONAL CHAT ASSISTANT */}
 
