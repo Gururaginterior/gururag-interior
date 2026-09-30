@@ -624,7 +624,7 @@ function Chatbot({ onWhatsApp }) {
 
         setTimeout(() => {
           addBotMessage(
-            "You can continue asking me about the design, materials or budget. If you're ready, tap "Send Enquiry on WhatsApp" below."
+            "You can continue asking me about the design, materials or budget. If you're ready, tap 'Send Enquiry on WhatsApp' below."
           );
         }, 250);
       } else {
@@ -662,7 +662,7 @@ function Chatbot({ onWhatsApp }) {
 
       setTimeout(() => {
         addBotMessage(
-          "For example: "I need a 2BHK interior", "modular kitchen", or "false ceiling for my living room"."
+          `For example: "I need a 2BHK interior", "modular kitchen", or "false ceiling for my living room".`
         );
       }, 250);
 
@@ -825,7 +825,7 @@ function Chatbot({ onWhatsApp }) {
 
       setTimeout(() => {
         addBotMessage(
-          "If you tell me your home type, like "3BHK", and your approximate budget, I can guide you on what to discuss with the designer."
+          `If you tell me your home type, like "3BHK", and your approximate budget, I can guide you on what to discuss with the designer.`
         );
       }, 300);
 
