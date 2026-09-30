@@ -488,7 +488,7 @@ function Chatbot({ onWhatsApp }) {
       role: "bot",
       type: "text",
       text:
-        "Hi there! 馃憢 Welcome to Gururag Interior. Tell me what you're planning for your space 鈥� you can type naturally, like 鈥淚 need a modular kitchen鈥� or 鈥�2 lakh budget kitchen possible ah?鈥�",
+        "Hi there! 馃憢 Welcome to Gururag Interior. Tell me what you're planning for your space - you can type naturally, like \"I need a modular kitchen\" or \"2 lakh budget kitchen possible ah?\"",
     },
   ]);
 
@@ -624,12 +624,12 @@ function Chatbot({ onWhatsApp }) {
 
         setTimeout(() => {
           addBotMessage(
-            "You can continue asking me about the design, materials or budget. If you're ready, tap 鈥淪end Enquiry on WhatsApp鈥� below."
+            "You can continue asking me about the design, materials or budget. If you're ready, tap "Send Enquiry on WhatsApp" below."
           );
         }, 250);
       } else {
         addBotMessage(
-          `Nice to meet you, ${finalName}! 馃槉 Which service are you looking for? You can simply type something like 鈥渕odular kitchen鈥�, 鈥渨ardrobe鈥�, 鈥減ainting鈥� or 鈥渇alse ceiling鈥�.`
+          `Nice to meet you, ${finalName}! 馃槉 Which service are you looking for? You can simply type something like "modular kitchen", "wardrobe", "painting" or "false ceiling".`
         );
       }
 
@@ -662,7 +662,7 @@ function Chatbot({ onWhatsApp }) {
 
       setTimeout(() => {
         addBotMessage(
-          "For example: 鈥淚 need a 2BHK interior鈥�, 鈥渕odular kitchen鈥�, or 鈥渇alse ceiling for my living room鈥�."
+          "For example: "I need a 2BHK interior", "modular kitchen", or "false ceiling for my living room"."
         );
       }, 250);
 
@@ -697,7 +697,7 @@ function Chatbot({ onWhatsApp }) {
         }, 550);
       } else {
         addBotMessage(
-          `鈧�${budget.replace("鈧�", "")} budget noted 馃憤 Which space are you planning 鈥� kitchen, wardrobe, full home interior, office, painting or something else?`
+          `鈧�${budget.replace("鈧�", "")} budget noted 馃憤 Which space are you planning - kitchen, wardrobe, full home interior, office, painting or something else?`
         );
       }
 
@@ -733,8 +733,8 @@ function Chatbot({ onWhatsApp }) {
         ])
       ) {
         addBotMessage(
-          `For ${activeService.title}, some key advantages are:\n\n鈥� ${activeService.pros.join(
-            "\n鈥� "
+          `For ${activeService.title}, some key advantages are:\n\n| ${activeService.pros.join(
+            "\n| "
           )}`
         );
 
@@ -752,8 +752,8 @@ function Chatbot({ onWhatsApp }) {
         ])
       ) {
         addBotMessage(
-          `A few things to consider for ${activeService.title}:\n\n鈥� ${activeService.considerations.join(
-            "\n鈥� "
+          `A few things to consider for ${activeService.title}:\n\n| ${activeService.considerations.join(
+            "\n| "
           )}`
         );
 
@@ -773,8 +773,8 @@ function Chatbot({ onWhatsApp }) {
         ])
       ) {
         addBotMessage(
-          `For ${activeService.title}, we can provide:\n\n鈥� ${activeService.items.join(
-            "\n鈥� "
+          `For ${activeService.title}, we can provide:\n\n| ${activeService.items.join(
+            "\n| "
           )}`
         );
 
@@ -820,12 +820,12 @@ function Chatbot({ onWhatsApp }) {
       ])
     ) {
       addBotMessage(
-        "Absolutely 馃憤 Gururag Interior can coordinate multiple parts of a home interior 鈥� carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."
+        "Absolutely 馃憤 Gururag Interior can coordinate multiple parts of a home interior - carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."
       );
 
       setTimeout(() => {
         addBotMessage(
-          "If you tell me your home type, like 鈥�3BHK鈥�, and your approximate budget, I can guide you on what to discuss with the designer."
+          "If you tell me your home type, like "3BHK", and your approximate budget, I can guide you on what to discuss with the designer."
         );
       }, 300);
 
@@ -848,7 +848,7 @@ function Chatbot({ onWhatsApp }) {
 
       setTimeout(() => {
         addBotMessage(
-          "Tell me what type of space you have 鈥� office, showroom, shop or workspace 鈥� and I can guide you further."
+          "Tell me what type of space you have - office, showroom, shop or workspace - and I can guide you further."
         );
       }, 300);
 
@@ -857,7 +857,7 @@ function Chatbot({ onWhatsApp }) {
 
     /* FALLBACK */
     addBotMessage(
-      "I can help you with that 馃槉 Tell me a little more about what you're planning. For example:\n\n鈥� 鈥淚 need a modular kitchen鈥漒n鈥� 鈥渨ardrobe venum鈥漒n鈥� 鈥渇alse ceiling for hall鈥漒n鈥� 鈥�2 lakh budget kitchen鈥漒n鈥� 鈥�3BHK full interior鈥漒n鈥� 鈥減ainting work venum鈥�"
+      "I can help you with that 馃槉 Tell me a little more about what you're planning. For example:\n\n| \"I need a modular kitchen\"\n| \"wardrobe venum\"\n| \"false ceiling for hall\"\n| \"2 lakh budget kitchen\"\n| \"3BHK full interior\"\n| \"painting work venum\""
     );
   };
 
@@ -924,7 +924,7 @@ function Chatbot({ onWhatsApp }) {
           >
             <span className="chatbot-live-dot" />
             <Bot size={23} />
-            <span>We鈥檙e Live</span>
+            <span>We're Live</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -965,7 +965,7 @@ function Chatbot({ onWhatsApp }) {
 
                   <span>
                     <i />
-                    We鈥檙e Live 鈥� 24/7
+                    We're Live | 24/7
                   </span>
                 </div>
               </div>
@@ -1064,7 +1064,7 @@ function Chatbot({ onWhatsApp }) {
                                       consideration
                                     }
                                   >
-                                    <span>鈥�</span>
+                                    <span>|</span>
                                     {consideration}
                                   </div>
                                 )
@@ -1360,7 +1360,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp }) {
             <div className="new-page-hero-copy">
               <div>
                 <span className="new-page-eyebrow">
-                  {data.number} 鈥� {data.eyebrow}
+                  {data.number} - {data.eyebrow}
                 </span>
                 <h2>
                   {data.title.split("\n").map((line, index) => (
@@ -1431,7 +1431,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp }) {
                   <div className="new-founder-image-wrap">
                     <img src={founder} alt="Saran Raj" />
                     <div className="new-founder-image-overlay" />
-                    <span>FOUNDER 鈥� GURURAG INTERIOR</span>
+                    <span>FOUNDER | GURURAG INTERIOR</span>
                   </div>
 
                   <div className="new-founder-content">
@@ -1555,7 +1555,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp }) {
             {page === "contact" && (
               <div className="new-contact-page">
                 <div className="new-contact-intro">
-                  <span className="new-page-label">GURURAG INTERIOR 鈥� CHENNAI</span>
+                  <span className="new-page-label">GURURAG INTERIOR | CHENNAI</span>
                   <h3>
                     <TypewriterText
                       lines={[
@@ -1612,7 +1612,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp }) {
 
                 <div className="new-contact-bottom-row">
                   <span>Available for residential & commercial enquiries</span>
-                  <span>Chennai 鈥� Tamil Nadu</span>
+                  <span>Chennai | Tamil Nadu</span>
                 </div>
               </div>
             )}
@@ -1889,7 +1889,7 @@ function App() {
               delay: 0.3,
             }}
           >
-            INTERIOR DESIGN 鈥� TURNKEY
+            INTERIOR DESIGN | TURNKEY
             SOLUTIONS
           </motion.div>
 
@@ -1973,7 +1973,7 @@ function App() {
         <div className="hero-bottom">
           <span>SCROLL TO EXPLORE</span>
           <div />
-          <span>CHENNAI 鈥� INDIA</span>
+          <span>CHENNAI | INDIA</span>
         </div>
       </section>
 
@@ -1981,7 +1981,7 @@ function App() {
 
       <section className="intro section">
         <div className="label">
-          01 鈥� THE STUDIO
+          01 - THE STUDIO
         </div>
 
         <div className="intro-grid">
@@ -2090,7 +2090,7 @@ function App() {
         className="about section"
       >
         <div className="label light">
-          02 鈥� ABOUT US
+          02 - ABOUT US
         </div>
 
         <div className="about-heading">
@@ -2102,7 +2102,7 @@ function App() {
 
           <p>
             Gururag Interior is built around
-            a simple idea 鈥� every space
+            a simple idea - every space
             deserves its own character.
           </p>
         </div>
@@ -2183,7 +2183,7 @@ function App() {
         className="services section"
       >
         <div className="label light">
-          03 鈥� OUR SERVICES
+          03 - OUR SERVICES
         </div>
 
         <div className="services-heading">
@@ -2310,7 +2310,7 @@ function App() {
         className="projects section"
       >
         <div className="label">
-          04 鈥� OUR PROJECTS
+          04 - OUR PROJECTS
         </div>
 
         <div className="projects-heading">
@@ -2419,7 +2419,7 @@ function App() {
         className="contact section"
       >
         <div className="label">
-          05 鈥� CONTACT
+          05 - CONTACT
         </div>
 
         <div className="contact-grid">
@@ -2533,11 +2533,11 @@ function App() {
 
         <div className="footer-bottom">
           <span>
-            漏 2026 Gururag Interior
+            (c) 2026 Gururag Interior
           </span>
 
           <span>
-            Saran Raj 鈥� Founder
+            Saran Raj | Founder
           </span>
         </div>
       </footer>
