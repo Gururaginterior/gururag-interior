@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowUpRight,
@@ -310,7 +310,7 @@ function WhatsAppIcon({ size = 22 }) {
 function normalizeText(text = "") {
   return text
     .toLowerCase()
-    .replace(/[^\w\s鈧�.]/g, " ")
+    .replace(/[^\w\s.]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -399,7 +399,7 @@ function isPriceQuestion(text) {
     "lakh",
     "lakhs",
     "rs",
-    "鈧�",
+    "Rs",
   ]);
 }
 
@@ -446,7 +446,7 @@ function detectBudget(text) {
   const normalized = normalizeText(text);
 
   const match = normalized.match(
-    /(?:rs|鈧�)?\s*(\d+(?:\.\d+)?)\s*(lakh|lakhs|k|thousand)?/
+    /(?:rs)?\s*(\d+(?:\.\d+)?)\s*(lakh|lakhs|k|thousand)?/
   );
 
   if (!match) return null;
@@ -457,11 +457,11 @@ function detectBudget(text) {
   if (!number) return null;
 
   if (unit === "lakh" || unit === "lakhs") {
-    return `鈧�${number} lakh`;
+    return `Rs. ${number} lakh`;
   }
 
   if (unit === "k" || unit === "thousand") {
-    return `鈧�${number}k`;
+    return `Rs. ${number}k`;
   }
 
   if (
@@ -469,7 +469,7 @@ function detectBudget(text) {
     normalized.includes("price") ||
     normalized.includes("cost")
   ) {
-    return `鈧�${number}`;
+    return `Rs. ${number}`;
   }
 
   return null;
@@ -488,7 +488,7 @@ function Chatbot({ onWhatsApp }) {
       role: "bot",
       type: "text",
       text:
-        "Hi there! 馃憢 Welcome to Gururag Interior. Tell me what you're planning for your space - you can type naturally, like \"I need a modular kitchen\" or \"2 lakh budget kitchen possible ah?\"",
+        "Hi there! Welcome to Gururag Interior. Tell me what you're planning for your space - you can type naturally, like \"I need a modular kitchen\" or \"2 lakh budget kitchen possible ah?\"",
     },
   ]);
 
@@ -496,6 +496,7 @@ function Chatbot({ onWhatsApp }) {
   const [activeService, setActiveService] = useState(null);
   const [leadName, setLeadName] = useState("");
   const [waitingForName, setWaitingForName] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -552,7 +553,7 @@ function Chatbot({ onWhatsApp }) {
         role: "bot",
         type: "text",
         text:
-          "Hi there! 馃憢 Welcome to Gururag Interior. Tell me what you're planning for your space.",
+          "Hi there! Welcome to Gururag Interior. Tell me what you're planning for your space.",
       },
     ]);
 
@@ -560,6 +561,7 @@ function Chatbot({ onWhatsApp }) {
     setActiveService(null);
     setLeadName("");
     setWaitingForName(false);
+    setIsThinking(false);
   };
 
   const startEnquiry = (service = activeService) => {
@@ -595,7 +597,47 @@ function Chatbot({ onWhatsApp }) {
     onWhatsApp(message);
   };
 
-  const handleBotResponse = (rawText) => {
+  const askAiAssistant = async (rawText) => {
+    setIsThinking(true);
+
+    try {
+      const history = messages
+        .filter((message) => message.type === "text")
+        .slice(-10)
+        .map((message) => ({
+          role: message.role,
+          text: message.text,
+        }));
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: rawText,
+          history,
+          service: activeService?.title || null,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.reply) {
+        throw new Error(data.error || "AI request failed");
+      }
+
+      addBotMessage(data.reply);
+    } catch (error) {
+      addBotMessage(
+        "I can help with Gururag Interior services, design ideas, materials and project questions. For a live AI answer, please try again in a moment or contact us on WhatsApp at +91 99402 77984."
+      );
+    } finally {
+      setIsThinking(false);
+    }
+  };
+
+  const handleBotResponse = async (rawText) => {
     const text = normalizeText(rawText);
 
     if (!text) return;
@@ -619,7 +661,7 @@ function Chatbot({ onWhatsApp }) {
 
       if (activeService) {
         addBotMessage(
-          `Nice to meet you, ${finalName}! 馃槉 You're enquiring about ${activeService.title}.`
+          `Nice to meet you, ${finalName}! You're enquiring about ${activeService.title}.`
         );
 
         setTimeout(() => {
@@ -629,7 +671,7 @@ function Chatbot({ onWhatsApp }) {
         }, 250);
       } else {
         addBotMessage(
-          `Nice to meet you, ${finalName}! 馃槉 Which service are you looking for? You can simply type something like "modular kitchen", "wardrobe", "painting" or "false ceiling".`
+          `Nice to meet you, ${finalName}! Which service are you looking for? You can simply type something like "modular kitchen", "wardrobe", "painting" or "false ceiling".`
         );
       }
 
@@ -639,7 +681,7 @@ function Chatbot({ onWhatsApp }) {
     /* GREETING */
     if (isGreeting(text)) {
       addBotMessage(
-        "Hello! 馃憢 What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."
+        "Hello! What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."
       );
 
       return;
@@ -657,7 +699,7 @@ function Chatbot({ onWhatsApp }) {
     /* CONTACT */
     if (isContactQuestion(text)) {
       addBotMessage(
-        "Sure 馃憤 You can contact Gururag Interior directly on WhatsApp at +91 99402 77984. If you tell me your requirement first, I can also prepare the enquiry for you."
+        "Sure. You can contact Gururag Interior directly on WhatsApp at +91 99402 77984. If you tell me your requirement first, I can also prepare the enquiry for you."
       );
 
       setTimeout(() => {
@@ -681,7 +723,7 @@ function Chatbot({ onWhatsApp }) {
     if (budget) {
       if (activeService) {
         addBotMessage(
-          `Got it 馃憤 You're considering around ${budget} for ${activeService.title}. The final cost depends on the size, materials, finish, hardware and site requirements.`
+          `Got it. You're considering around ${budget} for ${activeService.title}. The final cost depends on the size, materials, finish, hardware and site requirements.`
         );
 
         setTimeout(() => {
@@ -697,7 +739,7 @@ function Chatbot({ onWhatsApp }) {
         }, 550);
       } else {
         addBotMessage(
-          `鈧�${budget.replace("鈧�", "")} budget noted 馃憤 Which space are you planning - kitchen, wardrobe, full home interior, office, painting or something else?`
+          `Rs. ${budget.replace("Rs. ", "")} budget noted. Which space are you planning - kitchen, wardrobe, full home interior, office, painting or something else?`
         );
       }
 
@@ -712,7 +754,7 @@ function Chatbot({ onWhatsApp }) {
 
       setTimeout(() => {
         addBotMessage(
-          `Yes 馃憤 ${detectedService.title} is something Gururag Interior can help with. You can ask me about options, advantages, materials, budget considerations, or how to enquire.`
+          `Yes, ${detectedService.title} is something Gururag Interior can help with. You can ask me about options, advantages, materials, budget considerations, or how to enquire.`
         );
       }, 350);
 
@@ -796,7 +838,7 @@ function Chatbot({ onWhatsApp }) {
       }
 
       addBotMessage(
-        `Sure 馃憤 I can help with ${activeService.title}. Are you looking for information about the options, advantages, things to consider, budget, or a quotation?`
+        `Sure, I can help with ${activeService.title}. Are you looking for information about the options, advantages, things to consider, budget, or a quotation?`
       );
 
       return;
@@ -820,7 +862,7 @@ function Chatbot({ onWhatsApp }) {
       ])
     ) {
       addBotMessage(
-        "Absolutely 馃憤 Gururag Interior can coordinate multiple parts of a home interior - carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."
+        "Absolutely. Gururag Interior can coordinate multiple parts of a home interior - carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."
       );
 
       setTimeout(() => {
@@ -843,7 +885,7 @@ function Chatbot({ onWhatsApp }) {
       ])
     ) {
       addBotMessage(
-        "Yes 馃憤 Gururag Interior also provides commercial interior solutions such as office furniture, partitions, electrical planning, painting, civil work and custom spaces."
+        "Yes  Gururag Interior also provides commercial interior solutions such as office furniture, partitions, electrical planning, painting, civil work and custom spaces."
       );
 
       setTimeout(() => {
@@ -855,10 +897,8 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* FALLBACK */
-    addBotMessage(
-      "I can help you with that 馃槉 Tell me a little more about what you're planning. For example:\n\n| \"I need a modular kitchen\"\n| \"wardrobe venum\"\n| \"false ceiling for hall\"\n| \"2 lakh budget kitchen\"\n| \"3BHK full interior\"\n| \"painting work venum\""
-    );
+    /* OPEN-ENDED AI FALLBACK */
+    await askAiAssistant(rawText);
   };
 
   const sendMessage = () => {
@@ -869,36 +909,8 @@ function Chatbot({ onWhatsApp }) {
     addUserMessage(value);
     setInput("");
 
-    setTimeout(() => {
-      handleBotResponse(value);
-    }, 350);
+    handleBotResponse(value);
   };
-
-  const quickAsk = (text) => {
-    addUserMessage(text);
-
-    setTimeout(() => {
-      handleBotResponse(text);
-    }, 300);
-  };
-
-  const quickSuggestions = useMemo(() => {
-    if (activeService) {
-      return [
-        "What options do you have?",
-        "What are the advantages?",
-        "What should I consider?",
-        "I want a quotation",
-      ];
-    }
-
-    return [
-      "I need a modular kitchen",
-      "I need a wardrobe",
-      "False ceiling venum",
-      "3BHK full interior",
-    ];
-  }, [activeService]);
 
   return (
     <>
@@ -924,7 +936,7 @@ function Chatbot({ onWhatsApp }) {
           >
             <span className="chatbot-live-dot" />
             <Bot size={23} />
-            <span>We're Live</span>
+            <span>Live Now</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -965,7 +977,7 @@ function Chatbot({ onWhatsApp }) {
 
                   <span>
                     <i />
-                    We're Live | 24/7
+                    Live Now | 24/7
                   </span>
                 </div>
               </div>
@@ -1131,28 +1143,20 @@ function Chatbot({ onWhatsApp }) {
                   );
                 })}
 
+                {isThinking && (
+                  <motion.div
+                    className="chat-message bot-message"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="message-avatar">
+                      <Bot size={14} />
+                    </div>
+                    <div className="message-bubble">Thinking...</div>
+                  </motion.div>
+                )}
+
                 <div ref={messagesEndRef} />
-              </div>
-
-              {/* QUICK SUGGESTIONS */}
-
-              <div className="chat-quick-area">
-                <span>Try asking</span>
-
-                <div className="chat-quick-buttons">
-                  {quickSuggestions.map(
-                    (suggestion) => (
-                      <button
-                        key={suggestion}
-                        onClick={() =>
-                          quickAsk(suggestion)
-                        }
-                      >
-                        {suggestion}
-                      </button>
-                    )
-                  )}
-                </div>
               </div>
 
               {/* ENQUIRY ACTION */}
@@ -1177,6 +1181,7 @@ function Chatbot({ onWhatsApp }) {
                   className="chat-input"
                   type="text"
                   value={input}
+                  disabled={isThinking}
                   placeholder={
                     waitingForName
                       ? "Type your name..."
@@ -1199,7 +1204,7 @@ function Chatbot({ onWhatsApp }) {
                 <button
                   className="chat-send-button"
                   onClick={sendMessage}
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || isThinking}
                   aria-label="Send message"
                 >
                   <Send size={17} />
