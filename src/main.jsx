@@ -13,6 +13,8 @@ import {
   Bot,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "./supabaseClient";
+import OwnerDashboard from "./OwnerDashboard";
 import "./styles.css";
 
 import logo from "./logo.jpg";
@@ -1287,7 +1289,7 @@ function TypewriterText({ lines }) {
   );
 }
 
-function NewPageOverlay({ page, onClose, onWhatsApp }) {
+function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedProjects }) {
   const pageData = {
     about: {
       number: "02",
@@ -1502,7 +1504,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp }) {
 
             {page === "services" && (
               <div className="new-service-grid">
-                {services.map((item, index) => (
+                {managedServices.map((item, index) => (
                   <motion.article
                     className="new-service-page-card"
                     key={item.title}
@@ -1536,7 +1538,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp }) {
 
             {page === "projects" && (
               <div className="new-project-page-grid">
-                {projects.map((project, index) => (
+                {managedProjects.map((project, index) => (
                   <motion.article
                     className="new-project-page-card"
                     key={project.title}
@@ -1635,6 +1637,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp }) {
 function NewPageStyles() {
   return (
     <style>{`
+      .menu-owner-trigger{border:0;background:transparent;color:inherit;font:inherit;padding:0;cursor:pointer;text-align:left}
       .new-page-overlay{position:fixed;inset:0;z-index:1200;background:rgba(5,16,29,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:14px;display:flex;align-items:center;justify-content:center}
       .new-page-shell{width:min(1180px,100%);height:min(94vh,900px);overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:#071827;color:#f7f5ed;box-shadow:0 35px 100px rgba(0,0,0,.48);position:relative}
       .new-page-topbar{height:78px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(7,24,39,.92);position:sticky;top:0;z-index:5}
@@ -1659,6 +1662,72 @@ function App() {
   const [menu, setMenu] = useState(false);
   const [service, setService] = useState(0);
   const [newPage, setNewPage] = useState(null);
+  const [ownerOpen, setOwnerOpen] = useState(false);
+  const [managedServices, setManagedServices] = useState(services);
+  const [managedProjects, setManagedProjects] = useState(projects);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadManagedContent = async () => {
+      try {
+        const [servicesResult, projectsResult] = await Promise.all([
+          supabase
+            .from("services")
+            .select("*")
+            .order("sort_order", { ascending: true })
+            .order("created_at", { ascending: true }),
+          supabase
+            .from("projects")
+            .select("*")
+            .order("sort_order", { ascending: true })
+            .order("created_at", { ascending: true }),
+        ]);
+
+        if (!mounted) return;
+
+        if (!servicesResult.error && servicesResult.data?.length) {
+          setManagedServices(
+            servicesResult.data.map((item) => ({
+              ...item,
+              title: item.title || "Untitled Service",
+              text: item.description || item.text || "",
+              image: item.image_url || item.image || "",
+              items: Array.isArray(item.items) ? item.items : [],
+              pros: Array.isArray(item.pros) ? item.pros : [],
+              considerations: Array.isArray(item.considerations)
+                ? item.considerations
+                : [],
+              chatbotDescription:
+                item.chatbotDescription ||
+                item.description ||
+                "Gururag Interior service solution.",
+              keywords: Array.isArray(item.keywords) ? item.keywords : [],
+            }))
+          );
+        }
+
+        if (!projectsResult.error && projectsResult.data?.length) {
+          setManagedProjects(
+            projectsResult.data.map((item) => ({
+              ...item,
+              title: item.title || "Untitled Project",
+              category: item.category || "Project",
+              image: item.image_url || item.image || "",
+            }))
+          );
+        }
+      } catch {
+        // Keep the original static website content if Supabase is unavailable.
+      }
+    };
+
+    loadManagedContent();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -1797,9 +1866,16 @@ function App() {
               }}
             >
               <div className="menu-header">
-                <span>
+                <button
+                  className="menu-owner-trigger"
+                  onClick={() => {
+                    setMenu(false);
+                    setOwnerOpen(true);
+                  }}
+                  aria-label="Owner access"
+                >
                   GURURAG INTERIOR
-                </span>
+                </button>
 
                 <button
                   onClick={() =>
@@ -2550,6 +2626,14 @@ function App() {
           page={newPage}
           onClose={closeNewPage}
           onWhatsApp={whatsapp}
+          managedServices={managedServices}
+          managedProjects={managedProjects}
+        />
+      )}
+
+      {ownerOpen && (
+        <OwnerDashboard
+          onClose={() => setOwnerOpen(false)}
         />
       )}
 
