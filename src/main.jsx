@@ -2134,13 +2134,9 @@ function App() {
             <div className="label mint">
               THE PERSON BEHIND THE VISION
             </div>
-
-            <h3>
-              Saran
-              <br />
-              <em>Raj.</em>
-            </h3>
-
+            <h3 style={{ whiteSpace: "nowrap" }}>
+  Saran <em>Raj.</em>
+</h3>
             <div className="stats">
               <div>
                 <strong>13+</strong>
