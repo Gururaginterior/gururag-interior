@@ -8,6 +8,7 @@ import {
   Phone,
   MapPin,
   Instagram,
+  Youtube,
   Check,
   Send,
   Bot,
@@ -22,6 +23,7 @@ import founder from "./founder.jpg";
 
 const WHATSAPP = "https://wa.me/919940277984";
 const INSTAGRAM = "https://www.instagram.com/sgr_decors_interior_designer?stkn=bDNyaWVleDY2dDI=";
+const YOUTUBE = "https://www.youtube.com/@GuruRagSignaturehome";
 
 const services = [
   {
@@ -1353,6 +1355,16 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 <WhatsAppIcon size={19} />
                 <span>WhatsApp</span>
               </a>
+              <a
+                className="new-page-top-whatsapp"
+                href={YOUTUBE}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="YouTube GuruRag Signature Home"
+              >
+                <Youtube size={19} />
+                <span>YouTube</span>
+              </a>
               <button
                 className="new-page-close"
                 onClick={onClose}
@@ -1497,6 +1509,11 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                       <span>Instagram Profile</span>
                       <ArrowUpRight size={17} />
                     </a>
+                    <a href={YOUTUBE} target="_blank" rel="noreferrer">
+                      <Youtube size={20} />
+                      <span>YouTube Channel</span>
+                      <ArrowUpRight size={17} />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -1615,6 +1632,20 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     </span>
                     <ArrowUpRight size={19} />
                   </a>
+
+                  <a
+                    className="new-contact-action youtube"
+                    href={YOUTUBE}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="new-action-icon"><Youtube size={23} /></span>
+                    <span className="new-action-copy">
+                      <small>WATCH OUR WORK</small>
+                      <strong>GuruRag Signature Home</strong>
+                    </span>
+                    <ArrowUpRight size={19} />
+                  </a>
                 </div>
 
                 <div className="new-contact-bottom-row">
@@ -1648,7 +1679,7 @@ function NewPageStyles() {
       .new-about-grid{display:grid;grid-template-columns:1.6fr .75fr;gap:22px}.new-founder-card{display:grid;grid-template-columns:.82fr 1.18fr;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden}.new-founder-image-wrap{min-height:500px;position:relative;overflow:hidden}.new-founder-image-wrap img{width:100%;height:100%;object-fit:cover;display:block}.new-founder-image-overlay{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.78))}.new-founder-image-wrap>span{position:absolute;left:22px;bottom:20px;font-size:9px;letter-spacing:.17em;line-height:1.6;color:#fff}.new-founder-content{padding:34px;display:flex;flex-direction:column;justify-content:center}.new-founder-content h3{font-size:46px;line-height:.95;margin:13px 0 22px}.new-founder-content h3 em{font-family:Georgia,serif;color:#f3d36a;font-weight:400}.new-founder-content p{color:rgba(255,255,255,.68);line-height:1.75;font-size:14px;margin:0 0 15px}.new-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.new-stat-row>div{padding:17px;border-radius:15px;background:rgba(158,231,207,.07);border:1px solid rgba(158,231,207,.12)}.new-stat-row strong{display:block;font-size:28px;color:#9ee7cf}.new-stat-row span{display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-top:5px}.new-about-side{display:flex;flex-direction:column;gap:22px}.new-info-card,.new-contact-mini{border-radius:24px;padding:28px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}.new-info-card>span,.new-contact-mini>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;font-weight:800}.new-info-card h4{font-size:25px;line-height:1.2;margin:14px 0}.new-info-card p{color:rgba(255,255,255,.63);line-height:1.7;font-size:13px}.new-contact-mini{display:flex;flex-direction:column;gap:10px}.new-contact-mini>a{display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff;padding:14px;border-radius:13px;border:1px solid rgba(255,255,255,.09);transition:.25s}.new-contact-mini>a span{flex:1;font-size:12px;font-weight:700}.new-contact-mini>a:hover{transform:translateX(4px);border-color:rgba(243,211,106,.42);background:rgba(243,211,106,.07);box-shadow:0 0 25px rgba(243,211,106,.08)}
       .new-service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.new-service-page-card{display:grid;grid-template-columns:.9fr 1.1fr;min-height:240px;border-radius:22px;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)}.new-service-page-image{position:relative;min-height:240px}.new-service-page-image img{width:100%;height:100%;object-fit:cover}.new-service-page-image>span{position:absolute;top:14px;left:14px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827;font-size:10px;font-weight:900}.new-service-page-card>div:last-child{padding:24px}.new-service-page-card h3{font-size:23px;margin:9px 0}.new-service-page-card p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.62);margin-bottom:17px}.new-outline-button{border:1px solid rgba(158,231,207,.28);background:transparent;color:#9ee7cf;padding:10px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;cursor:pointer;transition:.25s}.new-outline-button:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 25px rgba(158,231,207,.2)}
       .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}
-      .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+      .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action.youtube:before{background:#ff6b6b}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-contact-action.youtube .new-action-icon{color:#ff8a8a}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}
       @media(max-width:800px){.new-page-overlay{padding:0}.new-page-shell{height:100vh;border-radius:0;border:0}.new-page-topbar{height:70px;padding:0 16px}.new-page-top-whatsapp span{display:none}.new-page-scroll{height:calc(100% - 70px);padding:34px 17px 50px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}}
     `}</style>
   );
@@ -1824,6 +1855,16 @@ function App() {
           >
             <WhatsAppIcon size={22} />
           </button>
+
+          <a
+            className="whatsapp-button"
+            href={YOUTUBE}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="YouTube"
+          >
+            <Youtube size={22} />
+          </a>
 
           <button
             className="menu-button"
@@ -2529,6 +2570,15 @@ function App() {
                 WhatsApp
               </a>
 
+              <a
+                href={YOUTUBE}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Youtube size={22} />
+                YouTube
+              </a>
+
               <div>
                 <MapPin />
                 Chennai, Tamil Nadu
@@ -2604,6 +2654,15 @@ function App() {
               aria-label="WhatsApp"
             >
               <WhatsAppIcon size={21} />
+            </a>
+
+            <a
+              href={YOUTUBE}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="YouTube"
+            >
+              <Youtube size={21} />
             </a>
           </div>
         </div>
