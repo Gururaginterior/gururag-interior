@@ -1856,16 +1856,6 @@ function App() {
             <WhatsAppIcon size={22} />
           </button>
 
-          <a
-            className="whatsapp-button"
-            href={YOUTUBE}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="YouTube"
-          >
-            <Youtube size={22} />
-          </a>
-
           <button
             className="menu-button"
             aria-label="Open menu"
