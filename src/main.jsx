@@ -7,8 +7,6 @@ import {
   X,
   Phone,
   MapPin,
-  Instagram,
-  Youtube,
   Check,
   Send,
   Bot,
@@ -989,8 +987,6 @@ function Chatbot({ onWhatsApp }) {
               duration: 0.25,
             }}
           >
-            {}
-
             <div className="chatbot-header">
               <div className="chatbot-agent">
                 <div className="chatbot-avatar">
@@ -1015,9 +1011,6 @@ function Chatbot({ onWhatsApp }) {
                 <X size={19} />
               </button>
             </div>
-
-            {}
-
             <div className="chatbot-body">
               <div className="chatbot-conversation">
                 {messages.map((message) => {
@@ -1183,9 +1176,6 @@ function Chatbot({ onWhatsApp }) {
 
                 <div ref={messagesEndRef} />
               </div>
-
-              {}
-
               {leadName && (
                 <button
                   className="chat-whatsapp-button"
@@ -1197,9 +1187,6 @@ function Chatbot({ onWhatsApp }) {
                   Send Enquiry on WhatsApp
                 </button>
               )}
-
-              {}
-
               <div className="chat-input-wrap">
                 <input
                   ref={inputRef}
@@ -1257,9 +1244,6 @@ function Chatbot({ onWhatsApp }) {
                 </button>
               </div>
             </div>
-
-            {}
-
             <div className="chatbot-footer">
               <span>GURURAG INTERIOR</span>
               <span>CHENNAI</span>
@@ -1379,7 +1363,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 rel="noreferrer"
                 aria-label="YouTube GuruRag Signature Home"
               >
-                <Youtube size={19} />
+                <YouTubeBrandIcon size={19} />
                 <span>YouTube</span>
               </a>
               <button
@@ -1482,7 +1466,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     <p>
                       The company, previously operating under the name Sri Guru
                       Ragavendra Decors, has now evolved into Guru Rags Signature
-                      Homes鈥攁 new identity that reflects our continued growth,
+                      Homes 鈥� a new identity that reflects our continued growth,
                       refined design approach and commitment to delivering
                       distinctive spaces.
                     </p>
@@ -1502,7 +1486,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     </p>
                     <p>
                       At Guru Rags Signature Homes, we believe that a
-                      well-designed space is more than just beautiful鈥攊t should
+                      well-designed space is more than just beautiful 鈥� it should
                       reflect the people who live in it.
                     </p>
 
@@ -1543,12 +1527,12 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                       <ArrowUpRight size={17} />
                     </a>
                     <a href={INSTAGRAM} target="_blank" rel="noreferrer">
-                      <Instagram size={20} />
+                      <InstagramBrandIcon size={20} />
                       <span>Instagram Profile</span>
                       <ArrowUpRight size={17} />
                     </a>
                     <a href={YOUTUBE} target="_blank" rel="noreferrer">
-                      <Youtube size={20} />
+                      <YouTubeBrandIcon size={20} />
                       <span>YouTube Channel</span>
                       <ArrowUpRight size={17} />
                     </a>
@@ -1663,7 +1647,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="new-action-icon"><Instagram size={23} /></span>
+                    <span className="new-action-icon"><InstagramBrandIcon size={23} /></span>
                     <span className="new-action-copy">
                       <small>FOLLOW OUR WORK</small>
                       <strong>@sgr_decors_interior_designer</strong>
@@ -1677,7 +1661,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="new-action-icon"><Youtube size={23} /></span>
+                    <span className="new-action-icon"><YouTubeBrandIcon size={23} /></span>
                     <span className="new-action-copy">
                       <small>WATCH OUR WORK</small>
                       <strong>GuruRag Signature Home</strong>
@@ -1719,38 +1703,31 @@ function NewPageStyles() {
   );
 }
 
-const DEFAULT_PROMO = {
-  type: "normal", name: "LIMITED TIME OFFER", title: "FREE DESIGN",
-  description: "Tell us about your space, property type and location. Our team will guide you towards the right interior solution.",
-  offer_text: "15% OFF", button_text: "Book a Free Consultation",
-  image_url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
+const FESTIVAL_IMAGES = {
+  Diwali:"https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=1600&q=90",
+  "Gandhi Jayanti":"https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=1600&q=90",
+  Pongal:"https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1600&q=90",
+  "Vinayagar Chaturthi":"https://images.unsplash.com/photo-1599629954294-14df9b3b7c04?auto=format&fit=crop&w=1600&q=90",
+  "New Year":"https://images.unsplash.com/photo-1513159446162-54eb8bdaa79b?auto=format&fit=crop&w=1600&q=90",
+  Christmas:"https://images.unsplash.com/photo-1482517967863-00e15c9b44be?auto=format&fit=crop&w=1600&q=90",
+  "Ramzan / Eid":"https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1600&q=90",
+  "Bakrid / Eid-ul-Adha":"https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=90",
+  "Krishna Jayanti":"https://images.unsplash.com/photo-1567591414240-e9c1e608c9c7?auto=format&fit=crop&w=1600&q=90"
 };
+
+const DEFAULT_PROMO = {type:"normal",name:"LIMITED TIME OFFER",title:"FREE DESIGN",description:"Tell us about your space, property type and location. Our team will guide you towards the right interior solution.",offer_text:"15% OFF",button_text:"Book a Free Consultation",image_url:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90"};
 
 const FESTIVAL_DATES = {
-  2026: { Diwali:["2026-11-07","2026-11-10"], "Gandhi Jayanti":["2026-10-01","2026-10-03"], Pongal:["2026-01-13","2026-01-17"], "New Year":["2026-01-01","2026-01-03"] },
-  2027: { Diwali:["2027-10-28","2027-10-31"], "Gandhi Jayanti":["2027-10-01","2027-10-03"], Pongal:["2027-01-13","2027-01-17"], "New Year":["2027-01-01","2027-01-03"] },
-  2028: { Diwali:["2028-10-16","2028-10-19"], "Gandhi Jayanti":["2028-10-01","2028-10-03"], Pongal:["2028-01-13","2028-01-17"], "New Year":["2028-01-01","2028-01-03"] },
-  2029: { Diwali:["2029-10-15","2029-10-18"], "Gandhi Jayanti":["2029-10-01","2029-10-03"], Pongal:["2029-01-13","2029-01-17"], "New Year":["2029-01-01","2029-01-03"] },
-  2030: { Diwali:["2030-11-04","2030-11-07"], "Gandhi Jayanti":["2030-10-01","2030-10-03"], Pongal:["2030-01-13","2030-01-17"], "New Year":["2030-01-01","2030-01-03"] },
+  2026:{"New Year":["2026-01-01","2026-01-03"],Pongal:["2026-01-14","2026-01-17"],"Ramzan / Eid":["2026-03-20","2026-03-22"],"Bakrid / Eid-ul-Adha":["2026-05-27","2026-05-29"],"Krishna Jayanti":["2026-09-03","2026-09-05"],"Vinayagar Chaturthi":["2026-09-14","2026-09-16"],"Gandhi Jayanti":["2026-10-01","2026-10-03"],Diwali:["2026-11-07","2026-11-10"],Christmas:["2026-12-24","2026-12-26"]},
+  2027:{"New Year":["2027-01-01","2027-01-03"],Pongal:["2027-01-14","2027-01-17"],"Ramzan / Eid":["2027-03-09","2027-03-11"],"Bakrid / Eid-ul-Adha":["2027-05-17","2027-05-19"],"Krishna Jayanti":["2027-08-24","2027-08-26"],"Vinayagar Chaturthi":["2027-09-04","2027-09-06"],"Gandhi Jayanti":["2027-10-01","2027-10-03"],Diwali:["2027-10-28","2027-10-31"],Christmas:["2027-12-24","2027-12-26"]},
+  2028:{"New Year":["2028-01-01","2028-01-03"],Pongal:["2028-01-14","2028-01-17"],"Krishna Jayanti":["2028-08-17","2028-08-19"],"Vinayagar Chaturthi":["2028-08-25","2028-08-27"],"Gandhi Jayanti":["2028-10-01","2028-10-03"],Diwali:["2028-10-16","2028-10-19"],Christmas:["2028-12-24","2028-12-26"]},
+  2029:{"New Year":["2029-01-01","2029-01-03"],Pongal:["2029-01-14","2029-01-17"],"Krishna Jayanti":["2029-09-02","2029-09-04"],"Vinayagar Chaturthi":["2029-09-12","2029-09-14"],"Gandhi Jayanti":["2029-10-01","2029-10-03"],Diwali:["2029-10-15","2029-10-18"],Christmas:["2029-12-24","2029-12-26"]},
+  2030:{"New Year":["2030-01-01","2030-01-03"],Pongal:["2030-01-14","2030-01-17"],"Krishna Jayanti":["2030-08-24","2030-08-26"],"Vinayagar Chaturthi":["2030-09-02","2030-09-04"],"Gandhi Jayanti":["2030-10-01","2030-10-03"],Diwali:["2030-11-04","2030-11-07"],Christmas:["2030-12-24","2030-12-26"]}
 };
 
-function autoFestivalPromo() {
-  const today = new Date().toISOString().slice(0,10), year = new Date().getFullYear(), dates = FESTIVAL_DATES[year] || {};
-  for (const [name,[start,end]] of Object.entries(dates)) if (today >= start && today <= end) return { ...DEFAULT_PROMO, type:"festival", name, title:name, offer_text:"15% OFF" };
-  return null;
-}
+function autoFestivalPromo(){const now=new Date(),today=now.toISOString().slice(0,10),dates=FESTIVAL_DATES[now.getFullYear()]||{};for(const [name,[start,end]] of Object.entries(dates))if(today>=start&&today<=end)return {...DEFAULT_PROMO,type:"festival",name,title:name,image_url:FESTIVAL_IMAGES[name]||DEFAULT_PROMO.image_url,offer_text:"15% OFF"};return null;}
 
-function promoToPopup(item = DEFAULT_PROMO) {
-  return {
-    eyebrow: item.type === "festival" ? (item.name || "FESTIVE OFFER") : "LIMITED TIME OFFER",
-    title: item.type === "festival" ? (item.name || "FESTIVE OFFER") : "FREE DESIGN",
-    highlight: item.type === "festival" ? "SPECIAL OFFER" : "CONSULTATION",
-    description: item.description || DEFAULT_PROMO.description,
-    badge: item.offer_text || "15% OFF",
-    button: item.button_text || "Book a Free Consultation",
-    image: item.image_url || DEFAULT_PROMO.image_url,
-  };
-}
+function promoToPopup(item=DEFAULT_PROMO){const festival=item.type==="festival";return {eyebrow:festival?(item.name||"FESTIVE OFFER"):"LIMITED TIME OFFER",title:festival?(item.name||"FESTIVE OFFER"):"FREE DESIGN",highlight:festival?"SPECIAL OFFER":"CONSULTATION",description:item.description||DEFAULT_PROMO.description,badge:item.offer_text||"15% OFF",button:item.button_text||"Book a Free Consultation",image:item.image_url||FESTIVAL_IMAGES[item.name]||DEFAULT_PROMO.image_url,isFestival:festival};}
 
 function OfferPopup({ open, promo, onClose }) {
   const [propertyType, setPropertyType] = useState("1 BHK");
@@ -1778,34 +1755,13 @@ function OfferPopup({ open, promo, onClose }) {
     setSubmitted(false);
   }, [open]);
 
-  const submitLead = (event) => {
+  const submitLead = async (event) => {
     event.preventDefault();
-
-    const cleanName = name.trim();
-    const cleanPhone = phone.trim();
-    const cleanLocation = location.trim();
-
-    if (!cleanName || !cleanPhone) {
-      return;
-    }
-
-    const message =
-      `Hi Gururag Interior, I would like to book a free consultation.\n\n` +
-      `Offer: ${currentPromo.badge}\n` +
-      `Property Type: ${propertyType}\n` +
-      `Property Location: ${cleanLocation || "Not provided"}\n` +
-      `Name: ${cleanName}\n` +
-      `Mobile: +91 ${cleanPhone}\n` +
-      `WhatsApp Updates: ${whatsappUpdates ? "Yes" : "No"}`;
-
+    const cleanName=name.trim(),cleanPhone=phone.trim(),cleanLocation=location.trim();
+    if(!cleanName||cleanPhone.length<10)return;
+    const booking={customer_name:cleanName,phone:cleanPhone,service:"Interior Consultation",preferred_date:null,message:`Offer: ${currentPromo.badge} | Property: ${propertyType} | Location: ${cleanLocation||"Not provided"} | WhatsApp Updates: ${whatsappUpdates?"Yes":"No"}`,source:"Offer Popup"};
     setSubmitted(true);
-
-    setTimeout(() => {
-      window.open(
-        `${WHATSAPP}?text=${encodeURIComponent(message)}`,
-        "_blank"
-      );
-    }, 450);
+    try{const {data,error}=await supabase.from("bookings").insert(booking).select("*").single();if(!error){try{await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking:data||booking})});}catch{}}}catch{}
   };
 
   if (!open) return null;
@@ -1839,7 +1795,7 @@ function OfferPopup({ open, promo, onClose }) {
             <X size={22} />
           </button>
 
-          <div className="offer-popup-banner">
+          <div className={`offer-popup-banner ${currentPromo.isFestival ? "festival-banner" : ""}`}>
             <img src={currentPromo.image} alt="Gururag Interior interior" />
             <div className="offer-popup-banner-overlay" />
 
@@ -1945,7 +1901,7 @@ function OfferPopup({ open, promo, onClose }) {
               {submitted ? (
                 <div className="offer-submit-success">
                   <Check size={19} />
-                  Opening WhatsApp with your consultation enquiry...
+                  Booking sent successfully. Thank you for booking with Gururag Interior! Our team will contact you shortly.
                 </div>
               ) : (
                 <button className="offer-submit-button" type="submit">
@@ -2093,7 +2049,7 @@ function OfferPopupStyles() {
       .offer-popup-banner-copy>span{grid-column:1/-1;color:#9ee7cf;font-size:10px;font-weight:900;letter-spacing:.22em;margin-bottom:-4px}
       .offer-popup-banner-copy>strong{grid-column:1;color:#fff;font-size:clamp(38px,6vw,66px);line-height:.9;letter-spacing:-.055em;font-weight:700}
       .offer-popup-banner-copy>em{grid-column:1;color:#f3d36a;font-family:Georgia,serif;font-size:clamp(20px,3vw,30px);font-style:italic;margin-top:-5px}
-      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;min-width:150px;padding:13px 18px;border:1px solid rgba(243,211,106,.72);border-radius:18px;background:linear-gradient(145deg,rgba(7,24,39,.86),rgba(7,24,39,.58));color:#f3d36a;text-align:center;font-size:clamp(22px,3.4vw,34px);line-height:1;font-weight:900;box-shadow:0 14px 35px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.08)}.offer-popup-banner-copy>b:before{content:"SPECIAL OFFER";display:block;color:#9ee7cf;font-size:8px;letter-spacing:.18em;margin-bottom:7px}.offer-popup-banner-copy>b:after{content:"INTERIOR SOLUTIONS";display:block;color:rgba(255,255,255,.72);font-size:7px;letter-spacing:.12em;margin-top:7px}
+      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;min-width:190px;min-height:105px;display:flex;flex-direction:column;justify-content:center;padding:13px 18px;border:1px solid rgba(243,211,106,.72);border-radius:18px;background:linear-gradient(145deg,rgba(7,24,39,.86),rgba(7,24,39,.58));color:#f3d36a;text-align:center;font-size:clamp(30px,4.8vw,52px);line-height:1;font-weight:950;box-shadow:0 14px 35px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.08)}.offer-popup-banner-copy>b:before{content:"SPECIAL OFFER";display:block;color:#9ee7cf;font-size:8px;letter-spacing:.18em;margin-bottom:7px}.offer-popup-banner-copy>b:after{content:"INTERIOR SOLUTIONS";display:block;color:rgba(255,255,255,.72);font-size:7px;letter-spacing:.12em;margin-top:7px}
 
       .offer-popup-consultation-title{
         background:#9ee7cf;
@@ -2683,9 +2639,6 @@ function App() {
 
   return (
     <div className="website">
-
-      {}
-
       <header className="navbar">
         <button
           className="brand"
@@ -2755,9 +2708,6 @@ function App() {
           </button>
         </div>
       </header>
-
-      {}
-
       <AnimatePresence>
         {menu && (
           <motion.div
@@ -2864,9 +2814,6 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {}
-
       <section
         id="home"
         className="hero"
@@ -2976,9 +2923,6 @@ function App() {
           <span>CHENNAI | INDIA</span>
         </div>
       </section>
-
-      {}
-
       <section className="intro section">
         <div className="label">
           01 - THE STUDIO
@@ -3082,9 +3026,6 @@ function App() {
           />
         </div>
       </section>
-
-      {}
-
       <section
         id="about"
         className="about section"
@@ -3106,9 +3047,6 @@ function App() {
             deserves its own character.
           </p>
         </div>
-
-        {}
-
         <div className="founder">
           <div className="founder-photo">
             <img
@@ -3166,9 +3104,6 @@ function App() {
           </div>
         </div>
       </section>
-
-      {}
-
       <section
         id="services"
         className="services section"
@@ -3293,9 +3228,6 @@ function App() {
           </div>
         </div>
       </section>
-
-      {}
-
       <section
         id="projects"
         className="projects section"
@@ -3370,9 +3302,6 @@ function App() {
           )}
         </div>
       </section>
-
-      {}
-
       <section className="cta">
         <div className="cta-image" />
         <div className="cta-overlay" />
@@ -3402,9 +3331,6 @@ function App() {
           </button>
         </div>
       </section>
-
-      {}
-
       <section
         id="contact"
         className="contact section"
@@ -3448,7 +3374,7 @@ function App() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <Youtube size={22} />
+                <YouTubeBrandIcon size={22} />
                 YouTube
               </a>
 
@@ -3490,9 +3416,6 @@ function App() {
           </div>
         </div>
       </section>
-
-      {}
-
       <footer>
         <div className="footer-top">
           <div className="footer-brand">
@@ -3517,7 +3440,7 @@ function App() {
 
           <div className="socials">
             <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram">
-              <Instagram />
+              <InstagramBrandIcon size={21} />
             </a>
 
             <a
@@ -3535,7 +3458,7 @@ function App() {
               rel="noreferrer"
               aria-label="YouTube"
             >
-              <Youtube size={21} />
+              <YouTubeBrandIcon size={21} />
             </a>
           </div>
         </div>
@@ -3586,9 +3509,6 @@ function App() {
         promo={promoToPopup(popupPromotion)}
         onClose={() => setOfferOpen(false)}
       />
-
-      {}
-
       <Chatbot
         onWhatsApp={whatsapp}
       />
