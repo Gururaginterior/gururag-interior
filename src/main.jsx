@@ -7,6 +7,8 @@ import {
   X,
   Phone,
   MapPin,
+  Instagram,
+  Youtube,
   Check,
   Send,
   Bot,
@@ -257,7 +259,7 @@ const projects = [
     title: "Modern Kitchen",
     category: "Kitchen",
     image:
-      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1600&q=90",
+      "https://images.unsplash.com/photo-1758240689297-d8613ca753f3?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=90&w=1600",
   },
   {
     title: "Contemporary Living",
@@ -1408,7 +1410,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 rel="noreferrer"
                 aria-label="YouTube GuruRag Signature Home"
               >
-                <YouTubeBrandIcon size={19} />
+                <Youtube size={19} />
                 <span>YouTube</span>
               </a>
               <button
@@ -1501,12 +1503,11 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
                   <div className="new-founder-content">
                     <span className="new-page-label">FOUNDER / DESIGN VISION</span>
-                    <h3>Saran Raj.</h3>
+                    <h3>Saran <em>Raj.</em></h3>
                     <p>
                       With over 13 years of experience across interior,
                       construction and renovation solutions, Saran Raj leads
-                      Gururag Interior, now operating under the name Sri Guru
-                      Ragavendra Decors, with a strong focus on craftsmanship,
+                      Gururag Interior with a strong focus on craftsmanship,
                       detail and client satisfaction.
                     </p>
                     <p>
@@ -1552,12 +1553,12 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                       <ArrowUpRight size={17} />
                     </a>
                     <a href={INSTAGRAM} target="_blank" rel="noreferrer">
-                      <InstagramBrandIcon size={20} />
+                      <Instagram size={20} />
                       <span>Instagram Profile</span>
                       <ArrowUpRight size={17} />
                     </a>
                     <a href={YOUTUBE} target="_blank" rel="noreferrer">
-                      <YouTubeBrandIcon size={20} />
+                      <Youtube size={20} />
                       <span>YouTube Channel</span>
                       <ArrowUpRight size={17} />
                     </a>
@@ -1672,7 +1673,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="new-action-icon"><InstagramBrandIcon size={23} /></span>
+                    <span className="new-action-icon"><Instagram size={23} /></span>
                     <span className="new-action-copy">
                       <small>FOLLOW OUR WORK</small>
                       <strong>@sgr_decors_interior_designer</strong>
@@ -1686,7 +1687,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="new-action-icon"><YouTubeBrandIcon size={23} /></span>
+                    <span className="new-action-icon"><Youtube size={23} /></span>
                     <span className="new-action-copy">
                       <small>WATCH OUR WORK</small>
                       <strong>GuruRag Signature Home</strong>
@@ -2309,8 +2310,8 @@ function App() {
               THE PERSON BEHIND THE VISION
             </div>
             <h3 style={{ whiteSpace: "nowrap" }}>
-              Saran Raj.
-            </h3>
+  Saran <em>Raj.</em>
+</h3>
             <div className="stats">
               <div>
                 <strong>13+</strong>
@@ -2328,15 +2329,20 @@ function App() {
             </div>
 
             <p>
-              With over 13 years of experience across interior, construction
-              and renovation solutions, Saran Raj leads Gururag Interior, now
-              operating under the name Sri Guru Ragavendra Decors, with a
-              strong focus on craftsmanship, detail and client satisfaction.
+              With over 13 years of experience
+              across interior, construction and
+              renovation solutions, Saran Raj
+              leads Gururag Interior with a
+              strong focus on craftsmanship,
+              detail and client satisfaction.
             </p>
 
             <p>
-              His approach brings design and practical execution together,
-              creating spaces that feel distinctive, comfortable and personal.
+              His approach combines thoughtful
+              design with practical execution,
+              creating spaces that are distinctive,
+              comfortable and built around the
+              people who use them.
             </p>
 
             <div className="signature">
@@ -2627,7 +2633,7 @@ function App() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <YouTubeBrandIcon size={22} />
+                <Youtube size={22} />
                 YouTube
               </a>
 
@@ -2696,7 +2702,7 @@ function App() {
 
           <div className="socials">
             <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram">
-              <InstagramBrandIcon size={21} />
+              <Instagram />
             </a>
 
             <a
@@ -2714,7 +2720,7 @@ function App() {
               rel="noreferrer"
               aria-label="YouTube"
             >
-              <YouTubeBrandIcon size={21} />
+              <Youtube size={21} />
             </a>
           </div>
         </div>
