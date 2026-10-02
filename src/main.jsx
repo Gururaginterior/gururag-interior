@@ -1322,7 +1322,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     <p>
                       The company, previously operating under the name Sri Guru
                       Ragavendra Decors, has now evolved into Guru Rags Signature
-                      Homes 閳ワ拷 a new identity that reflects our continued growth,
+                      Homes 鈥� a new identity that reflects our continued growth,
                       refined design approach and commitment to delivering
                       distinctive spaces.
                     </p>
@@ -1330,7 +1330,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                       Led by Saran Raj, our approach brings together thoughtful
                       design, practical execution and meticulous attention to
                       detail. Every project is carefully planned around the
-                      client閳ワ拷 lifestyle, requirements and vision, ensuring that
+                      client鈥檚 lifestyle, requirements and vision, ensuring that
                       the final space is not only visually appealing but also
                       comfortable, functional and truly personal.
                     </p>
@@ -1342,7 +1342,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     </p>
                     <p>
                       At Guru Rags Signature Homes, we believe that a
-                      well-designed space is more than just beautiful 閳ワ拷 it should
+                      well-designed space is more than just beautiful 鈥� it should
                       reflect the people who live in it.
                     </p>
                     <div className="new-stat-row">
