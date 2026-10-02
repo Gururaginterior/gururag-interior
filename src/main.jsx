@@ -281,14 +281,6 @@ const projects = [
   },
 ];
 
-/* -------------------------------------------------------
-   WHATSAPP LOGO
-------------------------------------------------------- */
-
-/* -------------------------------------------------------
-   BRAND LOGOS
-------------------------------------------------------- */
-
 function InstagramBrandIcon({ size = 22 }) {
   const gradientId = `instagramGradient-${size}`;
 
@@ -354,10 +346,6 @@ function WhatsAppIcon({ size = 22 }) {
     </svg>
   );
 }
-
-/* -------------------------------------------------------
-   CHATBOT HELPERS
-------------------------------------------------------- */
 
 function normalizeText(text = "") {
   return text
@@ -527,10 +515,6 @@ function detectBudget(text) {
   return null;
 }
 
-/* -------------------------------------------------------
-   CHATBOT
-------------------------------------------------------- */
-
 function Chatbot({ onWhatsApp }) {
   const [open, setOpen] = useState(false);
 
@@ -694,7 +678,6 @@ function Chatbot({ onWhatsApp }) {
 
     if (!text) return;
 
-    /* NAME COLLECTION */
     if (waitingForName) {
       const cleanedName = rawText
         .replace(
@@ -730,7 +713,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* GREETING */
     if (isGreeting(text)) {
       addBotMessage(
         "Hello! What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."
@@ -739,7 +721,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* ABOUT */
     if (isAboutQuestion(text)) {
       addBotMessage(
         "Gururag Interior is led by Saran Raj, with 13+ years of experience and 1,500+ completed projects. The team handles interior design, carpentry, civil works, finishing and allied solutions for residential and commercial spaces."
@@ -748,7 +729,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* CONTACT */
     if (isContactQuestion(text)) {
       addBotMessage(
         "Sure. You can contact Gururag Interior directly on WhatsApp at +91 97896 95878. If you tell me your requirement first, I can also prepare the enquiry for you."
@@ -763,13 +743,11 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* ENQUIRY / YES */
     if (isEnquiryRequest(text)) {
       startEnquiry();
       return;
     }
 
-    /* BUDGET */
     const budget = detectBudget(text);
 
     if (budget) {
@@ -798,7 +776,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* SERVICE DETECTION */
     const detectedService = findService(text);
 
     if (detectedService) {
@@ -813,7 +790,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* ACTIVE SERVICE FOLLOW-UP */
     if (activeService) {
       if (
         includesAny(text, [
@@ -896,7 +872,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* COMMON COMPLETE INTERIOR QUESTIONS */
     if (
       includesAny(text, [
         "full interior",
@@ -926,7 +901,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* OFFICE */
     if (
       includesAny(text, [
         "office",
@@ -949,7 +923,6 @@ function Chatbot({ onWhatsApp }) {
       return;
     }
 
-    /* OPEN-ENDED AI FALLBACK */
     await askAiAssistant(rawText);
   };
 
@@ -1016,7 +989,7 @@ function Chatbot({ onWhatsApp }) {
               duration: 0.25,
             }}
           >
-            {/* HEADER */}
+            {}
 
             <div className="chatbot-header">
               <div className="chatbot-agent">
@@ -1043,7 +1016,7 @@ function Chatbot({ onWhatsApp }) {
               </button>
             </div>
 
-            {/* CHAT BODY */}
+            {}
 
             <div className="chatbot-body">
               <div className="chatbot-conversation">
@@ -1211,7 +1184,7 @@ function Chatbot({ onWhatsApp }) {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* ENQUIRY ACTION */}
+              {}
 
               {leadName && (
                 <button
@@ -1225,7 +1198,7 @@ function Chatbot({ onWhatsApp }) {
                 </button>
               )}
 
-              {/* INPUT */}
+              {}
 
               <div className="chat-input-wrap">
                 <input
@@ -1285,7 +1258,7 @@ function Chatbot({ onWhatsApp }) {
               </div>
             </div>
 
-            {/* FOOTER */}
+            {}
 
             <div className="chatbot-footer">
               <span>GURURAG INTERIOR</span>
@@ -1297,10 +1270,6 @@ function Chatbot({ onWhatsApp }) {
     </>
   );
 }
-
-/* -------------------------------------------------------
-   NEW MENU PAGES
-------------------------------------------------------- */
 
 function TypewriterText({ lines }) {
   const [lineIndex, setLineIndex] = useState(0);
@@ -1343,8 +1312,8 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
   const pageData = {
     about: {
       number: "02",
-      eyebrow: "THE PERSON BEHIND THE VISION",
-      title: "Built on experience.\nDesigned with purpose.",
+      eyebrow: "ABOUT US",
+      title: "Designing Spaces.\nCreating Experiences.",
     },
     services: {
       number: "03",
@@ -1503,18 +1472,38 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
                   <div className="new-founder-content">
                     <span className="new-page-label">FOUNDER / DESIGN VISION</span>
-                    <h3>Saran Raj</h3>
+                    <h3>Guru Rags Signature Homes</h3>
                     <p>
-                      With over 13 years of experience across interior,
-                      construction and renovation solutions, Saran Raj leads
-                      Gururag Interior, now operating under the name Sri Guru
-                      Ragavendra Decors, with a strong focus on craftsmanship,
-                      detail and client satisfaction.
+                      With over 13 years of experience in interior design,
+                      construction and renovation solutions, Guru Rags Signature
+                      Homes is built on a passion for creating spaces that
+                      combine aesthetics, functionality and lasting quality.
                     </p>
                     <p>
-                      His approach brings design and practical execution
-                      together, creating spaces that feel distinctive,
-                      comfortable and personal.
+                      The company, previously operating under the name Sri Guru
+                      Ragavendra Decors, has now evolved into Guru Rags Signature
+                      Homes鈥攁 new identity that reflects our continued growth,
+                      refined design approach and commitment to delivering
+                      distinctive spaces.
+                    </p>
+                    <p>
+                      Led by Saran Raj, our approach brings together thoughtful
+                      design, practical execution and meticulous attention to
+                      detail. Every project is carefully planned around the
+                      client鈥檚 lifestyle, requirements and vision, ensuring that
+                      the final space is not only visually appealing but also
+                      comfortable, functional and truly personal.
+                    </p>
+                    <p>
+                      From concept to completion, we focus on quality
+                      craftsmanship, transparent execution and client
+                      satisfaction, with every detail receiving the attention it
+                      deserves.
+                    </p>
+                    <p>
+                      At Guru Rags Signature Homes, we believe that a
+                      well-designed space is more than just beautiful鈥攊t should
+                      reflect the people who live in it.
                     </p>
 
                     <div className="new-stat-row">
@@ -1710,10 +1699,6 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
   );
 }
 
-/* -------------------------------------------------------
-   NEW MENU / PAGE STYLES
-------------------------------------------------------- */
-
 function NewPageStyles() {
   return (
     <style>{`
@@ -1734,37 +1719,25 @@ function NewPageStyles() {
   );
 }
 
+const DEFAULT_PROMO = {
+  type: "normal", name: "GURURAG INTERIOR", title: "FREE DESIGN",
+  description: "Tell us about your space, property type and location. Our team will guide you towards the right interior solution.",
+  offer_text: "15% OFF", button_text: "Book a Free Consultation",
+  image_url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
+};
 
-/* -------------------------------------------------------
-   PREMIUM OFFER / FREE QUOTE POPUP
-------------------------------------------------------- */
+function promoToPopup(item = DEFAULT_PROMO) {
+  return {
+    eyebrow: item.type === "festival" ? (item.name || "FESTIVE OFFER") : "GURURAG INTERIOR",
+    title: "FREE DESIGN", highlight: "CONSULTATION",
+    description: item.description || DEFAULT_PROMO.description,
+    badge: item.offer_text || "15% OFF",
+    button: item.button_text || "Book a Free Consultation",
+    image: item.image_url || DEFAULT_PROMO.image_url,
+  };
+}
 
-const PROMO_POPUPS = [
-  {
-    eyebrow: "LIMITED TIME OFFER",
-    title: "15% OFF",
-    highlight: "on Interior Solutions",
-    description:
-      "Planning a new home interior, modular kitchen, wardrobe or renovation? Start your project with Gururag Interior and unlock our limited-time 15% offer.",
-    badge: "15% OFF",
-    button: "Book a Free Consultation",
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
-  },
-  {
-    eyebrow: "GURURAG INTERIOR",
-    title: "FREE DESIGN",
-    highlight: "CONSULTATION",
-    description:
-      "Tell us about your space, property type and location. Our team will understand your requirement and guide you towards the right interior solution.",
-    badge: "FREE CONSULTATION",
-    button: "Get My Free Consultation",
-    image:
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=90",
-  },
-];
-
-function OfferPopup({ open, variant, onClose }) {
+function OfferPopup({ open, promo, onClose }) {
   const [propertyType, setPropertyType] = useState("1 BHK");
   const [location, setLocation] = useState("");
   const [name, setName] = useState("");
@@ -1772,7 +1745,7 @@ function OfferPopup({ open, variant, onClose }) {
   const [whatsappUpdates, setWhatsappUpdates] = useState(true);
   const [submitted, setSubmitted] = useState(false);
 
-  const promo = PROMO_POPUPS[variant] || PROMO_POPUPS[0];
+  const currentPromo = promo || promoToPopup(DEFAULT_PROMO);
 
   useEffect(() => {
     if (!open) return;
@@ -1788,7 +1761,7 @@ function OfferPopup({ open, variant, onClose }) {
   useEffect(() => {
     if (!open) return;
     setSubmitted(false);
-  }, [open, variant]);
+  }, [open]);
 
   const submitLead = (event) => {
     event.preventDefault();
@@ -1803,7 +1776,7 @@ function OfferPopup({ open, variant, onClose }) {
 
     const message =
       `Hi Gururag Interior, I would like to book a free consultation.\n\n` +
-      `Offer: ${promo.badge}\n` +
+      `Offer: ${currentPromo.badge}\n` +
       `Property Type: ${propertyType}\n` +
       `Property Location: ${cleanLocation || "Not provided"}\n` +
       `Name: ${cleanName}\n` +
@@ -1852,7 +1825,7 @@ function OfferPopup({ open, variant, onClose }) {
           </button>
 
           <div className="offer-popup-banner">
-            <img src={promo.image} alt="Gururag Interior interior" />
+            <img src={currentPromo.image} alt="Gururag Interior interior" />
             <div className="offer-popup-banner-overlay" />
 
             <div className="offer-popup-brand">
@@ -1866,10 +1839,10 @@ function OfferPopup({ open, variant, onClose }) {
             </div>
 
             <div className="offer-popup-banner-copy">
-              <span>{promo.eyebrow}</span>
-              <strong>{promo.title}</strong>
-              <em>{promo.highlight}</em>
-              <b>{promo.badge}</b>
+              <span>{currentPromo.eyebrow}</span>
+              <strong>{currentPromo.title}</strong>
+              <em>{currentPromo.highlight}</em>
+              <b>{currentPromo.badge}</b>
             </div>
           </div>
 
@@ -1880,7 +1853,7 @@ function OfferPopup({ open, variant, onClose }) {
           <form className="offer-popup-form" onSubmit={submitLead}>
             <div className="offer-popup-content">
               <div className="offer-popup-description">
-                {promo.description}
+                {currentPromo.description}
               </div>
 
               <div className="offer-popup-label">
@@ -1907,10 +1880,7 @@ function OfferPopup({ open, variant, onClose }) {
               </div>
 
               <div className="offer-space-note">
-                <span className="offer-house-icon">鈱�</span>
-                <span>
-                  We design around your space, lifestyle and budget.
-                </span>
+                <span>We design around your space, lifestyle and budget.</span>
               </div>
 
               <label className="offer-input">
@@ -1968,7 +1938,7 @@ function OfferPopup({ open, variant, onClose }) {
                 </div>
               ) : (
                 <button className="offer-submit-button" type="submit">
-                  {promo.button}
+                  {currentPromo.button}
                   <ArrowUpRight size={20} />
                 </button>
               )}
@@ -2108,50 +2078,11 @@ function OfferPopupStyles() {
         letter-spacing:.28em;
       }
 
-      .offer-popup-banner-copy{
-        position:absolute;
-        left:34px;
-        bottom:27px;
-        max-width:570px;
-        display:flex;
-        flex-direction:column;
-        align-items:flex-start;
-      }
-
-      .offer-popup-banner-copy>span{
-        color:#9ee7cf;
-        font-size:10px;
-        font-weight:900;
-        letter-spacing:.22em;
-        margin-bottom:8px;
-      }
-
-      .offer-popup-banner-copy>strong{
-        color:#fff;
-        font-size:clamp(42px,7vw,74px);
-        line-height:.9;
-        letter-spacing:-.055em;
-        font-weight:700;
-      }
-
-      .offer-popup-banner-copy>em{
-        color:#f3d36a;
-        font-family:Georgia,serif;
-        font-size:clamp(21px,3vw,31px);
-        font-style:italic;
-        margin-top:8px;
-      }
-
-      .offer-popup-banner-copy>b{
-        margin-top:13px;
-        padding:8px 13px;
-        border-radius:999px;
-        background:#f3d36a;
-        color:#071827;
-        font-size:11px;
-        letter-spacing:.1em;
-        font-weight:900;
-      }
+      .offer-popup-banner-copy{position:absolute;left:34px;right:34px;bottom:27px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}
+      .offer-popup-banner-copy>span{grid-column:1/-1;color:#9ee7cf;font-size:10px;font-weight:900;letter-spacing:.22em;margin-bottom:-4px}
+      .offer-popup-banner-copy>strong{grid-column:1;color:#fff;font-size:clamp(38px,6vw,66px);line-height:.9;letter-spacing:-.055em;font-weight:700}
+      .offer-popup-banner-copy>em{grid-column:1;color:#f3d36a;font-family:Georgia,serif;font-size:clamp(20px,3vw,30px);font-style:italic;margin-top:-5px}
+      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;margin:0;padding:14px 20px;border-radius:16px;background:#f3d36a;color:#071827;font-size:clamp(18px,3vw,28px);letter-spacing:.03em;font-weight:900;box-shadow:0 12px 30px rgba(0,0,0,.22)}
 
       .offer-popup-consultation-title{
         background:#9ee7cf;
@@ -2470,6 +2401,8 @@ function OfferPopupStyles() {
           margin-bottom:5px;
         }
 
+        .offer-popup-banner-copy{left:18px;right:18px;bottom:18px;grid-template-columns:1fr .75fr;gap:10px}
+        .offer-popup-banner-copy>b{padding:10px 12px;font-size:18px;border-radius:12px}
         .offer-popup-banner-copy>strong{
           font-size:46px;
         }
@@ -2608,17 +2541,13 @@ function OfferPopupStyles() {
   );
 }
 
-/* -------------------------------------------------------
-   MAIN APP
-------------------------------------------------------- */
-
 function App() {
   const [menu, setMenu] = useState(false);
   const [service, setService] = useState(0);
   const [newPage, setNewPage] = useState(null);
   const [ownerOpen, setOwnerOpen] = useState(false);
   const [offerOpen, setOfferOpen] = useState(false);
-  const [offerVariant, setOfferVariant] = useState(0);
+  const [popupPromotion, setPopupPromotion] = useState(DEFAULT_PROMO);
   const [managedServices, setManagedServices] = useState(services);
   const [managedProjects, setManagedProjects] = useState(projects);
 
@@ -2627,17 +2556,10 @@ function App() {
 
     const loadManagedContent = async () => {
       try {
-        const [servicesResult, projectsResult] = await Promise.all([
-          supabase
-            .from("services")
-            .select("*")
-            .order("sort_order", { ascending: true })
-            .order("created_at", { ascending: true }),
-          supabase
-            .from("projects")
-            .select("*")
-            .order("sort_order", { ascending: true })
-            .order("created_at", { ascending: true }),
+        const [servicesResult, projectsResult, promotionsResult] = await Promise.all([
+          supabase.from("services").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),
+          supabase.from("projects").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),
+          supabase.from("promotions").select("*").eq("enabled", true).order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
         ]);
 
         if (!mounted) return;
@@ -2673,6 +2595,13 @@ function App() {
             }))
           );
         }
+
+        if (!promotionsResult.error && promotionsResult.data?.length) {
+          const today = new Date().toISOString().slice(0, 10);
+          const festival = promotionsResult.data.find((p) => p.type === "festival" && p.start_date <= today && p.end_date >= today);
+          const normal = promotionsResult.data.find((p) => p.type === "normal");
+          setPopupPromotion(festival || normal || DEFAULT_PROMO);
+        }
       } catch {
         // Keep the original static website content if Supabase is unavailable.
       }
@@ -2687,12 +2616,10 @@ function App() {
 
   useEffect(() => {
     const firstPopupTimer = setTimeout(() => {
-      setOfferVariant(0);
       setOfferOpen(true);
     }, 5000);
 
     const secondPopupTimer = setTimeout(() => {
-      setOfferVariant(1);
       setOfferOpen(true);
     }, 17000);
 
@@ -2713,10 +2640,7 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
-  const openOfferPopup = (variant = 0) => {
-    setOfferVariant(variant);
-    setOfferOpen(true);
-  };
+  const openOfferPopup = () => setOfferOpen(true);
 
   const scrollTo = (id) => {
     setMenu(false);
@@ -2770,7 +2694,7 @@ function App() {
   return (
     <div className="website">
 
-      {/* NAVBAR */}
+      {}
 
       <header className="navbar">
         <button
@@ -2825,7 +2749,7 @@ function App() {
 
           <button
             className="navbar-quote-button"
-            onClick={() => openOfferPopup(0)}
+            onClick={() => openOfferPopup()}
           >
             Get Free Quote
           </button>
@@ -2842,7 +2766,7 @@ function App() {
         </div>
       </header>
 
-      {/* MENU */}
+      {}
 
       <AnimatePresence>
         {menu && (
@@ -2951,7 +2875,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* HERO */}
+      {}
 
       <section
         id="home"
@@ -3063,7 +2987,7 @@ function App() {
         </div>
       </section>
 
-      {/* INTRO */}
+      {}
 
       <section className="intro section">
         <div className="label">
@@ -3169,7 +3093,7 @@ function App() {
         </div>
       </section>
 
-      {/* ABOUT */}
+      {}
 
       <section
         id="about"
@@ -3193,7 +3117,7 @@ function App() {
           </p>
         </div>
 
-        {/* FOUNDER */}
+        {}
 
         <div className="founder">
           <div className="founder-photo">
@@ -3253,7 +3177,7 @@ function App() {
         </div>
       </section>
 
-      {/* SERVICES */}
+      {}
 
       <section
         id="services"
@@ -3380,7 +3304,7 @@ function App() {
         </div>
       </section>
 
-      {/* PROJECTS */}
+      {}
 
       <section
         id="projects"
@@ -3457,7 +3381,7 @@ function App() {
         </div>
       </section>
 
-      {/* CTA */}
+      {}
 
       <section className="cta">
         <div className="cta-image" />
@@ -3489,7 +3413,7 @@ function App() {
         </div>
       </section>
 
-      {/* CONTACT */}
+      {}
 
       <section
         id="contact"
@@ -3577,7 +3501,7 @@ function App() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {}
 
       <footer>
         <div className="footer-top">
@@ -3642,7 +3566,7 @@ function App() {
 
       <motion.button
         className="quote-floating-button"
-        onClick={() => openOfferPopup(0)}
+        onClick={() => openOfferPopup()}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.4 }}
@@ -3669,11 +3593,11 @@ function App() {
 
       <OfferPopup
         open={offerOpen}
-        variant={offerVariant}
+        promo={promoToPopup(popupPromotion)}
         onClose={() => setOfferOpen(false)}
       />
 
-      {/* CONVERSATIONAL CHAT ASSISTANT */}
+      {}
 
       <Chatbot
         onWhatsApp={whatsapp}
