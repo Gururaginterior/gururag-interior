@@ -1322,7 +1322,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     <p>
                       The company, previously operating under the name Sri Guru
                       Ragavendra Decors, has now evolved into Guru Rags Signature
-                      Homes 鈥� a new identity that reflects our continued growth,
+                      Homes 閳ワ拷 a new identity that reflects our continued growth,
                       refined design approach and commitment to delivering
                       distinctive spaces.
                     </p>
@@ -1330,7 +1330,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                       Led by Saran Raj, our approach brings together thoughtful
                       design, practical execution and meticulous attention to
                       detail. Every project is carefully planned around the
-                      client鈥� lifestyle, requirements and vision, ensuring that
+                      client閳ワ拷 lifestyle, requirements and vision, ensuring that
                       the final space is not only visually appealing but also
                       comfortable, functional and truly personal.
                     </p>
@@ -1342,7 +1342,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     </p>
                     <p>
                       At Guru Rags Signature Homes, we believe that a
-                      well-designed space is more than just beautiful 鈥� it should
+                      well-designed space is more than just beautiful 閳ワ拷 it should
                       reflect the people who live in it.
                     </p>
                     <div className="new-stat-row">
@@ -1710,9 +1710,7 @@ function OfferPopup({ open, promo, onClose }) {
                   checked={whatsappUpdates}
                   onChange={(event) => setWhatsappUpdates(event.target.checked)}
                 />
-                <span className={`offer-check-box ${whatsappUpdates ? "checked" : ""}`} aria-hidden="true">
-                  {whatsappUpdates ? "鉁�" : ""}
-                </span>
+                <span className={`offer-check-box ${whatsappUpdates ? "checked" : ""}`} aria-hidden="true" />
                 <span>Yes, send me updates via WhatsApp.</span>
                 <WhatsAppIcon size={25} />
               </label>
@@ -1986,6 +1984,13 @@ function OfferPopupStyles() {
         border-color:#25D366;
         background:#25D366;
         box-shadow:0 4px 12px rgba(37,211,102,.2);
+      }
+      .offer-check-box.checked::after{
+        content:"\\2713";
+        color:#fff;
+        font-size:17px;
+        font-weight:900;
+        line-height:1;
       }
       .offer-whatsapp-check>svg{
         flex:none;
