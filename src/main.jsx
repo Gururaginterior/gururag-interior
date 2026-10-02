@@ -1503,11 +1503,12 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
                   <div className="new-founder-content">
                     <span className="new-page-label">FOUNDER / DESIGN VISION</span>
-                    <h3>Saran <em>Raj.</em></h3>
+                    <h3>Saran Raj</h3>
                     <p>
                       With over 13 years of experience across interior,
                       construction and renovation solutions, Saran Raj leads
-                      Gururag Interior with a strong focus on craftsmanship,
+                      Gururag Interior, now operating under the name Sri Guru
+                      Ragavendra Decors, with a strong focus on craftsmanship,
                       detail and client satisfaction.
                     </p>
                     <p>
@@ -2310,8 +2311,8 @@ function App() {
               THE PERSON BEHIND THE VISION
             </div>
             <h3 style={{ whiteSpace: "nowrap" }}>
-  Saran <em>Raj.</em>
-</h3>
+              Saran Raj
+            </h3>
             <div className="stats">
               <div>
                 <strong>13+</strong>
@@ -2329,20 +2330,15 @@ function App() {
             </div>
 
             <p>
-              With over 13 years of experience
-              across interior, construction and
-              renovation solutions, Saran Raj
-              leads Gururag Interior with a
-              strong focus on craftsmanship,
-              detail and client satisfaction.
+              With over 13 years of experience across interior, construction
+              and renovation solutions, Saran Raj leads Gururag Interior, now
+              operating under the name Sri Guru Ragavendra Decors, with a
+              strong focus on craftsmanship, detail and client satisfaction.
             </p>
 
             <p>
-              His approach combines thoughtful
-              design with practical execution,
-              creating spaces that are distinctive,
-              comfortable and built around the
-              people who use them.
+              His approach brings design and practical execution together,
+              creating spaces that feel distinctive, comfortable and personal.
             </p>
 
             <div className="signature">
