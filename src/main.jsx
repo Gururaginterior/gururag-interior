@@ -1330,7 +1330,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                       Led by Saran Raj, our approach brings together thoughtful
                       design, practical execution and meticulous attention to
                       detail. Every project is carefully planned around the
-                      client鈥檚 lifestyle, requirements and vision, ensuring that
+                      client's lifestyle, requirements and vision, ensuring that
                       the final space is not only visually appealing but also
                       comfortable, functional and truly personal.
                     </p>
