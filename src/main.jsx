@@ -265,7 +265,7 @@ const projects = [
     title: "Modern Kitchen",
     category: "Kitchen",
     image:
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=90",
+      "https://images.unsplash.com/photo-1758240689297-d8613ca753f3?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=90&w=1600",
   },
   {
     title: "Quiet Luxury Bedroom",
@@ -303,6 +303,25 @@ function WhatsAppIcon({ size = 22 }) {
         d="M21.55 18.78C21.26 18.64 19.83 17.94 19.57 17.84C19.31 17.74 19.12 17.69 18.92 17.98C18.73 18.27 18.2 18.93 18.04 19.12C17.87 19.31 17.7 19.33 17.41 19.18C17.12 19.04 16.18 18.73 15.07 17.74C14.2 16.97 13.61 16.02 13.45 15.73C13.29 15.44 13.43 15.28 13.57 15.14C13.71 15 13.86 14.78 14 14.61C14.14 14.44 14.19 14.32 14.29 14.13C14.38 13.94 14.34 13.78 14.27 13.64C14.19 13.5 13.61 12.08 13.37 11.5C13.14 10.94 12.91 11.03 12.73 11.02C12.56 11.01 12.37 11 12.18 11C11.99 11 11.68 11.07 11.42 11.36C11.16 11.65 10.42 12.35 10.42 13.77C10.42 15.19 11.44 16.56 11.58 16.75C11.72 16.94 13.58 19.8 16.42 21.03C17.1 21.32 17.63 21.49 18.05 21.62C18.73 21.84 19.35 21.81 19.84 21.74C20.39 21.66 21.53 21.05 21.77 20.39C22.01 19.72 22.01 19.15 21.94 19.03C21.88 18.91 21.74 18.85 21.55 18.78Z"
         fill="white"
       />
+    </svg>
+  );
+}
+
+function InstagramBrandIcon({ size = 22 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-label="Instagram">
+      <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="2" />
+      <circle cx="17.4" cy="6.7" r="1.2" fill="currentColor" />
+    </svg>
+  );
+}
+
+function YouTubeBrandIcon({ size = 22 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-label="YouTube">
+      <path d="M21 8.1a2.8 2.8 0 0 0-2-2C17.2 5.6 12 5.6 12 5.6s-5.2 0-7 .5a2.8 2.8 0 0 0-2 2C2.5 9.9 2.5 12 2.5 12s0 2.1.5 3.9a2.8 2.8 0 0 0 2 2c1.8.5 7 .5 7 .5s5.2 0 7-.5a2.8 2.8 0 0 0 2-2c.5-1.8.5-3.9.5-3.9s0-2.1-.5-3.9Z" stroke="currentColor" strokeWidth="1.7" />
+      <path d="m10 9 5 3-5 3V9Z" fill="currentColor" />
     </svg>
   );
 }
@@ -733,7 +752,7 @@ function Chatbot({ onBooking }) {
 
         setTimeout(() => {
           addBotMessage(
-            "If you'd like, I can prepare a WhatsApp enquiry for this service."
+            "If you'd like, I can prepare a booking enquiry for this service."
           );
         }, 550);
       } else {
@@ -1357,7 +1376,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 rel="noreferrer"
                 aria-label="YouTube GuruRag Signature Home"
               >
-                <Youtube size={19} />
+                <YouTubeBrandIcon size={19} />
                 <span>YouTube</span>
               </a>
               <button
@@ -1407,7 +1426,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                   <TypewriterText
                     lines={[
                       "Let's turn your idea into a space.",
-                      "Tell Saran Raj what you are planning.",
+                      "Speak directly with Saran Raj.",
                       "Your project can start with one message.",
                     ]}
                   />
@@ -1452,10 +1471,11 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     <span className="new-page-label">FOUNDER / DESIGN VISION</span>
                     <h3>Saran <em>Raj.</em></h3>
                     <p>
-                      With over 13 years of experience across interior,
-                      construction and renovation solutions, Saran Raj leads
-                      Gururag Interior with a strong focus on craftsmanship,
-                      detail and client satisfaction.
+                      With over 13 years of experience across interior, construction
+                      and renovation solutions, Saran Raj leads Gururag Interior,
+                      now operating under the name Sri Guru Ragavendra Decors,
+                      with a strong focus on craftsmanship, detail and client
+                      satisfaction.
                     </p>
                     <p>
                       His approach brings design and practical execution
@@ -1489,7 +1509,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
                   <div className="new-contact-mini">
                     <span>CONNECT WITH SARAN</span>
-                    <a href="tel:+919940277984">
+                    <a href="tel:+919789695878">
                       <Phone size={19} />
                       <span>+91 97896 95878</span>
                       <ArrowUpRight size={17} />
@@ -1500,12 +1520,12 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                       <ArrowUpRight size={17} />
                     </a>
                     <a href={INSTAGRAM} target="_blank" rel="noreferrer">
-                      <Instagram size={20} />
+                      <InstagramBrandIcon size={20} />
                       <span>Instagram Profile</span>
                       <ArrowUpRight size={17} />
                     </a>
                     <a href={YOUTUBE} target="_blank" rel="noreferrer">
-                      <Youtube size={20} />
+                      <YouTubeBrandIcon size={20} />
                       <span>YouTube Channel</span>
                       <ArrowUpRight size={17} />
                     </a>
@@ -1591,7 +1611,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 </div>
 
                 <div className="new-contact-actions">
-                  <a className="new-contact-action phone" href="tel:+919940277984">
+                  <a className="new-contact-action phone" href="tel:+919789695878">
                     <span className="new-action-icon"><Phone size={22} /></span>
                     <span className="new-action-copy">
                       <small>CALL DIRECTLY</small>
@@ -1620,7 +1640,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="new-action-icon"><Instagram size={23} /></span>
+                    <span className="new-action-icon"><InstagramBrandIcon size={23} /></span>
                     <span className="new-action-copy">
                       <small>FOLLOW OUR WORK</small>
                       <strong>@sgr_decors_interior_designer</strong>
@@ -1634,7 +1654,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span className="new-action-icon"><Youtube size={23} /></span>
+                    <span className="new-action-icon"><YouTubeBrandIcon size={23} /></span>
                     <span className="new-action-copy">
                       <small>WATCH OUR WORK</small>
                       <strong>GuruRag Signature Home</strong>
@@ -1675,7 +1695,31 @@ function NewPageStyles() {
       .new-service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.new-service-page-card{display:grid;grid-template-columns:.9fr 1.1fr;min-height:240px;border-radius:22px;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)}.new-service-page-image{position:relative;min-height:240px}.new-service-page-image img{width:100%;height:100%;object-fit:cover}.new-service-page-image>span{position:absolute;top:14px;left:14px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827;font-size:10px;font-weight:900}.new-service-page-card>div:last-child{padding:24px}.new-service-page-card h3{font-size:23px;margin:9px 0}.new-service-page-card p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.62);margin-bottom:17px}.new-outline-button{border:1px solid rgba(158,231,207,.28);background:transparent;color:#9ee7cf;padding:10px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;cursor:pointer;transition:.25s}.new-outline-button:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 25px rgba(158,231,207,.2)}
       .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}
       .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action.youtube:before{background:#ff6b6b}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-contact-action.youtube .new-action-icon{color:#ff8a8a}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}
-      @media(max-width:800px){.new-page-overlay{padding:0}.new-page-shell{height:100vh;border-radius:0;border:0}.new-page-topbar{height:70px;padding:0 16px}.new-page-top-whatsapp span{display:none}.new-page-scroll{height:calc(100% - 70px);padding:34px 17px 50px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}}
+      
+
+      /* PREMIUM PROMOTION + BOOKING RESPONSIVE */
+      .promotion-popup-backdrop{overflow-y:auto;overscroll-behavior:contain}
+      .promotion-popup-card{scrollbar-width:thin}
+      .promotion-popup-card::-webkit-scrollbar,.booking-modal-card::-webkit-scrollbar{width:5px}
+      .promotion-popup-card::-webkit-scrollbar-thumb,.booking-modal-card::-webkit-scrollbar-thumb{background:rgba(158,231,207,.35);border-radius:20px}
+      .promotion-popup-image{min-height:390px !important}
+      .promotion-popup-content{min-width:0}
+      .booking-modal-card{scrollbar-width:thin}
+      @media(max-width:720px){
+        .promotion-popup-backdrop{align-items:center !important;justify-content:center !important;padding:12px !important}
+        .promotion-popup-card{width:100% !important;max-height:calc(100dvh - 24px) !important;border-radius:22px !important}
+        .promotion-popup-grid{grid-template-columns:1fr !important;min-height:0 !important}
+        .promotion-popup-image{min-height:190px !important;height:190px !important;max-height:190px !important;background-position:center !important}
+        .promotion-popup-content{padding:26px 20px 22px !important}
+        .promotion-popup-content h2{font-size:clamp(28px,8vw,38px) !important}
+        .booking-modal-card{width:100% !important;max-height:calc(100dvh - 24px) !important;padding:22px 18px 20px !important;border-radius:22px !important}
+      }
+      @media(max-width:390px){
+        .promotion-popup-image{min-height:160px !important;height:160px !important;max-height:160px !important}
+        .promotion-popup-content{padding:22px 16px 18px !important}
+        .promotion-popup-content p{font-size:13px !important;line-height:1.6 !important}
+      }
+@media(max-width:800px){.new-page-overlay{padding:0}.new-page-shell{height:100vh;border-radius:0;border:0}.new-page-topbar{height:70px;padding:0 16px}.new-page-top-whatsapp span{display:none}.new-page-scroll{height:calc(100% - 70px);padding:34px 17px 50px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}}
     `}</style>
   );
 }
@@ -1762,11 +1806,26 @@ function PromotionPopup({ onBooking }) {
 
     loadPromotions();
 
-    const timer = setTimeout(() => setOpen(true), 1200);
+    const openTimer = setTimeout(() => setOpen(true), 1200);
+
+    const refreshActivePromotion = () => {
+      if (!mounted) return;
+      const today = getTodayDate();
+      const festival = promotions.find(
+        (item) => item.type === "festival" && isPromotionActive(item, today)
+      );
+      const normal = promotions.find(
+        (item) => item.type === "normal" && isPromotionActive(item, today)
+      );
+      setActivePromotion(festival || normal || DEFAULT_NORMAL_PROMOTION);
+    };
+
+    const dateTimer = setInterval(refreshActivePromotion, 60 * 1000);
 
     return () => {
       mounted = false;
-      clearTimeout(timer);
+      clearTimeout(openTimer);
+      clearInterval(dateTimer);
     };
   }, []);
 
@@ -1812,10 +1871,11 @@ function PromotionPopup({ onBooking }) {
           initial={{ opacity: 0, y: 35, scale: 0.94 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.35 }}
+          className="promotion-popup-card"
           style={{
             position: "relative",
             width: "min(920px, 100%)",
-            maxHeight: "90vh",
+            maxHeight: "min(90vh, 760px)",
             overflow: "auto",
             borderRadius: "28px",
             background: "#071827",
@@ -1846,6 +1906,7 @@ function PromotionPopup({ onBooking }) {
           </button>
 
           <div
+            className="promotion-popup-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
@@ -1853,6 +1914,7 @@ function PromotionPopup({ onBooking }) {
             }}
           >
             <div
+              className="promotion-popup-image"
               style={{
                 minHeight: 300,
                 backgroundImage: `linear-gradient(180deg, rgba(7,24,39,.08), rgba(7,24,39,.82)), url(${promotion.image_url || DEFAULT_NORMAL_PROMOTION.image_url})`,
@@ -1862,6 +1924,7 @@ function PromotionPopup({ onBooking }) {
             />
 
             <div
+              className="promotion-popup-content"
               style={{
                 padding: "48px 34px 34px",
                 display: "flex",
@@ -2066,6 +2129,7 @@ function BookingModal({ initialData, onClose }) {
         }}
       >
         <motion.div
+          className="booking-modal-card"
           initial={{ opacity: 0, y: 25, scale: .96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           style={{
@@ -2106,11 +2170,11 @@ function BookingModal({ initialData, onClose }) {
               <div style={{ color: "#7fffd4", fontWeight: 800, fontSize: 12, letterSpacing: ".14em" }}>
                 GURURAG INTERIOR
               </div>
-              <h2 style={{ margin: "9px 0 8px", fontSize: 30 }}>
-                Book a Consultation
+              <h2 style={{ margin: "9px 0 8px", fontSize: "clamp(28px, 7vw, 38px)", lineHeight: 1.05 }}>
+                Book a <span style={{ color: "#f4d35e", fontFamily: "Georgia, serif", fontWeight: 400 }}>Consultation.</span>
               </h2>
               <p style={{ color: "rgba(255,255,255,.68)", lineHeight: 1.6, marginTop: 0 }}>
-                Share your requirement. Your details will be sent to the Gururag Interior team.
+                Share your requirement and our team will get back to you with the right guidance and quotation.
               </p>
 
               <form onSubmit={submit} style={{ display: "grid", gap: 13 }}>
@@ -2390,6 +2454,14 @@ function App() {
         </button>
 
         <div className="nav-actions">
+          <a className="whatsapp-button" href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram" style={{ display: "grid", placeItems: "center", textDecoration: "none" }}>
+            <InstagramBrandIcon size={21} />
+          </a>
+
+          <a className="whatsapp-button" href={YOUTUBE} target="_blank" rel="noreferrer" aria-label="YouTube" style={{ display: "grid", placeItems: "center", textDecoration: "none" }}>
+            <YouTubeBrandIcon size={21} />
+          </a>
+
           <button
             className="whatsapp-button"
             aria-label="WhatsApp"
@@ -2514,7 +2586,7 @@ function App() {
                   Crafted with character.
                 </p>
 
-                <a href="tel:+919940277984">
+                <a href="tel:+919789695878">
                   +91 97896 95878
                 </a>
               </div>
@@ -2807,20 +2879,17 @@ function App() {
             </div>
 
             <p>
-              With over 13 years of experience
-              across interior, construction and
-              renovation solutions, Saran Raj
-              leads Gururag Interior with a
-              strong focus on craftsmanship,
+              With over 13 years of experience across interior,
+              construction and renovation solutions, Saran Raj leads
+              Gururag Interior, now operating under the name Sri Guru
+              Ragavendra Decors, with a strong focus on craftsmanship,
               detail and client satisfaction.
             </p>
 
             <p>
-              His approach combines thoughtful
-              design with practical execution,
-              creating spaces that are distinctive,
-              comfortable and built around the
-              people who use them.
+              His approach brings design and practical execution
+              together, creating spaces that feel distinctive,
+              comfortable and personal.
             </p>
 
             <div className="signature">
@@ -3091,8 +3160,22 @@ function App() {
               something around it.
             </p>
 
+            <div
+              style={{
+                marginTop: 18,
+                marginBottom: 20,
+                fontSize: 14,
+                letterSpacing: ".08em",
+                textTransform: "uppercase",
+                color: "#9ee7cf",
+                fontWeight: 800,
+              }}
+            >
+              Speak directly with <span style={{ color: "#f3d36a", fontFamily: "Georgia, serif", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>Saran Raj</span>
+            </div>
+
             <div className="contact-details">
-              <a href="tel:+919940277984">
+              <a href="tel:+919789695878">
                 <Phone />
                 +91 97896 95878
               </a>
@@ -3180,7 +3263,7 @@ function App() {
 
           <div className="socials">
             <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram">
-              <Instagram />
+              <InstagramBrandIcon />
             </a>
 
             <a
