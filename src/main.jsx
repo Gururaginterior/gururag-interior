@@ -1566,7 +1566,21 @@ const FESTIVAL_DATES = {
   2030:{"New Year":["2030-01-01","2030-01-03"],Pongal:["2030-01-14","2030-01-17"],"Krishna Jayanti":["2030-08-24","2030-08-26"],"Vinayagar Chaturthi":["2030-09-02","2030-09-04"],"Gandhi Jayanti":["2030-10-01","2030-10-03"],Diwali:["2030-11-04","2030-11-07"],Christmas:["2030-12-24","2030-12-26"]}
 };
 function autoFestivalPromo(){const now=new Date(),today=now.toISOString().slice(0,10),dates=FESTIVAL_DATES[now.getFullYear()]||{};for(const [name,[start,end]] of Object.entries(dates))if(today>=start&&today<=end)return {...DEFAULT_PROMO,type:"festival",name,title:name,image_url:FESTIVAL_IMAGES[name]||DEFAULT_PROMO.image_url,offer_text:"15% OFF"};return null;}
-function promoToPopup(item=DEFAULT_PROMO){const festival=item.type==="festival";return {eyebrow:festival?(item.name||"FESTIVE OFFER"):"LIMITED TIME OFFER",title:festival?(item.name||"FESTIVE OFFER"):"FREE DESIGN",highlight:festival?"SPECIAL OFFER":"CONSULTATION",description:item.description||DEFAULT_PROMO.description,badge:item.offer_text||"15% OFF",button:item.button_text||"Book a Free Consultation",image:item.image_url||FESTIVAL_IMAGES[item.name]||DEFAULT_PROMO.image_url,isFestival:festival};}
+function promoToPopup(item=DEFAULT_PROMO){
+  const festival=item.type==="festival";
+  const name=(item.name||"GURURAG INTERIOR").trim();
+  const heading=(item.title||DEFAULT_PROMO.title).trim();
+  return {
+    eyebrow:festival?(name||"FESTIVE OFFER"):(name||"GURURAG INTERIOR"),
+    title:festival?(name||"FESTIVE OFFER"):(heading||DEFAULT_PROMO.title),
+    highlight:festival?(heading||"SPECIAL OFFER"):"CONSULTATION",
+    description:item.description||DEFAULT_PROMO.description,
+    badge:item.offer_text||"15% OFF",
+    button:item.button_text||"Book a Free Consultation",
+    image:item.image_url||FESTIVAL_IMAGES[item.name]||DEFAULT_PROMO.image_url,
+    isFestival:festival
+  };
+}
 function OfferPopup({ open, promo, onClose }) {
   const [propertyType, setPropertyType] = useState("1 BHK");
   const [location, setLocation] = useState("");
