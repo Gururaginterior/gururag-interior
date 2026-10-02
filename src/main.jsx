@@ -21,7 +21,7 @@ import "./styles.css";
 import logo from "./logo.jpg";
 import founder from "./founder.jpg";
 
-const WHATSAPP = "https://wa.me/919940277984";
+const WHATSAPP = "https://wa.me/919789695878";
 const INSTAGRAM = "https://www.instagram.com/sgr_decors_interior_designer?stkn=bDNyaWVleDY2dDI=";
 const YOUTUBE = "https://www.youtube.com/@GuruRagSignaturehome";
 
@@ -256,22 +256,22 @@ const services = [
 
 const projects = [
   {
-    title: "Contemporary Living",
-    category: "Residential",
-    image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
-  },
-  {
     title: "Modern Kitchen",
     category: "Kitchen",
     image:
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=90",
   },
   {
+    title: "Contemporary Living",
+    category: "Residential",
+    image:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
+  },
+  {
     title: "Quiet Luxury Bedroom",
     category: "Bedroom",
     image:
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=90",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=90",
   },
   {
     title: "Modern Workspace",
@@ -284,6 +284,63 @@ const projects = [
 /* -------------------------------------------------------
    WHATSAPP LOGO
 ------------------------------------------------------- */
+
+/* -------------------------------------------------------
+   BRAND LOGOS
+------------------------------------------------------- */
+
+function InstagramBrandIcon({ size = 22 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Instagram"
+    >
+      <rect
+        x="3"
+        y="3"
+        width="18"
+        height="18"
+        rx="5"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+    </svg>
+  );
+}
+
+function YouTubeBrandIcon({ size = 22 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="YouTube"
+    >
+      <path
+        d="M21.2 7.1C20.98 6.28 20.33 5.64 19.51 5.42C18.02 5 12 5 12 5C12 5 5.98 5 4.49 5.42C3.67 5.64 3.02 6.28 2.8 7.1C2.4 8.59 2.4 12 2.4 12C2.4 12 2.4 15.41 2.8 16.9C3.02 17.72 3.67 18.36 4.49 18.58C5.98 19 12 19 12 19C12 19 18.02 19 19.51 18.58C20.33 18.36 20.98 17.72 21.2 16.9C21.6 15.41 21.6 12 21.6 12C21.6 12 21.6 8.59 21.2 7.1Z"
+        fill="currentColor"
+      />
+      <path
+        d="M10 15.5L15.5 12L10 8.5V15.5Z"
+        fill="#071827"
+      />
+    </svg>
+  );
+}
 
 function WhatsAppIcon({ size = 22 }) {
   return (
@@ -634,7 +691,7 @@ function Chatbot({ onWhatsApp }) {
       addBotMessage(data.reply);
     } catch (error) {
       addBotMessage(
-        "I can help with Gururag Interior services, design ideas, materials and project questions. For a live AI answer, please try again in a moment or contact us on WhatsApp at +91 99402 77984."
+        "I can help with Gururag Interior services, design ideas, materials and project questions. For a live AI answer, please try again in a moment or contact us on WhatsApp at +91 97896 95878."
       );
     } finally {
       setIsThinking(false);
@@ -703,7 +760,7 @@ function Chatbot({ onWhatsApp }) {
     /* CONTACT */
     if (isContactQuestion(text)) {
       addBotMessage(
-        "Sure. You can contact Gururag Interior directly on WhatsApp at +91 99402 77984. If you tell me your requirement first, I can also prepare the enquiry for you."
+        "Sure. You can contact Gururag Interior directly on WhatsApp at +91 97896 95878. If you tell me your requirement first, I can also prepare the enquiry for you."
       );
 
       setTimeout(() => {
@@ -1494,9 +1551,9 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
                   <div className="new-contact-mini">
                     <span>CONNECT WITH SARAN</span>
-                    <a href="tel:+919940277984">
+                    <a href="tel:+919789695878">
                       <Phone size={19} />
-                      <span>+91 99402 77984</span>
+                      <span>+91 97896 95878</span>
                       <ArrowUpRight size={17} />
                     </a>
                     <a href={WHATSAPP} target="_blank" rel="noreferrer">
@@ -1596,11 +1653,11 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 </div>
 
                 <div className="new-contact-actions">
-                  <a className="new-contact-action phone" href="tel:+919940277984">
+                  <a className="new-contact-action phone" href="tel:+919789695878">
                     <span className="new-action-icon"><Phone size={22} /></span>
                     <span className="new-action-copy">
                       <small>CALL DIRECTLY</small>
-                      <strong>+91 99402 77984</strong>
+                      <strong>+91 97896 95878</strong>
                     </span>
                     <ArrowUpRight size={19} />
                   </a>
@@ -1844,6 +1901,26 @@ function App() {
         </button>
 
         <div className="nav-actions">
+          <a
+            className="whatsapp-button"
+            href={INSTAGRAM}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Instagram"
+          >
+            <InstagramBrandIcon size={22} />
+          </a>
+
+          <a
+            className="whatsapp-button"
+            href={YOUTUBE}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="YouTube"
+          >
+            <YouTubeBrandIcon size={22} />
+          </a>
+
           <button
             className="whatsapp-button"
             aria-label="WhatsApp"
@@ -1968,8 +2045,8 @@ function App() {
                   Crafted with character.
                 </p>
 
-                <a href="tel:+919940277984">
-                  +91 99402 77984
+                <a href="tel:+919789695878">
+                  +91 97896 95878
                 </a>
               </div>
             </motion.div>
@@ -2546,9 +2623,9 @@ function App() {
             </p>
 
             <div className="contact-details">
-              <a href="tel:+919940277984">
+              <a href="tel:+919789695878">
                 <Phone />
-                +91 99402 77984
+                +91 97896 95878
               </a>
 
               <a
