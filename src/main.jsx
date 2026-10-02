@@ -256,22 +256,22 @@ const services = [
 
 const projects = [
   {
-    title: "Modern Kitchen",
-    category: "Kitchen",
-    image:
-      "https://images.unsplash.com/photo-1758240689297-d8613ca753f3?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=90&w=1600",
-  },
-  {
     title: "Contemporary Living",
     category: "Residential",
     image:
       "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
   },
   {
+    title: "Modern Kitchen",
+    category: "Kitchen",
+    image:
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=90",
+  },
+  {
     title: "Quiet Luxury Bedroom",
     category: "Bedroom",
     image:
-      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=90",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=90",
   },
   {
     title: "Modern Workspace",
@@ -285,54 +285,6 @@ const projects = [
    WHATSAPP LOGO
 ------------------------------------------------------- */
 
-/* -------------------------------------------------------
-   BRAND LOGOS
-------------------------------------------------------- */
-
-function InstagramBrandIcon({ size = 22 }) {
-  const gradientId = `instagramGradient-${size}`;
-
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Instagram"
-    >
-      <defs>
-        <linearGradient id={gradientId} x1="3" y1="21" x2="21" y2="3" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FFDC80" />
-          <stop offset="0.35" stopColor="#F77737" />
-          <stop offset="0.65" stopColor="#E1306C" />
-          <stop offset="1" stopColor="#833AB4" />
-        </linearGradient>
-      </defs>
-      <rect x="3" y="3" width="18" height="18" rx="5" fill={`url(#${gradientId})`} />
-      <rect x="7.2" y="7.2" width="9.6" height="9.6" rx="3" stroke="white" strokeWidth="1.9" />
-      <circle cx="12" cy="12" r="2.5" stroke="white" strokeWidth="1.9" />
-      <circle cx="16.5" cy="7.6" r="1.05" fill="white" />
-    </svg>
-  );
-}
-
-function YouTubeBrandIcon({ size = 22 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="YouTube"
-    >
-      <rect x="2.2" y="5" width="19.6" height="14" rx="4.2" fill="#FF0000" />
-      <path d="M10.2 8.5L16.1 12L10.2 15.5V8.5Z" fill="white" />
-    </svg>
-  );
-}
-
 function WhatsAppIcon({ size = 22 }) {
   return (
     <svg
@@ -345,10 +297,10 @@ function WhatsAppIcon({ size = 22 }) {
     >
       <path
         d="M16 3C8.82 3 3 8.82 3 16C3 18.3 3.6 20.46 4.65 22.34L3.1 28.9L9.82 27.38C11.65 28.4 13.77 29 16 29C23.18 29 29 23.18 29 16C29 8.82 23.18 3 16 3Z"
-        fill="#25D366"
+        fill="currentColor"
       />
       <path
-        d="M21.55 18.78C21.26 18.64 19.88 17.96 19.62 17.87C19.35 17.77 19.16 17.72 18.97 18.01C18.77 18.3 18.24 18.96 18.08 19.15C17.91 19.34 17.74 19.36 17.45 19.21C17.16 19.07 16.22 18.76 15.11 17.77C14.24 17 13.65 16.05 13.49 15.76C13.33 15.47 13.47 15.31 13.61 15.17C13.75 15.03 13.9 14.81 14.04 14.64C14.18 14.47 14.23 14.35 14.33 14.16C14.42 13.97 14.38 13.81 14.31 13.67C14.23 13.53 13.65 12.11 13.41 11.53C13.18 10.97 12.95 11.06 12.77 11.05C12.6 11.04 12.41 11.03 12.22 11.03C12.03 11.03 11.72 11.1 11.46 11.39C11.2 11.68 10.46 12.38 10.46 13.8C10.46 15.22 11.48 16.59 11.62 16.78C11.76 16.97 13.62 19.83 16.46 21.06C17.14 21.35 17.67 21.52 18.09 21.65C18.77 21.87 19.39 21.84 19.88 21.77C20.43 21.69 21.57 21.08 21.81 20.42C22.05 19.75 22.05 19.18 21.98 19.06C21.92 18.94 21.78 18.88 21.55 18.78Z"
+        d="M21.55 18.78C21.26 18.64 19.83 17.94 19.57 17.84C19.31 17.74 19.12 17.69 18.92 17.98C18.73 18.27 18.2 18.93 18.04 19.12C17.87 19.31 17.7 19.33 17.41 19.18C17.12 19.04 16.18 18.73 15.07 17.74C14.2 16.97 13.61 16.02 13.45 15.73C13.29 15.44 13.43 15.28 13.57 15.14C13.71 15 13.86 14.78 14 14.61C14.14 14.44 14.19 14.32 14.29 14.13C14.38 13.94 14.34 13.78 14.27 13.64C14.19 13.5 13.61 12.08 13.37 11.5C13.14 10.94 12.91 11.03 12.73 11.02C12.56 11.01 12.37 11 12.18 11C11.99 11 11.68 11.07 11.42 11.36C11.16 11.65 10.42 12.35 10.42 13.77C10.42 15.19 11.44 16.56 11.58 16.75C11.72 16.94 13.58 19.8 16.42 21.03C17.1 21.32 17.63 21.49 18.05 21.62C18.73 21.84 19.35 21.81 19.84 21.74C20.39 21.66 21.53 21.05 21.77 20.39C22.01 19.72 22.01 19.15 21.94 19.03C21.88 18.91 21.74 18.85 21.55 18.78Z"
         fill="white"
       />
     </svg>
@@ -531,7 +483,7 @@ function detectBudget(text) {
    CHATBOT
 ------------------------------------------------------- */
 
-function Chatbot({ onWhatsApp }) {
+function Chatbot({ onBooking }) {
   const [open, setOpen] = useState(false);
 
   const [messages, setMessages] = useState([
@@ -635,18 +587,13 @@ function Chatbot({ onWhatsApp }) {
   };
 
   const sendWhatsAppEnquiry = () => {
-    const serviceName =
-      activeService?.title || "Interior Services";
-
-    const customerName =
-      leadName.trim() || "Customer";
-
-    const message =
-      `Hi Sir, I'm ${customerName}. ` +
-      `I'm interested in ${serviceName} from Gururag Interior. ` +
-      `I discussed my requirement with the website assistant and would like to know more and get a quotation.`;
-
-    onWhatsApp(message);
+    onBooking({
+      name: leadName.trim() || "",
+      service: activeService?.title || "Interior Services",
+      source: "AI Assistant",
+      message:
+        "Customer enquired through the Gururag Interior website assistant and requested a quotation.",
+    });
   };
 
   const askAiAssistant = async (rawText) => {
@@ -718,7 +665,7 @@ function Chatbot({ onWhatsApp }) {
 
         setTimeout(() => {
           addBotMessage(
-            "You can continue asking me about the design, materials or budget. If you're ready, tap 'Send Enquiry on WhatsApp' below."
+            "You can continue asking me about the design, materials or budget. If you're ready, tap 'Book / Send Enquiry' below."
           );
         }, 250);
       } else {
@@ -1221,7 +1168,7 @@ function Chatbot({ onWhatsApp }) {
                   }
                 >
                   <WhatsAppIcon size={20} />
-                  Send Enquiry on WhatsApp
+                  Book / Send Enquiry
                 </button>
               )}
 
@@ -1503,12 +1450,11 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
                   <div className="new-founder-content">
                     <span className="new-page-label">FOUNDER / DESIGN VISION</span>
-                    <h3>Saran Raj</h3>
+                    <h3>Saran <em>Raj.</em></h3>
                     <p>
                       With over 13 years of experience across interior,
                       construction and renovation solutions, Saran Raj leads
-                      Gururag Interior, now operating under the name Sri Guru
-                      Ragavendra Decors, with a strong focus on craftsmanship,
+                      Gururag Interior with a strong focus on craftsmanship,
                       detail and client satisfaction.
                     </p>
                     <p>
@@ -1543,7 +1489,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
                   <div className="new-contact-mini">
                     <span>CONNECT WITH SARAN</span>
-                    <a href="tel:+919789695878">
+                    <a href="tel:+919940277984">
                       <Phone size={19} />
                       <span>+91 97896 95878</span>
                       <ArrowUpRight size={17} />
@@ -1645,7 +1591,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 </div>
 
                 <div className="new-contact-actions">
-                  <a className="new-contact-action phone" href="tel:+919789695878">
+                  <a className="new-contact-action phone" href="tel:+919940277984">
                     <span className="new-action-icon"><Phone size={22} /></span>
                     <span className="new-action-copy">
                       <small>CALL DIRECTLY</small>
@@ -1738,6 +1684,548 @@ function NewPageStyles() {
    MAIN APP
 ------------------------------------------------------- */
 
+
+/* -------------------------------------------------------
+   PROMOTION POPUP + WEBSITE BOOKING
+------------------------------------------------------- */
+
+const DEFAULT_NORMAL_PROMOTION = {
+  type: "normal",
+  name: "General",
+  title: "Ready to Transform Your Space?",
+  description:
+    "Tell us what you are planning and our team will help you with the right interior solution and quotation.",
+  offer_text: "Free consultation & quotation",
+  button_text: "Book a Consultation",
+  image_url:
+    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=90",
+  enabled: true,
+  sort_order: 0,
+};
+
+function getTodayDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function isPromotionActive(item, today) {
+  if (!item?.enabled) return false;
+
+  if (item.type === "normal") return true;
+
+  if (item.type !== "festival") return false;
+
+  const start = item.start_date || "0000-01-01";
+  const end = item.end_date || "9999-12-31";
+
+  return today >= start && today <= end;
+}
+
+function PromotionPopup({ onBooking }) {
+  const [open, setOpen] = useState(false);
+  const [promotions, setPromotions] = useState([]);
+  const [activePromotion, setActivePromotion] = useState(DEFAULT_NORMAL_PROMOTION);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadPromotions = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("promotions")
+          .select("*")
+          .eq("enabled", true)
+          .order("sort_order", { ascending: true })
+          .order("start_date", { ascending: false });
+
+        if (!mounted || error) return;
+
+        const rows = Array.isArray(data) ? data : [];
+        setPromotions(rows);
+
+        const today = getTodayDate();
+        const festival = rows.find(
+          (item) => item.type === "festival" && isPromotionActive(item, today)
+        );
+        const normal = rows.find(
+          (item) => item.type === "normal" && isPromotionActive(item, today)
+        );
+
+        setActivePromotion(festival || normal || DEFAULT_NORMAL_PROMOTION);
+      } catch {
+        if (mounted) setActivePromotion(DEFAULT_NORMAL_PROMOTION);
+      }
+    };
+
+    loadPromotions();
+
+    const timer = setTimeout(() => setOpen(true), 1200);
+
+    return () => {
+      mounted = false;
+      clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!promotions.length) return;
+
+    const today = getTodayDate();
+    const festival = promotions.find(
+      (item) => item.type === "festival" && isPromotionActive(item, today)
+    );
+    const normal = promotions.find(
+      (item) => item.type === "normal" && isPromotionActive(item, today)
+    );
+
+    setActivePromotion(festival || normal || DEFAULT_NORMAL_PROMOTION);
+  }, [promotions]);
+
+  const promotion = activePromotion || DEFAULT_NORMAL_PROMOTION;
+  const isFestival = promotion.type === "festival";
+
+  if (!open) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="promotion-popup-backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9997,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "18px",
+          background: "rgba(2, 10, 18, 0.72)",
+          backdropFilter: "blur(10px)",
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 35, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.35 }}
+          style={{
+            position: "relative",
+            width: "min(920px, 100%)",
+            maxHeight: "90vh",
+            overflow: "auto",
+            borderRadius: "28px",
+            background: "#071827",
+            border: "1px solid rgba(127, 255, 212, 0.28)",
+            boxShadow: "0 30px 100px rgba(0,0,0,.45)",
+          }}
+        >
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close promotion"
+            style={{
+              position: "absolute",
+              top: 14,
+              right: 14,
+              zIndex: 3,
+              width: 42,
+              height: 42,
+              borderRadius: "50%",
+              border: "1px solid rgba(255,255,255,.18)",
+              background: "rgba(0,0,0,.35)",
+              color: "white",
+              display: "grid",
+              placeItems: "center",
+              cursor: "pointer",
+            }}
+          >
+            <X size={20} />
+          </button>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+              minHeight: 390,
+            }}
+          >
+            <div
+              style={{
+                minHeight: 300,
+                backgroundImage: `linear-gradient(180deg, rgba(7,24,39,.08), rgba(7,24,39,.82)), url(${promotion.image_url || DEFAULT_NORMAL_PROMOTION.image_url})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+
+            <div
+              style={{
+                padding: "48px 34px 34px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              {isFestival && promotion.name && (
+                <div
+                  style={{
+                    display: "inline-flex",
+                    alignSelf: "flex-start",
+                    padding: "8px 13px",
+                    borderRadius: 999,
+                    background: "#f4d35e",
+                    color: "#071827",
+                    fontWeight: 800,
+                    fontSize: 12,
+                    letterSpacing: ".08em",
+                    textTransform: "uppercase",
+                    marginBottom: 16,
+                  }}
+                >
+                  {promotion.name}
+                </div>
+              )}
+
+              <div
+                style={{
+                  color: "#7fffd4",
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: ".14em",
+                  textTransform: "uppercase",
+                  marginBottom: 12,
+                }}
+              >
+                GURURAG INTERIOR
+              </div>
+
+              <h2
+                style={{
+                  margin: 0,
+                  color: "white",
+                  fontSize: "clamp(28px, 4vw, 46px)",
+                  lineHeight: 1.04,
+                  letterSpacing: "-.03em",
+                }}
+              >
+                {promotion.title || DEFAULT_NORMAL_PROMOTION.title}
+              </h2>
+
+              {promotion.offer_text && (
+                <div
+                  style={{
+                    marginTop: 18,
+                    color: "#f4d35e",
+                    fontWeight: 800,
+                    fontSize: 15,
+                  }}
+                >
+                  {promotion.offer_text}
+                </div>
+              )}
+
+              <p
+                style={{
+                  color: "rgba(255,255,255,.72)",
+                  lineHeight: 1.7,
+                  margin: "16px 0 24px",
+                }}
+              >
+                {promotion.description || DEFAULT_NORMAL_PROMOTION.description}
+              </p>
+
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  onBooking({
+                    source: isFestival ? `Festival Popup - ${promotion.name || "Festival"}` : "Website Popup",
+                    message: promotion.offer_text || promotion.description || "Customer opened the website promotion popup.",
+                  });
+                }}
+                style={{
+                  border: 0,
+                  borderRadius: 999,
+                  padding: "15px 22px",
+                  background: "#7fffd4",
+                  color: "#071827",
+                  fontWeight: 900,
+                  cursor: "pointer",
+                  fontSize: 14,
+                  width: "100%",
+                }}
+              >
+                {promotion.button_text || DEFAULT_NORMAL_PROMOTION.button_text}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function BookingModal({ initialData, onClose }) {
+  const [form, setForm] = useState({
+    name: initialData?.name || "",
+    phone: "",
+    service: initialData?.service || "",
+    date: "",
+    message: initialData?.message || "",
+  });
+  const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setForm({
+      name: initialData?.name || "",
+      phone: "",
+      service: initialData?.service || "",
+      date: "",
+      message: initialData?.message || "",
+    });
+    setSuccess(false);
+    setError("");
+  }, [initialData]);
+
+  const update = (key, value) => {
+    setForm((current) => ({ ...current, [key]: value }));
+  };
+
+  const submit = async (event) => {
+    event.preventDefault();
+    setError("");
+
+    if (!form.name.trim() || !form.phone.trim()) {
+      setError("Please enter your name and phone number.");
+      return;
+    }
+
+    setSaving(true);
+
+    const booking = {
+      customer_name: form.name.trim(),
+      phone: form.phone.trim(),
+      service: form.service.trim() || "Interior Services",
+      preferred_date: form.date || null,
+      message: form.message.trim(),
+      source: initialData?.source || "Website",
+    };
+
+    try {
+      const { data, error: insertError } = await supabase
+        .from("bookings")
+        .insert(booking)
+        .select("*")
+        .single();
+
+      if (insertError) throw insertError;
+
+      try {
+        await fetch("/api/booking-notify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            booking: data || booking,
+          }),
+        });
+      } catch {
+        // The booking is already saved. Notification can be retried/configured separately.
+      }
+
+      setSuccess(true);
+    } catch (err) {
+      setError(
+        err?.message ||
+          "Booking could not be saved right now. Please try again."
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9999,
+          background: "rgba(2,10,18,.78)",
+          backdropFilter: "blur(10px)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 18,
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 25, scale: .96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          style={{
+            width: "min(560px,100%)",
+            maxHeight: "92vh",
+            overflow: "auto",
+            borderRadius: 26,
+            padding: 28,
+            background: "#071827",
+            border: "1px solid rgba(127,255,212,.25)",
+            boxShadow: "0 30px 100px rgba(0,0,0,.45)",
+            color: "white",
+            position: "relative",
+          }}
+        >
+          <button
+            onClick={onClose}
+            style={{
+              position: "absolute",
+              right: 14,
+              top: 14,
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              border: "1px solid rgba(255,255,255,.16)",
+              background: "rgba(255,255,255,.06)",
+              color: "white",
+              cursor: "pointer",
+              display: "grid",
+              placeItems: "center",
+            }}
+          >
+            <X size={19} />
+          </button>
+
+          {!success ? (
+            <>
+              <div style={{ color: "#7fffd4", fontWeight: 800, fontSize: 12, letterSpacing: ".14em" }}>
+                GURURAG INTERIOR
+              </div>
+              <h2 style={{ margin: "9px 0 8px", fontSize: 30 }}>
+                Book a Consultation
+              </h2>
+              <p style={{ color: "rgba(255,255,255,.68)", lineHeight: 1.6, marginTop: 0 }}>
+                Share your requirement. Your details will be sent to the Gururag Interior team.
+              </p>
+
+              <form onSubmit={submit} style={{ display: "grid", gap: 13 }}>
+                {[
+                  ["name", "Your Name", "text"],
+                  ["phone", "Phone Number", "tel"],
+                  ["service", "Service / Requirement", "text"],
+                  ["date", "Preferred Date", "date"],
+                ].map(([key, label, type]) => (
+                  <label key={key} style={{ display: "grid", gap: 7, fontSize: 13, color: "rgba(255,255,255,.78)" }}>
+                    {label}
+                    <input
+                      type={type}
+                      value={form[key]}
+                      onChange={(e) => update(key, e.target.value)}
+                      required={key === "name" || key === "phone"}
+                      style={{
+                        width: "100%",
+                        boxSizing: "border-box",
+                        borderRadius: 13,
+                        border: "1px solid rgba(255,255,255,.13)",
+                        background: "rgba(255,255,255,.055)",
+                        color: "white",
+                        padding: "13px 14px",
+                        outline: "none",
+                      }}
+                    />
+                  </label>
+                ))}
+
+                <label style={{ display: "grid", gap: 7, fontSize: 13, color: "rgba(255,255,255,.78)" }}>
+                  Message
+                  <textarea
+                    value={form.message}
+                    onChange={(e) => update("message", e.target.value)}
+                    rows={4}
+                    placeholder="Tell us about your project..."
+                    style={{
+                      width: "100%",
+                      boxSizing: "border-box",
+                      resize: "vertical",
+                      borderRadius: 13,
+                      border: "1px solid rgba(255,255,255,.13)",
+                      background: "rgba(255,255,255,.055)",
+                      color: "white",
+                      padding: "13px 14px",
+                      outline: "none",
+                    }}
+                  />
+                </label>
+
+                {error && (
+                  <div style={{ color: "#ff9f9f", fontSize: 13 }}>{error}</div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={saving}
+                  style={{
+                    marginTop: 4,
+                    border: 0,
+                    borderRadius: 999,
+                    padding: "14px 18px",
+                    background: saving ? "#55766f" : "#7fffd4",
+                    color: "#071827",
+                    fontWeight: 900,
+                    cursor: saving ? "wait" : "pointer",
+                  }}
+                >
+                  {saving ? "Sending..." : "Submit Booking"}
+                </button>
+              </form>
+            </>
+          ) : (
+            <div style={{ textAlign: "center", padding: "35px 10px" }}>
+              <div
+                style={{
+                  width: 64,
+                  height: 64,
+                  margin: "0 auto 18px",
+                  borderRadius: "50%",
+                  background: "#7fffd4",
+                  color: "#071827",
+                  display: "grid",
+                  placeItems: "center",
+                }}
+              >
+                <Check size={30} />
+              </div>
+              <h2 style={{ margin: 0, fontSize: 30 }}>Booking Received</h2>
+              <p style={{ color: "rgba(255,255,255,.7)", lineHeight: 1.7 }}>
+                Thank you. Your enquiry has been saved successfully. The Gururag Interior team will contact you soon.
+              </p>
+              <button
+                onClick={onClose}
+                style={{
+                  border: 0,
+                  borderRadius: 999,
+                  padding: "13px 24px",
+                  background: "#7fffd4",
+                  color: "#071827",
+                  fontWeight: 900,
+                  cursor: "pointer",
+                }}
+              >
+                Done
+              </button>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 function App() {
   const [menu, setMenu] = useState(false);
   const [service, setService] = useState(0);
@@ -1745,6 +2233,8 @@ function App() {
   const [ownerOpen, setOwnerOpen] = useState(false);
   const [managedServices, setManagedServices] = useState(services);
   const [managedProjects, setManagedProjects] = useState(projects);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingData, setBookingData] = useState({});
 
   useEffect(() => {
     let mounted = true;
@@ -1852,6 +2342,11 @@ function App() {
     );
   };
 
+  const openBooking = (data = {}) => {
+    setBookingData(data || {});
+    setBookingOpen(true);
+  };
+
   const nextService = () => {
     setService(
       (current) =>
@@ -1871,6 +2366,8 @@ function App() {
 
   return (
     <div className="website">
+
+      <PromotionPopup onBooking={openBooking} />
 
       {/* NAVBAR */}
 
@@ -1893,26 +2390,6 @@ function App() {
         </button>
 
         <div className="nav-actions">
-          <a
-            className="whatsapp-button"
-            href={INSTAGRAM}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-          >
-            <InstagramBrandIcon size={22} />
-          </a>
-
-          <a
-            className="whatsapp-button"
-            href={YOUTUBE}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="YouTube"
-          >
-            <YouTubeBrandIcon size={22} />
-          </a>
-
           <button
             className="whatsapp-button"
             aria-label="WhatsApp"
@@ -2037,7 +2514,7 @@ function App() {
                   Crafted with character.
                 </p>
 
-                <a href="tel:+919789695878">
+                <a href="tel:+919940277984">
                   +91 97896 95878
                 </a>
               </div>
@@ -2311,8 +2788,8 @@ function App() {
               THE PERSON BEHIND THE VISION
             </div>
             <h3 style={{ whiteSpace: "nowrap" }}>
-              Saran Raj
-            </h3>
+  Saran <em>Raj.</em>
+</h3>
             <div className="stats">
               <div>
                 <strong>13+</strong>
@@ -2330,15 +2807,20 @@ function App() {
             </div>
 
             <p>
-              With over 13 years of experience across interior, construction
-              and renovation solutions, Saran Raj leads Gururag Interior, now
-              operating under the name Sri Guru Ragavendra Decors, with a
-              strong focus on craftsmanship, detail and client satisfaction.
+              With over 13 years of experience
+              across interior, construction and
+              renovation solutions, Saran Raj
+              leads Gururag Interior with a
+              strong focus on craftsmanship,
+              detail and client satisfaction.
             </p>
 
             <p>
-              His approach brings design and practical execution together,
-              creating spaces that feel distinctive, comfortable and personal.
+              His approach combines thoughtful
+              design with practical execution,
+              creating spaces that are distinctive,
+              comfortable and built around the
+              people who use them.
             </p>
 
             <div className="signature">
@@ -2610,7 +3092,7 @@ function App() {
             </p>
 
             <div className="contact-details">
-              <a href="tel:+919789695878">
+              <a href="tel:+919940277984">
                 <Phone />
                 +91 97896 95878
               </a>
@@ -2752,8 +3234,15 @@ function App() {
 
       {/* CONVERSATIONAL CHAT ASSISTANT */}
 
+      {bookingOpen && (
+        <BookingModal
+          initialData={bookingData}
+          onClose={() => setBookingOpen(false)}
+        />
+      )}
+
       <Chatbot
-        onWhatsApp={whatsapp}
+        onBooking={openBooking}
       />
     </div>
   );
