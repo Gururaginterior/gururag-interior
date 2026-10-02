@@ -1720,16 +1720,31 @@ function NewPageStyles() {
 }
 
 const DEFAULT_PROMO = {
-  type: "normal", name: "GURURAG INTERIOR", title: "FREE DESIGN",
+  type: "normal", name: "LIMITED TIME OFFER", title: "FREE DESIGN",
   description: "Tell us about your space, property type and location. Our team will guide you towards the right interior solution.",
   offer_text: "15% OFF", button_text: "Book a Free Consultation",
   image_url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",
 };
 
+const FESTIVAL_DATES = {
+  2026: { Diwali:["2026-11-07","2026-11-10"], "Gandhi Jayanti":["2026-10-01","2026-10-03"], Pongal:["2026-01-13","2026-01-17"], "New Year":["2026-01-01","2026-01-03"] },
+  2027: { Diwali:["2027-10-28","2027-10-31"], "Gandhi Jayanti":["2027-10-01","2027-10-03"], Pongal:["2027-01-13","2027-01-17"], "New Year":["2027-01-01","2027-01-03"] },
+  2028: { Diwali:["2028-10-16","2028-10-19"], "Gandhi Jayanti":["2028-10-01","2028-10-03"], Pongal:["2028-01-13","2028-01-17"], "New Year":["2028-01-01","2028-01-03"] },
+  2029: { Diwali:["2029-10-15","2029-10-18"], "Gandhi Jayanti":["2029-10-01","2029-10-03"], Pongal:["2029-01-13","2029-01-17"], "New Year":["2029-01-01","2029-01-03"] },
+  2030: { Diwali:["2030-11-04","2030-11-07"], "Gandhi Jayanti":["2030-10-01","2030-10-03"], Pongal:["2030-01-13","2030-01-17"], "New Year":["2030-01-01","2030-01-03"] },
+};
+
+function autoFestivalPromo() {
+  const today = new Date().toISOString().slice(0,10), year = new Date().getFullYear(), dates = FESTIVAL_DATES[year] || {};
+  for (const [name,[start,end]] of Object.entries(dates)) if (today >= start && today <= end) return { ...DEFAULT_PROMO, type:"festival", name, title:name, offer_text:"15% OFF" };
+  return null;
+}
+
 function promoToPopup(item = DEFAULT_PROMO) {
   return {
-    eyebrow: item.type === "festival" ? (item.name || "FESTIVE OFFER") : "GURURAG INTERIOR",
-    title: "FREE DESIGN", highlight: "CONSULTATION",
+    eyebrow: item.type === "festival" ? (item.name || "FESTIVE OFFER") : "LIMITED TIME OFFER",
+    title: item.type === "festival" ? (item.name || "FESTIVE OFFER") : "FREE DESIGN",
+    highlight: item.type === "festival" ? "SPECIAL OFFER" : "CONSULTATION",
     description: item.description || DEFAULT_PROMO.description,
     badge: item.offer_text || "15% OFF",
     button: item.button_text || "Book a Free Consultation",
@@ -1877,10 +1892,6 @@ function OfferPopup({ open, promo, onClose }) {
                     </button>
                   )
                 )}
-              </div>
-
-              <div className="offer-space-note">
-                <span>We design around your space, lifestyle and budget.</span>
               </div>
 
               <label className="offer-input">
@@ -2082,7 +2093,7 @@ function OfferPopupStyles() {
       .offer-popup-banner-copy>span{grid-column:1/-1;color:#9ee7cf;font-size:10px;font-weight:900;letter-spacing:.22em;margin-bottom:-4px}
       .offer-popup-banner-copy>strong{grid-column:1;color:#fff;font-size:clamp(38px,6vw,66px);line-height:.9;letter-spacing:-.055em;font-weight:700}
       .offer-popup-banner-copy>em{grid-column:1;color:#f3d36a;font-family:Georgia,serif;font-size:clamp(20px,3vw,30px);font-style:italic;margin-top:-5px}
-      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;margin:0;padding:14px 20px;border-radius:16px;background:#f3d36a;color:#071827;font-size:clamp(18px,3vw,28px);letter-spacing:.03em;font-weight:900;box-shadow:0 12px 30px rgba(0,0,0,.22)}
+      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;min-width:150px;padding:13px 18px;border:1px solid rgba(243,211,106,.72);border-radius:18px;background:linear-gradient(145deg,rgba(7,24,39,.86),rgba(7,24,39,.58));color:#f3d36a;text-align:center;font-size:clamp(22px,3.4vw,34px);line-height:1;font-weight:900;box-shadow:0 14px 35px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.08)}.offer-popup-banner-copy>b:before{content:"SPECIAL OFFER";display:block;color:#9ee7cf;font-size:8px;letter-spacing:.18em;margin-bottom:7px}.offer-popup-banner-copy>b:after{content:"INTERIOR SOLUTIONS";display:block;color:rgba(255,255,255,.72);font-size:7px;letter-spacing:.12em;margin-top:7px}
 
       .offer-popup-consultation-title{
         background:#9ee7cf;
@@ -2141,22 +2152,6 @@ function OfferPopupStyles() {
         color:#fff;
         border-color:#0c6f73;
         box-shadow:0 8px 20px rgba(12,111,115,.18);
-      }
-
-      .offer-space-note{
-        display:flex;
-        align-items:center;
-        gap:9px;
-        margin:16px 0 20px;
-        color:#1c242c;
-        font-size:15px;
-        line-height:1.4;
-      }
-
-      .offer-house-icon{
-        color:#0c6f73;
-        font-size:27px;
-        line-height:1;
       }
 
       .offer-input,
@@ -2448,11 +2443,6 @@ function OfferPopupStyles() {
           border-radius:11px;
         }
 
-        .offer-space-note{
-          margin:12px 0 15px;
-          font-size:12px;
-        }
-
         .offer-input,
         .offer-phone-input{
           min-height:51px;
@@ -2596,21 +2586,21 @@ function App() {
           );
         }
 
-        if (!promotionsResult.error && promotionsResult.data?.length) {
-          const today = new Date().toISOString().slice(0, 10);
-          const festival = promotionsResult.data.find((p) => p.type === "festival" && p.start_date <= today && p.end_date >= today);
-          const normal = promotionsResult.data.find((p) => p.type === "normal");
-          setPopupPromotion(festival || normal || DEFAULT_PROMO);
-        }
+        const today = new Date().toISOString().slice(0,10);
+        const dbFestival = !promotionsResult.error ? promotionsResult.data?.find(p => p.type === "festival" && p.start_date <= today && p.end_date >= today) : null;
+        const dbNormal = !promotionsResult.error ? promotionsResult.data?.find(p => p.type === "normal") : null;
+        setPopupPromotion(dbFestival || autoFestivalPromo() || dbNormal || DEFAULT_PROMO);
       } catch {
         // Keep the original static website content if Supabase is unavailable.
       }
     };
 
     loadManagedContent();
+    const festivalTimer = setInterval(loadManagedContent, 60000);
 
     return () => {
       mounted = false;
+      clearInterval(festivalTimer);
     };
   }, []);
 
