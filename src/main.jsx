@@ -1322,7 +1322,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     <p>
                       The company, previously operating under the name Sri Guru
                       Ragavendra Decors, has now evolved into Guru Rags Signature
-                      Homes 鈥� a new identity that reflects our continued growth,
+                      Homes - a new identity that reflects our continued growth,
                       refined design approach and commitment to delivering
                       distinctive spaces.
                     </p>
@@ -1342,7 +1342,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     </p>
                     <p>
                       At Guru Rags Signature Homes, we believe that a
-                      well-designed space is more than just beautiful 鈥� it should
+                      well-designed space is more than just beautiful - it should
                       reflect the people who live in it.
                     </p>
                     <div className="new-stat-row">
@@ -2814,13 +2814,13 @@ function App() {
             </div>
             <p>
               With over 13 years of experience across interior, construction
-              and renovation solutions, Saran Raj leads Gururag Interior, now
-              operating under the name Sri Guru Ragavendra Decors, with a
+              and renovation solutions, Saran Raj leads Gururag Interior with a
               strong focus on craftsmanship, detail and client satisfaction.
-            </p>
-            <p>
-              His approach brings design and practical execution together,
-              creating spaces that feel distinctive, comfortable and personal.
+              The company, previously operating as Sri Guru Ragavendra Decors,
+              has now evolved into Guru Rags Signature Homes - a new identity
+              reflecting our continued growth and refined design approach. His
+              approach brings design and practical execution together, creating
+              spaces that feel distinctive, comfortable and personal.
             </p>
             <div className="signature">
               Saran Raj
