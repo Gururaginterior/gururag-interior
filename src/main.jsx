@@ -6430,7 +6430,7 @@ function OfferPopupStyles() {
         .offer-popup-banner{ 
 
 
-          height:205px; 
+          height:235px; 
 
 
         } 
@@ -6808,7 +6808,7 @@ function OfferPopupStyles() {
         .offer-popup-banner{ 
 
 
-          height:184px; 
+          height:215px; 
 
 
         } 
