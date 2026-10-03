@@ -20,11 +20,7 @@ const CUSTOMER_LANGUAGE =
   process.env.WHATSAPP_CUSTOMER_TEMPLATE_LANGUAGE ||
   OWNER_LANGUAGE;
 
-
-// -----------------------------
 // Helpers
-// -----------------------------
-
 const clean = (value, max = 500) => {
   return String(value ?? "")
     .trim()
@@ -37,8 +33,6 @@ const phone = (value) => {
     .slice(0, 20);
 };
 
-
-// Convert Indian 10-digit number to WhatsApp international format
 const customerWhatsAppPhone = (value) => {
   const digits = phone(value);
 
@@ -53,26 +47,20 @@ const customerWhatsAppPhone = (value) => {
   return digits;
 };
 
-
-// Extract values from the existing frontend message
 const extractBookingDetails = (message) => {
   const text = String(message || "");
 
-  const propertyMatch = text.match(
-    /Property:\s*([^|]+)/i
-  );
+  const propertyMatch =
+    text.match(/Property:\s*([^|]+)/i);
 
-  const locationMatch = text.match(
-    /Location:\s*([^|]+)/i
-  );
+  const locationMatch =
+    text.match(/Location:\s*([^|]+)/i);
 
-  const offerMatch = text.match(
-    /Offer:\s*([^|]+)/i
-  );
+  const offerMatch =
+    text.match(/Offer:\s*([^|]+)/i);
 
-  const whatsappMatch = text.match(
-    /WhatsApp Updates:\s*(Yes|No)/i
-  );
+  const whatsappMatch =
+    text.match(/WhatsApp Updates:\s*(Yes|No)/i);
 
   return {
     property: clean(
@@ -94,11 +82,6 @@ const extractBookingDetails = (message) => {
       whatsappMatch?.[1]?.toLowerCase() === "yes"
   };
 };
-
-
-// -----------------------------
-// WhatsApp Template Sender
-// -----------------------------
 
 async function sendTemplate(
   to,
@@ -155,13 +138,7 @@ async function sendTemplate(
   };
 }
 
-
-// -----------------------------
-// API Handler
-// -----------------------------
-
 export default async function handler(req, res) {
-
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed."
@@ -169,14 +146,10 @@ export default async function handler(req, res) {
   }
 
   try {
-
-    // Frontend already saves booking into Supabase.
-    // This API only sends WhatsApp notifications.
     const booking =
       req.body?.booking ||
       req.body ||
       {};
-
 
     const name = clean(
       booking.customer_name ||
@@ -184,12 +157,10 @@ export default async function handler(req, res) {
       100
     );
 
-
     const customerPhone =
       customerWhatsAppPhone(
         booking.phone
       );
-
 
     const service = clean(
       booking.service ||
@@ -197,16 +168,13 @@ export default async function handler(req, res) {
       120
     );
 
-
     const message = clean(
       booking.message,
       1000
     );
 
-
     const details =
       extractBookingDetails(message);
-
 
     const property = clean(
       booking.property_type ||
@@ -215,14 +183,12 @@ export default async function handler(req, res) {
       100
     );
 
-
     const location = clean(
       booking.location ||
       details.location ||
       "Not provided",
       150
     );
-
 
     const offer = clean(
       booking.offer ||
@@ -231,14 +197,8 @@ export default async function handler(req, res) {
       80
     );
 
-
     const wantsWhatsApp =
       details.wantsWhatsApp;
-
-
-    // -----------------------------
-    // Basic validation
-    // -----------------------------
 
     if (
       !name ||
@@ -250,17 +210,11 @@ export default async function handler(req, res) {
       });
     }
 
-
-    // -----------------------------
-    // WhatsApp configuration check
-    // -----------------------------
-
     if (
       !WA_TOKEN ||
       !WA_PHONE_ID ||
       !OWNER_PHONE
     ) {
-
       console.log(
         "WhatsApp notification is not configured."
       );
@@ -271,10 +225,9 @@ export default async function handler(req, res) {
       });
     }
 
-
-    // -----------------------------
-    // Founder / Owner Notification
-    // -----------------------------
+    // ------------------------------------------------
+    // 1. SEND NEW BOOKING TO OWNER / BOSS
+    // ------------------------------------------------
 
     const owner =
       await sendTemplate(
@@ -290,22 +243,21 @@ export default async function handler(req, res) {
         ]
       );
 
-
-    // -----------------------------
-    // Customer WhatsApp Thank You
-    // -----------------------------
+    // ------------------------------------------------
+    // 2. SEND THANK-YOU MESSAGE TO CUSTOMER
+    // ------------------------------------------------
+    // Customer message is sent only when the customer
+    // has opted in for WhatsApp updates.
 
     let customer = {
       ok: false,
       skipped: true
     };
 
-
     if (
       wantsWhatsApp &&
       CUSTOMER_TEMPLATE
     ) {
-
       customer =
         await sendTemplate(
           customerPhone,
@@ -319,11 +271,6 @@ export default async function handler(req, res) {
           ]
         );
     }
-
-
-    // -----------------------------
-    // Server Log
-    // -----------------------------
 
     console.log(
       "Booking WhatsApp notification:",
@@ -359,13 +306,7 @@ export default async function handler(req, res) {
       }
     );
 
-
-    // -----------------------------
-    // Response
-    // -----------------------------
-
     return res.status(200).json({
-
       ok: true,
 
       founderNotification:
@@ -380,7 +321,6 @@ export default async function handler(req, res) {
             ? "sent"
             : "failed"
     });
-
 
   } catch (error) {
 
