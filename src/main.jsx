@@ -4638,7 +4638,18 @@ function TypewriterText({ lines }) {
 
 
 
-function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedProjects }) {  
+function getYouTubeVideoId(url = "") {
+  const value = String(url || "").trim();
+  if (!value) return "";
+  const patterns = [/[?&]v=([^&#]+)/i, /youtu\.be\/([^?&#/]+)/i, /youtube\.com\/(?:shorts|embed|live)\/([^?&#/]+)/i];
+  for (const pattern of patterns) {
+    const match = value.match(pattern);
+    if (match?.[1]) return match[1];
+  }
+  return "";
+}
+
+function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedProjects, managedProjectVideos, showcaseProjects }) {  
 
 
 
@@ -4706,11 +4717,37 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
-    contact: {  
+    showcase: {
 
 
 
-      number: "05",  
+
+      number: "05",
+
+
+
+
+      eyebrow: "PROJECT SHOWCASE",
+
+
+
+
+      title: "Project images.\nProject videos.",
+
+
+
+
+    },
+
+
+
+
+    contact: {
+
+
+
+
+      number: "06",  
 
 
 
@@ -5205,6 +5242,12 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                 </p>  
 
 
+
+              )}
+
+              {page === "showcase" && (
+
+                <p>Project images and project videos.</p>
 
               )}  
 
@@ -5798,7 +5841,154 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
-            {page === "contact" && (  
+            {page === "showcase" && (
+
+  
+
+
+
+              <div className="project-showcase-content">
+
+  
+
+
+
+                <section className="project-showcase-section">
+  
+
+
+
+                  <div className="project-showcase-section-heading">
+  
+
+
+
+                    <span className="new-page-label">PROJECT IMAGES</span>
+  
+
+
+
+                  </div>
+  
+
+
+
+                  <div className="project-showcase-image-grid">
+  
+
+
+
+                    {showcaseProjects.length ? showcaseProjects.map((project, index) => (
+  
+
+
+
+                      <motion.article
+  
+
+
+
+                        className="project-showcase-image-card"
+  
+
+
+
+                        key={project.id || project.title || index}
+  
+
+
+
+                        initial={{ opacity: 0, y: 22 }}
+  
+
+
+
+                        animate={{ opacity: 1, y: 0 }}
+  
+
+
+
+                        transition={{ delay: index * 0.06 }}
+  
+
+
+
+                      >
+  
+
+
+
+                        <img src={project.image} alt={project.title || "Project"} />
+  
+
+
+
+                      </motion.article>
+  
+
+
+
+                    )) : <div className="project-showcase-empty">No project images added yet.</div>}
+  
+
+
+
+                  </div>
+  
+
+
+
+                </section>
+
+  
+
+
+
+                <section className="project-showcase-section">
+  
+
+
+
+                  <div className="project-showcase-section-heading">
+  
+
+
+
+                    <span className="new-page-label">PROJECT VIDEOS</span>
+  
+
+
+
+                  </div>
+  
+
+
+
+                  <ProjectVideoGallery videos={managedProjectVideos} />
+  
+
+
+
+                </section>
+
+  
+
+
+
+              </div>
+
+  
+
+
+
+            )}
+
+  
+
+
+
+            {page === "contact" && (
+  
 
 
 
@@ -6114,6 +6304,39 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
+function ProjectVideoGallery({ videos = [] }) {
+  const [activeVideo, setActiveVideo] = useState(null);
+  const validVideos = videos.map((video) => ({
+    ...video,
+    youtubeId: video.youtube_id || getYouTubeVideoId(video.youtube_url || video.url || ""),
+  })).filter((video) => video.youtubeId);
+
+  return (
+    <>
+      <div className="project-showcase-video-grid">
+        {validVideos.length ? validVideos.map((video, index) => (
+          <motion.button type="button" className="project-showcase-video-card" key={video.id || video.youtubeId || index} onClick={() => setActiveVideo(video)} initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}>
+            <img src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`} alt="Project video" />
+            <span className="project-showcase-play" aria-hidden="true"><span /></span>
+          </motion.button>
+        )) : <div className="project-showcase-empty">No project videos added yet.</div>}
+      </div>
+      <AnimatePresence>
+        {activeVideo?.youtubeId && (
+          <motion.div className="project-video-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveVideo(null); }}>
+            <motion.div className="project-video-modal-card" initial={{ opacity: 0, scale: 0.94, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.94, y: 18 }}>
+              <button type="button" className="project-video-modal-close" onClick={() => setActiveVideo(null)} aria-label="Close project video"><X size={21} /></button>
+              <div className="project-video-frame">
+                <iframe src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`} title="Project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 function NewPageStyles() {  
 
 
@@ -6166,18 +6389,17 @@ function NewPageStyles() {
 
 
 
-      .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}  
-
-
+      .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}
+      .project-showcase-content{display:flex;flex-direction:column;gap:42px;padding-bottom:20px}.project-showcase-section{display:flex;flex-direction:column;gap:16px}.project-showcase-section-heading{display:flex;align-items:center;justify-content:space-between}.project-showcase-image-grid,.project-showcase-video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.project-showcase-image-card,.project-showcase-video-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(255,255,255,.045);padding:0}.project-showcase-image-card{aspect-ratio:1.25}.project-showcase-image-card img,.project-showcase-video-card img{width:100%;height:100%;object-fit:cover;display:block}.project-showcase-video-card{aspect-ratio:16/9;cursor:pointer;text-align:left}.project-showcase-video-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.32));pointer-events:none}.project-showcase-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:#f3d36a;color:#071827;display:grid;place-items:center;z-index:2;box-shadow:0 10px 30px rgba(0,0,0,.3)}.project-showcase-play span{display:block;margin-left:4px;width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid #071827}.project-showcase-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.16);border-radius:18px;padding:34px;text-align:center;color:rgba(255,255,255,.48);font-size:12px}.project-video-modal{position:fixed;inset:0;z-index:2500;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px}.project-video-modal-card{position:relative;width:min(900px,94vw);background:#071827;border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:12px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.project-video-modal-close{position:absolute;right:-12px;top:-12px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:#071827;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:3}.project-video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:13px;overflow:hidden;background:#000}.project-video-frame iframe{width:100%;height:100%;border:0;display:block}
 
       .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action.youtube:before{background:#ff6b6b}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-contact-action.youtube .new-action-icon{color:#ff8a8a}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}  
 
 
 
-      @media(max-width:800px){.new-page-overlay{padding:10px}.new-page-shell{width:calc(100vw - 20px);height:88dvh;min-height:0;border-radius:24px;border:1px solid rgba(255,255,255,.13)}.new-page-topbar{height:64px;min-height:64px;padding:0 12px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 64px);padding:28px 17px 42px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}} 
+      @media(max-width:800px){.new-page-overlay{padding:10px}.new-page-shell{width:calc(100vw - 20px);height:88dvh;min-height:0;border-radius:24px;border:1px solid rgba(255,255,255,.13)}.new-page-topbar{height:64px;min-height:64px;padding:0 12px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 64px);padding:28px 17px 42px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:repeat(2,1fr)}.project-video-modal{padding:12px}.project-video-modal-card{width:96vw}.project-video-modal-close{right:6px;top:6px}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}} 
 
 
-       @media(max-width:430px){.new-page-overlay{padding:8px}.new-page-shell{width:calc(100vw - 16px);height:86dvh;border-radius:22px}.new-page-topbar{padding:0 9px;gap:5px;height:60px;min-height:60px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}.new-page-scroll{height:calc(100% - 60px);padding:25px 14px 36px}}  
+       @media(max-width:430px){.new-page-overlay{padding:8px}.new-page-shell{width:calc(100vw - 16px);height:86dvh;border-radius:22px}.new-page-topbar{padding:0 9px;gap:5px;height:60px;min-height:60px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}.new-page-scroll{height:calc(100% - 60px);padding:25px 14px 36px}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:1fr;gap:13px}.project-showcase-image-card{aspect-ratio:1.15}.project-showcase-play{width:52px;height:52px}}  
 
 
 
@@ -8513,7 +8735,7 @@ function OfferPopupStyles() {
 
 
       }  
-      .warranty-floating-button{position:fixed;z-index:3001;right:24px;bottom:148px;min-height:45px;width:208px;padding:0 16px;border:1px solid rgba(243,211,106,.48);border-radius:999px;background:rgba(7,24,39,.96);color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:900;letter-spacing:.07em;box-shadow:0 12px 35px rgba(0,0,0,.24),0 0 25px rgba(243,211,106,.08);cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:.25s}.warranty-floating-badge{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;background:#f3d36a;color:#071827;clip-path:polygon(50% 0%,90% 15%,100% 52%,82% 86%,50% 100%,18% 86%,0 52%,10% 15%)}.warranty-floating-button:hover{transform:translateY(-3px);background:#9ee7cf;color:#071827;border-color:#9ee7cf;box-shadow:0 15px 40px rgba(0,0,0,.28)}
+      .warranty-floating-button{position:fixed;z-index:3001;right:54px;top:31vh;min-height:45px;width:208px;padding:0 16px;border:1px solid rgba(243,211,106,.48);border-radius:999px;background:rgba(7,24,39,.96);color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:900;letter-spacing:.07em;box-shadow:0 12px 35px rgba(0,0,0,.24),0 0 25px rgba(243,211,106,.08);cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:.25s}.warranty-floating-badge{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;background:#f3d36a;color:#071827;clip-path:polygon(50% 0%,90% 15%,100% 52%,82% 86%,50% 100%,18% 86%,0 52%,10% 15%)}.warranty-floating-button:hover{transform:translateY(-3px);background:#9ee7cf;color:#071827;border-color:#9ee7cf;box-shadow:0 15px 40px rgba(0,0,0,.28)}
 
 
 
@@ -9186,9 +9408,13 @@ function OfferPopupStyles() {
 
 
 
-        .quote-floating-button{  
+        .warranty-floating-button{top:31vh;right:18px;width:190px;min-height:42px;padding:0 13px;font-size:10px}
+
+  
 
 
+
+        .quote-floating-button{
 
           right:12px;  
 
@@ -9350,7 +9576,9 @@ function App() {
 
 
 
-  const [managedProjects, setManagedProjects] = useState(projects);  
+  const [managedProjects, setManagedProjects] = useState(projects);
+  const [managedProjectVideos, setManagedProjectVideos] = useState([]);
+  const [showcaseProjects, setShowcaseProjects] = useState([]);  
 
 
 
@@ -9370,7 +9598,7 @@ function App() {
 
 
 
-        const [servicesResult, projectsResult, promotionsResult] = await Promise.all([  
+        const [servicesResult, projectsResult, promotionsResult, projectVideosResult] = await Promise.all([  
 
 
 
@@ -9382,7 +9610,9 @@ function App() {
 
 
 
-          supabase.from("promotions").select("*").eq("enabled", true).order("sort_order", { ascending: true }).order("created_at", { ascending: false }),  
+          supabase.from("promotions").select("*").eq("enabled", true).order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
+
+          supabase.from("project_videos").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),  
 
 
 
@@ -9511,6 +9741,49 @@ function App() {
 
 
         }  
+
+
+
+        
+        if (!projectsResult.error) {
+          setShowcaseProjects(
+            (projectsResult.data || [])
+              .map((item) => ({
+                ...item,
+                title: item.title || "Untitled Project",
+                image: item.image_url || item.image || "",
+              }))
+              .filter((item) => item.image)
+          );
+        }
+
+if (!projectVideosResult.error && projectVideosResult.data?.length) {
+  
+
+
+
+          setManagedProjectVideos(projectVideosResult.data);
+  
+
+
+
+        } else if (projectVideosResult.error) {
+  
+
+
+
+          setManagedProjectVideos([]);
+  
+
+
+
+        }
+  
+
+
+
+        
+  
 
 
 
@@ -10450,30 +10723,15 @@ function App() {
 
 
 
-                <button  
-
-
-
-                  onClick={() => openPage("contact")}  
-
-
-
-                >  
-
-
-
-                  <small>05</small>  
-
-
-
-                  Contact  
-
-
-
-                  <ArrowUpRight />  
-
-
-
+                <button onClick={() => openPage("showcase")}>
+                  <small>05</small>
+                  Project Showcase
+                  <ArrowUpRight />
+                </button>
+                <button onClick={() => openPage("contact")}>
+                  <small>06</small>
+                  Contact Us
+                  <ArrowUpRight />
                 </button>  
 
 
@@ -12946,62 +13204,33 @@ function App() {
 
 
 
-      <OfferPopupStyles />  
+      <OfferPopupStyles />
 
+      {!newPage && (
+        <motion.button
+          className="warranty-floating-button"
+          onClick={() => openOfferPopup()}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.35, duration: 0.4 }}
+        >
+          <span className="warranty-floating-badge" aria-hidden="true">
+            <Check size={17} strokeWidth={3} />
+          </span>
+          <span>10 YEARS WARRANTY</span>
+        </motion.button>
+      )}
 
-
-            <motion.button
-        className="warranty-floating-button"
+      <motion.button
+        className="quote-floating-button"
         onClick={() => openOfferPopup()}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.35, duration: 0.4 }}
+        transition={{ delay: 1.5, duration: 0.4 }}
       >
-        <span className="warranty-floating-badge" aria-hidden="true">
-          <Check size={17} strokeWidth={3} />
-        </span>
-        <span>10 YEARS WARRANTY</span>
+        Get Free Quote
+        <ArrowUpRight size={16} />
       </motion.button>
-
-<motion.button  
-
-
-
-        className="quote-floating-button"  
-
-
-
-        onClick={() => openOfferPopup()}  
-
-
-
-        initial={{ opacity: 0, y: 20 }}  
-
-
-
-        animate={{ opacity: 1, y: 0 }}  
-
-
-
-        transition={{ delay: 1.5, duration: 0.4 }}  
-
-
-
-      >  
-
-
-
-        Get Free Quote  
-
-
-
-        <ArrowUpRight size={16} />  
-
-
-
-      </motion.button>  
-
-
 
       {newPage && (  
 
@@ -13030,6 +13259,10 @@ function App() {
           managedProjects={managedProjects}  
 
 
+
+        managedProjectVideos={managedProjectVideos}
+
+          showcaseProjects={showcaseProjects}
 
         />  
 
