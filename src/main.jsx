@@ -15494,7 +15494,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
             className="logo-box" 
 
 
-            style={{ width: "clamp(68px, 7vw, 84px)", height: "clamp(68px, 7vw, 84px)" }} 
+            style={{ width: "clamp(72px, 7vw, 88px)", height: "clamp(72px, 7vw, 88px)", borderRadius: "50%", overflow: "hidden", flexShrink: 0 }} 
 
 
           > 
@@ -15509,7 +15509,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
               alt="Gururag Signature Home" 
 
 
-              style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%", display: "block" }} 
 
 
             /> 
