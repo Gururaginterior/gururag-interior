@@ -15,7 +15,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "./supabaseClient";      
 import OwnerDashboard from "./OwnerDashboard";      
 import "./styles.css";      
-import logo from "./logo.jpg";      
+import logo from "./logo.jpg";
+import homeLogo from "./home-logo.png";      
 import founder from "./founder.jpg";      
 const WHATSAPP = "https://wa.me/919789695878";      
 const INSTAGRAM = "https://www.instagram.com/sgr_decors_interior_designer?stkn=bDNyaWVleDY2dDI=";      
@@ -2722,7 +2723,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
             }}   
           >   
             <img   
-              src={logo}   
+              src={homeLogo}   
               alt="Gururag Signature Home"   
               style={{ 
                 width: "100%", 
