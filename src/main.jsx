@@ -5247,745 +5247,35 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
               {page === "showcase" && (
 
-                <p>Project images and project videos.</p>
-
-              )}  
-
-
-
-            </div>  
-
-
-
-            {page === "about" && (  
-
-
-
-              <div className="new-about-grid">  
-
-
-
-                <div className="new-founder-card">  
-
-
-
-                  <div className="new-founder-image-wrap">  
-
-
-
-                    <img src={founder} alt="Saran Raj" />  
-
-
-
-                    <div className="new-founder-image-overlay" />  
-
-
-
-                    <span>FOUNDER | GURURAG INTERIOR</span>  
-
-
-
-                  </div>  
-
-
-
-                  <div className="new-founder-content">  
-
-
-
-                    <span className="new-page-label">FOUNDER / DESIGN VISION</span>  
-
-
-
-                    <h3>Guru Rags Signature Homes</h3>  
-
-
-
-                    <p>  
-
-
-
-                      With over 13 years of experience in interior design,  
-
-
-
-                      construction and renovation solutions, Guru Rags Signature  
-
-
-
-                      Homes is built on a passion for creating spaces that  
-
-
-
-                      combine aesthetics, functionality and lasting quality.  
-
-
-
-                    </p>  
-
-
-
-                    <p>  
-
-
-
-                      The company, previously operating under the name Sri Guru  
-
-
-
-                      Ragavendra Decors, has now evolved into Guru Rags Signature  
-
-
-
-                      Homes - a new identity that reflects our continued growth,  
-
-
-
-                      refined design approach and commitment to delivering  
-
-
-
-                      distinctive spaces.  
-
-
-
-                    </p>  
-
-
-
-                    <p>  
-
-
-
-                      Led by Saran Raj, our approach brings together thoughtful  
-
-
-
-                      design, practical execution and meticulous attention to  
-
-
-
-                      detail. Every project is carefully planned around the  
-
-
-
-                      client's lifestyle, requirements and vision, ensuring that  
-
-
-
-                      the final space is not only visually appealing but also  
-
-
-
-                      comfortable, functional and truly personal.  
-
-
-
-                    </p>  
-
-
-
-                    <p>  
-
-
-
-                      From concept to completion, we focus on quality  
-
-
-
-                      craftsmanship, transparent execution and client  
-
-
-
-                      satisfaction, with every detail receiving the attention it  
-
-
-
-                      deserves.  
-
-
-
-                    </p>  
-
-
-
-                    <p>  
-
-
-
-                      At Guru Rags Signature Homes, we believe that a  
-
-
-
-                      well-designed space is more than just beautiful - it should  
-
-
-
-                      reflect the people who live in it.  
-
-
-
-                    </p>  
-
-
-
-                    <div className="new-stat-row">  
-
-
-
-                      <div>  
-
-
-
-                        <strong>13+</strong>  
-
-
-
-                        <span>Years Experience</span>  
-
-
-
-                      </div>  
-
-
-
-                      <div>  
-
-
-
-                        <strong>1,500+</strong>  
-
-
-
-                        <span>Completed Projects</span>  
-
-
-
-                      </div>  
-
-
-
-                    </div>  
-
-
-
-                  </div>  
-
-
-
-                </div>  
-
-
-
-                <div className="new-about-side">  
-
-
-
-                  <div className="new-info-card">  
-
-
-
-                    <span>OUR APPROACH</span>  
-
-
-
-                    <h4>Thoughtful interiors. Crafted with character.</h4>  
-
-
-
-                    <p>  
-
-
-
-                      From detailed carpentry and modern kitchens to civil  
-
-
-
-                      works, finishing and turnkey solutions, every layer is  
-
-
-
-                      planned around the way you use your space.  
-
-
-
-                    </p>  
-
-
-
-                  </div>  
-
-
-
-                  <div className="new-contact-mini">  
-
-
-
-                    <span>CONNECT WITH SARAN</span>  
-
-
-
-                    <a href="tel:+919789695878">  
-
-
-
-                      <Phone size={19} />  
-
-
-
-                      <span>+91 97896 95878</span>  
-
-
-
-                      <ArrowUpRight size={17} />  
-
-
-
-                    </a>  
-
-
-
-                    <a href={WHATSAPP} target="_blank" rel="noreferrer">  
-
-
-
-                      <WhatsAppIcon size={20} />  
-
-
-
-                      <span>WhatsApp Saran Raj</span>  
-
-
-
-                      <ArrowUpRight size={17} />  
-
-
-
-                    </a>  
-
-
-
-                    <a href={INSTAGRAM} target="_blank" rel="noreferrer">  
-
-
-
-                      <InstagramBrandIcon size={20} />  
-
-
-
-                      <span>Instagram Profile</span>  
-
-
-
-                      <ArrowUpRight size={17} />  
-
-
-
-                    </a>  
-
-
-
-                    <a href={YOUTUBE} target="_blank" rel="noreferrer">  
-
-
-
-                      <YouTubeBrandIcon size={20} />  
-
-
-
-                      <span>YouTube Channel</span>  
-
-
-
-                      <ArrowUpRight size={17} />  
-
-
-
-                    </a>  
-
-
-
-                  </div>  
-
-
-
-                </div>  
-
-
-
-              </div>  
-
-
-
-            )}  
-
-
-
-            {page === "services" && (  
-
-
-
-              <div className="new-service-grid">  
-
-
-
-                {managedServices.map((item, index) => (  
-
-
-
-                  <motion.article  
-
-
-
-                    className="new-service-page-card"  
-
-
-
-                    key={item.title}  
-
-
-
-                    initial={{ opacity: 0, y: 20 }}  
-
-
-
-                    animate={{ opacity: 1, y: 0 }}  
-
-
-
-                    transition={{ delay: index * 0.07 }}  
-
-
-
-                  >  
-
-
-
-                    <div className="new-service-page-image">  
-
-
-
-                      <img src={item.image} alt={item.title} />  
-
-
-
-                      <span>0{index + 1}</span>  
-
-
-
-                    </div>  
-
-
-
-                    <div>  
-
-
-
-                      <span className="new-page-label">SERVICE 0{index + 1}</span>  
-
-
-
-                      <h3>{item.title}</h3>  
-
-
-
-                      <p>{item.text}</p>  
-
-
-
-                      <button  
-
-
-
-                        className="new-outline-button"  
-
-
-
-                        onClick={() =>  
-
-
-
-                          onWhatsApp(  
-
-
-
-                            `Hi Gururag Interior, I am interested in ${item.title}.`  
-
-
-
-                          )  
-
-
-
-                        }  
-
-
-
-                      >  
-
-
-
-                        Enquire About This <ArrowUpRight size={17} />  
-
-
-
-                      </button>  
-
-
-
-                    </div>  
-
-
-
-                  </motion.article>  
-
-
-
-                ))}  
-
-
-
-              </div>  
-
-
-
-            )}  
-
-
-
-            {page === "projects" && (  
-
-
-
-              <div className="new-project-page-grid">  
-
-
-
-                {managedProjects.map((project, index) => (  
-
-
-
-                  <motion.article  
-
-
-
-                    className="new-project-page-card"  
-
-
-
-                    key={project.title}  
-
-
-
-                    initial={{ opacity: 0, y: 25 }}  
-
-
-
-                    animate={{ opacity: 1, y: 0 }}  
-
-
-
-                    transition={{ delay: index * 0.08 }}  
-
-
-
-                  >  
-
-
-
-                    <div className="new-project-page-image">  
-
-
-
-                      <img src={project.image} alt={project.title} />  
-
-
-
-                      <div className="new-project-page-arrow">  
-
-
-
-                        <ArrowUpRight size={18} />  
-
-
-
-                      </div>  
-
-
-
-                    </div>  
-
-
-
-                    <span>{project.category}</span>  
-
-
-
-                    <h3>{project.title}</h3>  
-
-
-
-                  </motion.article>  
-
-
-
-                ))}  
-
-
-
-              </div>  
-
-
-
-            )}  
-
-
-
-            {page === "showcase" && (
-
-  
-
-
-
               <div className="project-showcase-content">
 
-  
-
-
-
                 <section className="project-showcase-section">
-  
-
-
 
                   <div className="project-showcase-section-heading">
-  
-
-
 
                     <span className="new-page-label">PROJECT IMAGES</span>
-  
-
-
 
                   </div>
-  
 
-
-
-                  <div className="project-showcase-image-grid">
-  
-
-
-
-                    {showcaseProjects.length ? showcaseProjects.map((project, index) => (
-  
-
-
-
-                      <motion.article
-  
-
-
-
-                        className="project-showcase-image-card"
-  
-
-
-
-                        key={project.id || project.title || index}
-  
-
-
-
-                        initial={{ opacity: 0, y: 22 }}
-  
-
-
-
-                        animate={{ opacity: 1, y: 0 }}
-  
-
-
-
-                        transition={{ delay: index * 0.06 }}
-  
-
-
-
-                      >
-  
-
-
-
-                        <img src={project.image} alt={project.title || "Project"} />
-  
-
-
-
-                      </motion.article>
-  
-
-
-
-                    )) : <div className="project-showcase-empty">No project images added yet.</div>}
-  
-
-
-
-                  </div>
-  
-
-
+                  <ProjectImageCarousel projects={showcaseProjects} />
 
                 </section>
-
-  
-
-
 
                 <section className="project-showcase-section">
-  
-
-
 
                   <div className="project-showcase-section-heading">
-  
-
-
 
                     <span className="new-page-label">PROJECT VIDEOS</span>
-  
-
-
 
                   </div>
-  
-
-
 
                   <ProjectVideoGallery videos={managedProjectVideos} />
-  
-
-
 
                 </section>
-
-  
-
-
 
               </div>
 
-  
-
-
-
             )}
-
-  
-
-
 
             {page === "contact" && (
   
@@ -6304,6 +5594,75 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
+function ProjectImageCarousel({ projects = [] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    setActiveIndex((current) => {
+      if (!projects.length) return 0;
+      return Math.min(current, projects.length - 1);
+    });
+  }, [projects.length]);
+
+  if (!projects.length) {
+    return <div className="project-showcase-empty">No project images added yet.</div>;
+  }
+
+  const activeProject = projects[activeIndex] || projects[0];
+  const hasMultiple = projects.length > 1;
+
+  const showPrevious = () => {
+    setActiveIndex((current) => (current - 1 + projects.length) % projects.length);
+  };
+
+  const showNext = () => {
+    setActiveIndex((current) => (current + 1) % projects.length);
+  };
+
+  return (
+    <motion.div
+      className="project-showcase-carousel"
+      initial={{ opacity: 0, y: 22 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <div className="project-showcase-carousel-frame">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={activeProject.id || activeProject.image || activeIndex}
+            src={activeProject.image}
+            alt={activeProject.title || "Project"}
+            initial={{ opacity: 0.35, x: 18 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0.35, x: -18 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+          />
+        </AnimatePresence>
+
+        {hasMultiple && (
+          <>
+            <button
+              type="button"
+              className="project-showcase-carousel-arrow previous"
+              onClick={showPrevious}
+              aria-label="Previous project image"
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <button
+              type="button"
+              className="project-showcase-carousel-arrow next"
+              onClick={showNext}
+              aria-label="Next project image"
+            >
+              <ArrowRight size={20} />
+            </button>
+          </>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
 function ProjectVideoGallery({ videos = [] }) {
   const [activeVideo, setActiveVideo] = useState(null);
   const validVideos = videos.map((video) => ({
@@ -6391,15 +5750,16 @@ function NewPageStyles() {
 
       .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}
       .project-showcase-content{display:flex;flex-direction:column;gap:42px;padding-bottom:20px}.project-showcase-section{display:flex;flex-direction:column;gap:16px}.project-showcase-section-heading{display:flex;align-items:center;justify-content:space-between}.project-showcase-image-grid,.project-showcase-video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.project-showcase-image-card,.project-showcase-video-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(255,255,255,.045);padding:0}.project-showcase-image-card{aspect-ratio:1.25}.project-showcase-image-card img,.project-showcase-video-card img{width:100%;height:100%;object-fit:cover;display:block}.project-showcase-video-card{aspect-ratio:16/9;cursor:pointer;text-align:left}.project-showcase-video-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.32));pointer-events:none}.project-showcase-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:#f3d36a;color:#071827;display:grid;place-items:center;z-index:2;box-shadow:0 10px 30px rgba(0,0,0,.3)}.project-showcase-play span{display:block;margin-left:4px;width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid #071827}.project-showcase-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.16);border-radius:18px;padding:34px;text-align:center;color:rgba(255,255,255,.48);font-size:12px}.project-video-modal{position:fixed;inset:0;z-index:2500;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px}.project-video-modal-card{position:relative;width:min(900px,94vw);background:#071827;border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:12px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.project-video-modal-close{position:absolute;right:-12px;top:-12px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:#071827;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:3}.project-video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:13px;overflow:hidden;background:#000}.project-video-frame iframe{width:100%;height:100%;border:0;display:block}
+      .project-showcase-carousel{width:100%}.project-showcase-carousel-frame{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.045);box-shadow:0 18px 45px rgba(0,0,0,.18)}.project-showcase-carousel-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.project-showcase-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(7,24,39,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:3;transition:.25s}.project-showcase-carousel-arrow:hover{background:#f3d36a;color:#071827;border-color:#f3d36a;transform:translateY(-50%) scale(1.05)}.project-showcase-carousel-arrow.previous{left:16px}.project-showcase-carousel-arrow.next{right:16px}
 
       .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action.youtube:before{background:#ff6b6b}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-contact-action.youtube .new-action-icon{color:#ff8a8a}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}  
 
 
 
-      @media(max-width:800px){.new-page-overlay{padding:10px}.new-page-shell{width:calc(100vw - 20px);height:88dvh;min-height:0;border-radius:24px;border:1px solid rgba(255,255,255,.13)}.new-page-topbar{height:64px;min-height:64px;padding:0 12px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 64px);padding:28px 17px 42px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:repeat(2,1fr)}.project-video-modal{padding:12px}.project-video-modal-card{width:96vw}.project-video-modal-close{right:6px;top:6px}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}} 
+      @media(max-width:800px){.new-page-overlay{padding:10px}.new-page-shell{width:calc(100vw - 20px);height:88dvh;min-height:0;border-radius:24px;border:1px solid rgba(255,255,255,.13)}.new-page-topbar{height:64px;min-height:64px;padding:0 12px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 64px);padding:28px 17px 42px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:repeat(2,1fr)}.project-showcase-carousel-frame{aspect-ratio:1.2}.project-showcase-carousel-arrow{width:42px;height:42px}.project-video-modal{padding:12px}.project-video-modal-card{width:96vw}.project-video-modal-close{right:6px;top:6px}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}} 
 
 
-       @media(max-width:430px){.new-page-overlay{padding:8px}.new-page-shell{width:calc(100vw - 16px);height:86dvh;border-radius:22px}.new-page-topbar{padding:0 9px;gap:5px;height:60px;min-height:60px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}.new-page-scroll{height:calc(100% - 60px);padding:25px 14px 36px}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:1fr;gap:13px}.project-showcase-image-card{aspect-ratio:1.15}.project-showcase-play{width:52px;height:52px}}  
+       @media(max-width:430px){.new-page-overlay{padding:8px}.new-page-shell{width:calc(100vw - 16px);height:86dvh;border-radius:22px}.new-page-topbar{padding:0 9px;gap:5px;height:60px;min-height:60px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}.new-page-scroll{height:calc(100% - 60px);padding:25px 14px 36px}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:1fr;gap:13px}.project-showcase-image-card{aspect-ratio:1.15}.project-showcase-carousel-frame{aspect-ratio:1.05;border-radius:18px}.project-showcase-carousel-arrow{width:38px;height:38px}.project-showcase-carousel-arrow.previous{left:10px}.project-showcase-carousel-arrow.next{right:10px}.project-showcase-carousel-arrow svg{width:17px;height:17px}.project-showcase-play{width:52px;height:52px}}  
 
 
 
