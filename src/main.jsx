@@ -2703,7 +2703,91 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
   };      
   const currentService = homeServices[service] || homeServices[0] || services[0];      
   return (      
-    <div className="website">      
+    <div className="website">
+      <style>{`
+        .about,
+        .about-heading,
+        .founder,
+        .founder-info,
+        .founder-photo,
+        .founder-info h3,
+        .founder-info p,
+        .stats,
+        .stats > div,
+        .signature,
+        .signature-role {
+          min-width: 0;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+        .about {
+          width: 100%;
+          overflow-x: hidden;
+        }
+        .founder {
+          width: 100%;
+        }
+        .founder-info h3 {
+          white-space: normal !important;
+          overflow-wrap: anywhere;
+          word-break: break-word;
+        }
+        .founder-info p {
+          width: 100%;
+          max-width: 100% !important;
+          white-space: normal;
+          overflow-wrap: anywhere;
+          word-break: normal;
+        }
+        .signature {
+          overflow-wrap: anywhere;
+          word-break: break-word;
+        }
+        @media (max-width: 650px) {
+          .about {
+            overflow-x: hidden;
+          }
+          .about-heading {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          .founder {
+            grid-template-columns: 1fr !important;
+            margin-top: 55px !important;
+          }
+          .founder-photo {
+            min-height: 360px !important;
+            width: 100%;
+          }
+          .founder-info {
+            width: 100%;
+            padding: 35px 20px !important;
+          }
+          .founder-info h3 {
+            width: 100%;
+            font-size: clamp(2.15rem, 11vw, 4rem) !important;
+            line-height: 1.02 !important;
+            letter-spacing: -0.035em !important;
+            margin: 20px 0 24px !important;
+          }
+          .stats {
+            flex-direction: column !important;
+            gap: 18px !important;
+            width: 100%;
+          }
+          .stats > div {
+            width: 100%;
+          }
+          .founder-info p {
+            font-size: 16px;
+            line-height: 1.75;
+          }
+          .signature {
+            max-width: 100%;
+            font-size: clamp(22px, 7vw, 30px);
+          }
+        }
+      `}</style>
       <header className="navbar">      
         <button      
           className="brand"      
@@ -3123,8 +3207,12 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
             </div>      
             <h3
               style={{
-                whiteSpace: "nowrap",
+                whiteSpace: "normal",
+                overflowWrap: "break-word",
+                maxWidth: "100%",
                 fontFamily: "Helvetica Neue, Arial, sans-serif",
+                fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                lineHeight: 1.05,
                 fontWeight: 800,
                 color: "#D4AF37",
                 letterSpacing: "0",
