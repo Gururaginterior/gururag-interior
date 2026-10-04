@@ -5574,7 +5574,7 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
-        </motion.div>  
+        </div>  
 
 
 
