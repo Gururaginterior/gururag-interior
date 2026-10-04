@@ -8888,31 +8888,13 @@ function OfferPopup({ open, promo, onClose }) {
 
 
 
-            <div className="offer-popup-banner-copy">   
-
-
-
-
-              <span>{currentPromo.eyebrow}</span>   
-
-
-
-
-              <strong>{currentPromo.title}</strong>   
-
-
-
-
-              <em>{currentPromo.highlight}</em>   
-
-
-
-
-              <b className="offer-popup-dynamic-badge">{currentPromo.badge}</b>   
-
-
-
-
+            <div className="offer-popup-banner-copy">
+              <strong>{currentPromo.title}</strong>
+              <em>{currentPromo.highlight}</em>
+              <b className="offer-popup-dynamic-badge">
+                <span className="offer-popup-dynamic-badge-value">{currentPromo.badge}</span>
+                <small className="offer-popup-dynamic-badge-note">For website enquiries</small>
+              </b>
             </div>   
 
 
@@ -9783,7 +9765,7 @@ function OfferPopupStyles() {
 
 
 
-        color:#fff;   
+        color:#f3d36a;   
 
 
 
@@ -9793,17 +9775,9 @@ function OfferPopupStyles() {
 
 
 
-      .offer-popup-brand-logo{   
-
-
-
-
-        width:38px;   
-
-
-
-
-        height:38px;   
+      .offer-popup-brand-logo{
+        width:48px;
+        height:48px;   
 
 
 
@@ -9913,7 +9887,7 @@ function OfferPopupStyles() {
 
 
 
-        color:#9ee7cf;   
+        color:#f3d36a;   
 
 
 
@@ -9953,21 +9927,10 @@ function OfferPopupStyles() {
 
 
 
-      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;align-self:center;position:relative;min-width:205px;min-height:118px;display:flex;align-items:center;justify-content:center;padding:14px 20px;border:3px solid #f7bd22;border-radius:18px;background:linear-gradient(145deg,#ef3f3a 0%,#dc2e2e 70%,#c92229 100%);color:#fff;text-align:center;font-size:clamp(34px,5vw,58px);line-height:.88;font-weight:950;letter-spacing:-.055em;text-shadow:3px 4px 0 rgba(119,25,25,.55);box-shadow:8px 10px 0 #f7bd22,0 18px 35px rgba(0,0,0,.3);transform:rotate(-2deg)}   
-
-
-
-
-      .offer-popup-banner-copy>b:before{content:"";position:absolute;left:-28px;top:14px;width:42px;height:18px;background:#f7bd22;transform:rotate(-16deg);box-shadow:0 55px 0 #f7bd22}   
-
-
-
-
-      .offer-popup-dynamic-badge{z-index:5;}  
-
-
-
-      .offer-popup-banner-copy>b:after{content:"";position:absolute;right:-25px;bottom:18px;width:38px;height:16px;background:#f7bd22;transform:rotate(-12deg)}   
+      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;align-self:center;position:relative;min-width:205px;min-height:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border:3px solid #f7bd22;border-radius:18px;background:linear-gradient(145deg,#ef3f3a 0%,#dc2e2e 70%,#c92229 100%);color:#fff;text-align:center;line-height:.92;font-weight:950;letter-spacing:-.055em;text-shadow:3px 4px 0 rgba(119,25,25,.55);box-shadow:0 18px 35px rgba(0,0,0,.3);transform:rotate(-2deg)}
+      .offer-popup-dynamic-badge{z-index:5;}
+      .offer-popup-dynamic-badge-value{display:block;font-size:clamp(34px,5vw,58px);line-height:.88;font-weight:950;letter-spacing:-.055em}
+      .offer-popup-dynamic-badge-note{display:block;font-size:10px;line-height:1.1;font-weight:800;letter-spacing:.08em;text-transform:none;text-shadow:none;color:#fff}   
 
 
 
@@ -11271,17 +11234,9 @@ function OfferPopupStyles() {
 
 
 
-        .offer-popup-brand-logo{   
-
-
-
-
-          width:31px;   
-
-
-
-
-          height:31px;   
+        .offer-popup-brand-logo{
+          width:38px;
+          height:38px;   
 
 
 
@@ -11469,51 +11424,20 @@ function OfferPopupStyles() {
 
 
 
-        .offer-popup-banner-copy>b{  
-
-
-
-          grid-column:2;  
-
-
-
-          grid-row:2 / span 2;  
-
-
-
-          min-width:0;  
-
-
-
-          width:100%;  
-
-
-
-          min-height:78px;  
-
-
-
-          padding:8px 10px;  
-
-
-
-          font-size:clamp(23px,7vw,34px);  
-
-
-
-          border-width:2px;  
-
-
-
-          border-radius:12px;  
-
-
-
-          box-shadow:5px 6px 0 #f7bd22,0 12px 24px rgba(0,0,0,.28);  
-
-
-
-        }  
+        .offer-popup-banner-copy>b{
+          grid-column:2;
+          grid-row:2 / span 2;
+          min-width:0;
+          width:100%;
+          min-height:78px;
+          padding:8px 10px;
+          gap:5px;
+          border-width:2px;
+          border-radius:12px;
+          box-shadow:0 12px 24px rgba(0,0,0,.28);
+        }
+        .offer-popup-dynamic-badge-value{font-size:clamp(23px,7vw,34px);line-height:.88}
+        .offer-popup-dynamic-badge-note{font-size:7px;letter-spacing:.05em}  
 
 
 
@@ -12567,7 +12491,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-          (current + 1) % services.length   
+          managedServices.length ? (current + 1) % managedServices.length : 0   
 
 
 
@@ -12747,7 +12671,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-        (current + 1) % services.length   
+        managedServices.length ? (current + 1) % managedServices.length : 0   
 
 
 
@@ -12777,12 +12701,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-        (current - 1 + services.length) %   
-
-
-
-
-        services.length   
+        managedServices.length ? (current - 1 + managedServices.length) % managedServices.length : 0   
 
 
 
@@ -12797,7 +12716,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-  const currentService = services[service];   
+  const currentService = managedServices[service] || managedServices[0] || services[0];   
 
 
 
@@ -12837,51 +12756,21 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-          <span className="logo-box">   
-
-
-
-
-            <img   
-
-
-
-
-              src={logo}   
-
-
-
-
-              alt="Gururag Interior"   
-
-
-
-
-            />   
-
-
-
-
-          </span>   
-
-
-
-
-          <span className="brand-name">   
-
-
-
-
-            <strong>GURURAG</strong>   
-
-
-
-
-            <small>INTERIOR</small>   
-
-
-
-
+          <span
+            className="logo-box"
+            style={{ width: "clamp(58px, 6vw, 72px)", height: "clamp(58px, 6vw, 72px)" }}
+          >
+            <img
+              src={logo}
+              alt="Gururag Signature Home"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </span>
+          <span
+            className="home-brand-signature"
+            style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic", color: "#f3d36a", lineHeight: 0.95, letterSpacing: "-.035em", fontSize: "clamp(14px, 1.7vw, 20px)", maxWidth: "145px", textAlign: "left" }}
+          >
+            Gururag Signature Home
           </span>   
 
 
@@ -13719,12 +13608,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-            INTERIOR DESIGN | TURNKEY   
-
-
-
-
-            SOLUTIONS   
+            INTERIOR DESIGN | TURNKEY SOLUTION | RENOVATION | CONSTRUCTION   
 
 
 
@@ -14314,32 +14198,9 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-              At Gururag Interior, we believe   
-
-
-
-
-              a beautiful space should do more   
-
-
-
-
-              than look good. It should feel   
-
-
-
-
-              natural, work effortlessly and   
-
-
-
-
-              reflect the people who live or   
-
-
-
-
-              work inside it.   
+              At Gururag Interior, we believe a beautiful space should be more
+              than just visually appealing. It should feel natural, function
+              effortlessly, and reflect the people who live or work in it.   
 
 
 
@@ -14799,7 +14660,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-              Saran Raj   
+              S.SaranRaj BE   
 
 
 
@@ -14929,16 +14790,16 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-            <div className="signature">   
-
-
-
-
-              Saran Raj   
-
-
-
-
+            <div className="signature">
+              S.SaranRaj BE
+            </div>
+            <div
+              className="signature-role"
+              style={{ marginTop: "-2px", color: "rgba(255,255,255,.62)", fontSize: "12px", lineHeight: 1.45, letterSpacing: ".09em", textTransform: "none" }}
+            >
+              Founder &amp; Design Director
+              <br />
+              Gururag Interiors
             </div>   
 
 
@@ -15404,7 +15265,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-              {services.map(   
+              {managedServices.map(   
 
 
 
@@ -15624,7 +15485,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-          {projects.map(   
+          {managedProjects.map(   
 
 
 
