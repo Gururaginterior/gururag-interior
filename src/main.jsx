@@ -20159,7 +20159,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                  onClick={() => openPage("about")}      
+                  onClick={() => { setMenu(false); scrollTo("about"); }}      
 
 
 
@@ -20215,7 +20215,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                  onClick={() => openPage("services")}      
+                  onClick={() => { setMenu(false); scrollTo("services"); }}      
 
 
 
@@ -20271,7 +20271,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                  onClick={() => openPage("projects")}      
+                  onClick={() => { setMenu(false); scrollTo("projects"); }}      
 
 
 
