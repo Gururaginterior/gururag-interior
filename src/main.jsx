@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect, useRef, useState } from "react";       
 
 
@@ -10508,153 +10512,32 @@ function getYouTubeVideoId(url = "") {
 
 
 
-function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedProjects, managedProjectVideos, showcaseProjects }) {     
+function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedProjects, managedProjectVideos, showcaseProjects }) {   
 
 
 
 
+  const pageData = {   
 
 
-  const pageData = {     
 
 
+    about: {   
 
 
 
 
-    about: {     
+      number: "02",   
 
 
 
 
+      eyebrow: "ABOUT US",   
 
 
-      number: "02",     
 
 
-
-
-
-
-      eyebrow: "ABOUT US",     
-
-
-
-
-
-
-      title: "Designing Spaces.\nCreating Experiences.",     
-
-
-
-
-
-
-    },     
-
-
-
-
-
-
-    services: {     
-
-
-
-
-
-
-      number: "03",     
-
-
-
-
-
-
-      eyebrow: "WHAT WE CREATE",     
-
-
-
-
-
-
-      title: "From first idea\nto final detail.",     
-
-
-
-
-
-
-    },     
-
-
-
-
-
-
-    projects: {     
-
-
-
-
-
-
-      number: "04",     
-
-
-
-
-
-
-      eyebrow: "SELECTED DIRECTIONS",     
-
-
-
-
-
-
-      title: "Spaces made\nto be lived in.",     
-
-
-
-
-
-
-    },     
-
-
-
-
-
-
-    showcase: {   
-
-
-
-
-
-
-
-      number: "05",   
-
-
-
-
-
-
-
-      eyebrow: "PROJECT SHOWCASE",   
-
-
-
-
-
-
-
-      title: "Project images.\nProject videos.",   
-
-
-
+      title: "Designing Spaces.\nCreating Experiences.",   
 
 
 
@@ -10664,881 +10547,543 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
+    services: {   
 
 
 
-    contact: {   
 
+      number: "03",   
 
 
 
 
+      eyebrow: "WHAT WE CREATE",   
 
 
-      number: "06",     
 
 
+      title: "From first idea\nto final detail.",   
 
 
 
 
-      eyebrow: "LET'S TALK",     
+    },   
 
 
 
 
+    projects: {   
 
 
-      title: "Your space.\nOur next conversation.",     
 
 
+      number: "04",   
 
 
 
 
-    },     
+      eyebrow: "SELECTED DIRECTIONS",   
 
 
 
 
+      title: "Spaces made\nto be lived in.",   
 
 
-  };     
 
 
+    },   
 
 
 
 
-  const data = pageData[page];     
+    showcase: { 
 
 
 
 
 
+      number: "05", 
 
-  if (!data) return null;     
 
 
 
 
+      eyebrow: "PROJECT SHOWCASE", 
 
 
-  return (     
 
 
 
+      title: "Project images.\nProject videos.", 
 
 
 
-    <AnimatePresence>     
 
 
+    }, 
 
 
 
 
-      <motion.div     
 
+    contact: { 
 
 
 
 
 
-        className="new-page-overlay"     
+      number: "06",   
 
 
 
 
+      eyebrow: "LET'S TALK",   
 
 
-        initial={{ opacity: 0 }}     
 
 
+      title: "Your space.\nOur next conversation.",   
 
 
 
 
-        animate={{ opacity: 1 }}     
+    },   
 
 
 
 
+  };   
 
 
-        exit={{ opacity: 0 }}     
 
 
+  const data = pageData[page];   
 
 
 
 
-      >     
+  if (!data) return null;   
 
 
 
 
+  return (   
 
 
-        <motion.div     
 
 
+    <AnimatePresence>   
 
 
 
 
-          className="new-page-shell"     
+      <motion.div   
 
 
 
 
+        className="new-page-overlay"   
 
 
-          initial={{ y: 45, scale: 0.985 }}     
 
 
+        initial={{ opacity: 0 }}   
 
 
 
 
-          animate={{ y: 0, scale: 1 }}     
+        animate={{ opacity: 1 }}   
 
 
 
 
+        exit={{ opacity: 0 }}   
 
 
-          exit={{ y: 30, scale: 0.985 }}     
 
 
+      >   
 
 
 
 
-          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}     
+        <motion.div   
 
 
 
 
+          className="new-page-shell"   
 
 
-        >     
 
 
+          initial={{ y: 45, scale: 0.985 }}   
 
 
 
 
-          <div className="new-page-topbar">     
+          animate={{ y: 0, scale: 1 }}   
 
 
 
 
+          exit={{ y: 30, scale: 0.985 }}   
 
 
-            <button className="new-page-brand" onClick={onClose}>     
 
 
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}   
 
 
 
 
-              <span className="new-page-logo">     
+        >   
 
 
 
 
+          <div className="new-page-topbar">   
 
 
-                <img src={logo} alt="Gururag Interior" />     
 
 
+            <button className="new-page-brand" onClick={onClose}>   
 
 
 
 
-              </span>     
+              <span className="new-page-logo">   
 
 
 
 
+                <img src={logo} alt="Gururag Interior" />   
 
 
-              <span>     
 
 
+              </span>   
 
 
 
 
-                <strong>GURURAG</strong>     
+              <span>   
 
 
 
 
+                <strong>GURURAG</strong>   
 
 
-                <small>INTERIOR</small>     
 
 
+                <small>INTERIOR</small>   
 
 
 
 
-              </span>     
+              </span>   
 
 
 
 
+            </button>   
 
 
-            </button>     
 
 
+            <div className="new-page-top-actions">   
 
 
 
 
-            <div className="new-page-top-actions">     
+              <a   
 
 
 
 
+                className="new-page-top-whatsapp"   
 
 
-              <a     
 
 
+                href={WHATSAPP}   
 
 
 
 
-                className="new-page-top-whatsapp"     
+                target="_blank"   
 
 
 
 
+                rel="noreferrer"   
 
 
-                href={WHATSAPP}     
 
 
+                aria-label="WhatsApp Gururag Interior"   
 
 
 
 
-                target="_blank"     
+              >   
 
 
 
 
+                <WhatsAppIcon size={19} />   
 
 
-                rel="noreferrer"     
 
 
+                <span>WhatsApp</span>   
 
 
 
 
-                aria-label="WhatsApp Gururag Interior"     
+              </a>   
 
 
 
 
+              <a   
 
 
-              >     
 
 
+                className="new-page-top-whatsapp"   
 
 
 
 
-                <WhatsAppIcon size={19} />     
+                href={YOUTUBE}   
 
 
 
 
+                target="_blank"   
 
 
-                <span>WhatsApp</span>     
 
 
+                rel="noreferrer"   
 
 
 
 
-              </a>     
+                aria-label="YouTube GuruRag Signature Home"   
 
 
 
 
+              >   
 
 
-              <a     
 
 
+                <YouTubeBrandIcon size={19} />   
 
 
 
 
-                className="new-page-top-whatsapp"     
+                <span>YouTube</span>   
 
 
 
 
+              </a>   
 
 
-                href={YOUTUBE}     
 
 
+              <button   
 
 
 
 
-                target="_blank"     
+                className="new-page-close"   
 
 
 
 
+                onClick={onClose}   
 
 
-                rel="noreferrer"     
 
 
+                aria-label="Close page"   
 
 
 
 
-                aria-label="YouTube GuruRag Signature Home"     
+              >   
 
 
 
 
+                <X size={21} />   
 
 
-              >     
 
 
+              </button>   
 
 
 
 
-                <YouTubeBrandIcon size={19} />     
+            </div>   
 
 
 
 
+          </div>   
 
 
-                <span>YouTube</span>     
 
 
+          <div className="new-page-scroll">   
 
 
 
 
-              </a>     
+            <div className="new-page-hero-copy">   
 
 
 
 
+              <div>   
 
 
-              <button     
 
 
+                <span className="new-page-eyebrow">   
 
 
 
 
-                className="new-page-close"     
+                  {data.number} - {data.eyebrow}   
 
 
 
 
+                </span>   
 
 
-                onClick={onClose}     
 
 
+                <h2>   
 
 
 
 
-                aria-label="Close page"     
+                  {data.title.split("\n").map((line, index) => (   
 
 
 
 
+                    <React.Fragment key={line}>   
 
 
-              >     
 
 
+                      {index > 0 && <br />}   
 
 
 
 
-                <X size={21} />     
+                      {index === data.title.split("\n").length - 1 ? (   
 
 
 
 
+                        <em>{line}</em>   
 
 
-              </button>     
 
 
+                      ) : (   
 
 
 
 
-            </div>     
+                        line   
 
 
 
 
+                      )}   
 
 
-          </div>     
 
 
+                    </React.Fragment>   
 
 
 
 
-          <div className="new-page-scroll">     
+                  ))}   
 
 
 
 
+                </h2>   
 
 
-            <div className="new-page-hero-copy">     
 
 
+              </div>   
 
 
 
 
-              <div>     
+              {page === "about" && (   
 
 
 
 
+                <p>   
 
 
-                <span className="new-page-eyebrow">     
 
 
+                  <TypewriterText   
 
 
 
 
-                  {data.number} - {data.eyebrow}     
+                    lines={[   
 
 
 
 
+                      "13+ years of experience.",   
 
 
-                </span>     
 
 
+                      "1,500+ completed projects.",   
 
 
 
 
-                <h2>     
+                      "One clear vision for every space.",   
 
 
 
 
+                    ]}   
 
 
-                  {data.title.split("\n").map((line, index) => (     
 
 
+                  />   
 
 
 
 
-                    <React.Fragment key={line}>     
-
-
-
-
-
-
-                      {index > 0 && <br />}     
-
-
-
-
-
-
-                      {index === data.title.split("\n").length - 1 ? (     
-
-
-
-
-
-
-                        <em>{line}</em>     
-
-
-
-
-
-
-                      ) : (     
-
-
-
-
-
-
-                        line     
-
-
-
-
-
-
-                      )}     
-
-
-
-
-
-
-                    </React.Fragment>     
-
-
-
-
-
-
-                  ))}     
-
-
-
-
-
-
-                </h2>     
-
-
-
-
-
-
-              </div>     
-
-
-
-
-
-
-              {page === "about" && (     
-
-
-
-
-
-
-                <p>     
-
-
-
-
-
-
-                  <TypewriterText     
-
-
-
-
-
-
-                    lines={[     
-
-
-
-
-
-
-                      "13+ years of experience.",     
-
-
-
-
-
-
-                      "1,500+ completed projects.",     
-
-
-
-
-
-
-                      "One clear vision for every space.",     
-
-
-
-
-
-
-                    ]}     
-
-
-
-
-
-
-                  />     
-
-
-
-
-
-
-                </p>     
-
-
-
-
-
-
-              )}     
-
-
-
-
-
-
-              {page === "contact" && (     
-
-
-
-
-
-
-                <p>     
-
-
-
-
-
-
-                  <TypewriterText     
-
-
-
-
-
-
-                    lines={[     
-
-
-
-
-
-
-                      "Let's turn your idea into a space.",     
-
-
-
-
-
-
-                      "Tell Saran Raj what you are planning.",     
-
-
-
-
-
-
-                      "Your project can start with one message.",     
-
-
-
-
-
-
-                    ]}     
-
-
-
-
-
-
-                  />     
-
-
-
-
-
-
-                </p>     
-
-
-
-
-
-
-              )}     
-
-
-
-
-
-
-              {page === "services" && (     
-
-
-
-
-
-
-                <p>     
-
-
-
-
-
-
-                  <TypewriterText     
-
-
-
-
-
-
-                    lines={[     
-
-
-
-
-
-
-                      "Carpentry. Civil. Painting. Electrical.",     
-
-
-
-
-
-
-                      "Every layer, thoughtfully coordinated.",     
-
-
-
-
-
-
-                      "Residential and commercial solutions.",     
-
-
-
-
-
-
-                    ]}     
-
-
-
-
-
-
-                  />     
-
-
-
-
-
-
-                </p>     
-
-
-
-
-
-
-              )}     
-
-
-
-
-
-
-              {page === "projects" && (     
-
-
-
-
-
-
-                <p>     
-
-
-
-
-
-
-                  <TypewriterText     
-
-
-
-
-
-
-                    lines={[     
-
-
-
-
-
-
-                      "Contemporary living spaces.",     
-
-
-
-
-
-
-                      "Modern kitchens and bedrooms.",     
-
-
-
-
-
-
-                      "Workspaces with character.",     
-
-
-
-
-
-
-                    ]}     
-
-
-
-
-
-
-                  />     
-
-
-
-
-
-
-                </p>     
-
-
+                </p>   
 
 
 
@@ -11548,7 +11093,916 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
-              {page === "showcase" && (     
+              {page === "contact" && (   
+
+
+
+
+                <p>   
+
+
+
+
+                  <TypewriterText   
+
+
+
+
+                    lines={[   
+
+
+
+
+                      "Let's turn your idea into a space.",   
+
+
+
+
+                      "Tell Saran Raj what you are planning.",   
+
+
+
+
+                      "Your project can start with one message.",   
+
+
+
+
+                    ]}   
+
+
+
+
+                  />   
+
+
+
+
+                </p>   
+
+
+
+
+              )}   
+
+
+
+
+              {page === "services" && (   
+
+
+
+
+                <p>   
+
+
+
+
+                  <TypewriterText   
+
+
+
+
+                    lines={[   
+
+
+
+
+                      "Carpentry. Civil. Painting. Electrical.",   
+
+
+
+
+                      "Every layer, thoughtfully coordinated.",   
+
+
+
+
+                      "Residential and commercial solutions.",   
+
+
+
+
+                    ]}   
+
+
+
+
+                  />   
+
+
+
+
+                </p>   
+
+
+
+
+              )}   
+
+
+
+
+              {page === "projects" && (   
+
+
+
+
+                <p>   
+
+
+
+
+                  <TypewriterText   
+
+
+
+
+                    lines={[   
+
+
+
+
+                      "Contemporary living spaces.",   
+
+
+
+
+                      "Modern kitchens and bedrooms.",   
+
+
+
+
+                      "Workspaces with character.",   
+
+
+
+
+                    ]}   
+
+
+
+
+                  />   
+
+
+
+
+                </p>   
+
+
+
+
+              )} 
+
+
+              {page === "showcase" && ( 
+
+
+                <p>Project images and project videos.</p> 
+
+
+              )}   
+
+
+
+
+            </div>   
+
+
+
+
+            {page === "about" && (   
+
+
+
+
+              <div className="new-about-grid">   
+
+
+
+
+                <div className="new-founder-card">   
+
+
+
+
+                  <div className="new-founder-image-wrap">   
+
+
+
+
+                    <img src={founder} alt="Saran Raj" />   
+
+
+
+
+                    <div className="new-founder-image-overlay" />   
+
+
+
+
+                    <span>FOUNDER | GURURAG INTERIOR</span>   
+
+
+
+
+                  </div>   
+
+
+
+
+                  <div className="new-founder-content">   
+
+
+
+
+                    <span className="new-page-label">FOUNDER / DESIGN VISION</span>   
+
+
+
+
+                    <h3>Guru Rags Signature Homes</h3>   
+
+
+
+
+                    <p>   
+
+
+
+
+                      With over 13 years of experience in interior design,   
+
+
+
+
+                      construction and renovation solutions, Guru Rags Signature   
+
+
+
+
+                      Homes is built on a passion for creating spaces that   
+
+
+
+
+                      combine aesthetics, functionality and lasting quality.   
+
+
+
+
+                    </p>   
+
+
+
+
+                    <p>   
+
+
+
+
+                      The company, previously operating under the name Sri Guru   
+
+
+
+
+                      Ragavendra Decors, has now evolved into Guru Rags Signature   
+
+
+
+
+                      Homes - a new identity that reflects our continued growth,   
+
+
+
+
+                      refined design approach and commitment to delivering   
+
+
+
+
+                      distinctive spaces.   
+
+
+
+
+                    </p>   
+
+
+
+
+                    <p>   
+
+
+
+
+                      Led by Saran Raj, our approach brings together thoughtful   
+
+
+
+
+                      design, practical execution and meticulous attention to   
+
+
+
+
+                      detail. Every project is carefully planned around the   
+
+
+
+
+                      client's lifestyle, requirements and vision, ensuring that   
+
+
+
+
+                      the final space is not only visually appealing but also   
+
+
+
+
+                      comfortable, functional and truly personal.   
+
+
+
+
+                    </p>   
+
+
+
+
+                    <p>   
+
+
+
+
+                      From concept to completion, we focus on quality   
+
+
+
+
+                      craftsmanship, transparent execution and client   
+
+
+
+
+                      satisfaction, with every detail receiving the attention it   
+
+
+
+
+                      deserves.   
+
+
+
+
+                    </p>   
+
+
+
+
+                    <p>   
+
+
+
+
+                      At Guru Rags Signature Homes, we believe that a   
+
+
+
+
+                      well-designed space is more than just beautiful - it should   
+
+
+
+
+                      reflect the people who live in it.   
+
+
+
+
+                    </p>   
+
+
+
+
+                    <div className="new-stat-row">   
+
+
+
+
+                      <div>   
+
+
+
+
+                        <strong>13+</strong>   
+
+
+
+
+                        <span>Years Experience</span>   
+
+
+
+
+                      </div>   
+
+
+
+
+                      <div>   
+
+
+
+
+                        <strong>1,500+</strong>   
+
+
+
+
+                        <span>Completed Projects</span>   
+
+
+
+
+                      </div>   
+
+
+
+
+                    </div>   
+
+
+
+
+                  </div>   
+
+
+
+
+                </div>   
+
+
+
+
+                <div className="new-about-side">   
+
+
+
+
+                  <div className="new-info-card">   
+
+
+
+
+                    <span>OUR APPROACH</span>   
+
+
+
+
+                    <h4>Thoughtful interiors. Crafted with character.</h4>   
+
+
+
+
+                    <p>   
+
+
+
+
+                      From detailed carpentry and modern kitchens to civil   
+
+
+
+
+                      works, finishing and turnkey solutions, every layer is   
+
+
+
+
+                      planned around the way you use your space.   
+
+
+
+
+                    </p>   
+
+
+
+
+                  </div>   
+
+
+
+
+                  <div className="new-contact-mini">   
+
+
+
+
+                    <span>CONNECT WITH SARAN</span>   
+
+
+
+
+                    <a href="tel:+919789695878">   
+
+
+
+
+                      <Phone size={19} />   
+
+
+
+
+                      <span>+91 97896 95878</span>   
+
+
+
+
+                      <ArrowUpRight size={17} />   
+
+
+
+
+                    </a>   
+
+
+
+
+                    <a href={WHATSAPP} target="_blank" rel="noreferrer">   
+
+
+
+
+                      <WhatsAppIcon size={20} />   
+
+
+
+
+                      <span>WhatsApp Saran Raj</span>   
+
+
+
+
+                      <ArrowUpRight size={17} />   
+
+
+
+
+                    </a>   
+
+
+
+
+                    <a href={INSTAGRAM} target="_blank" rel="noreferrer">   
+
+
+
+
+                      <InstagramBrandIcon size={20} />   
+
+
+
+
+                      <span>Instagram Profile</span>   
+
+
+
+
+                      <ArrowUpRight size={17} />   
+
+
+
+
+                    </a>   
+
+
+
+
+                    <a href={YOUTUBE} target="_blank" rel="noreferrer">   
+
+
+
+
+                      <YouTubeBrandIcon size={20} />   
+
+
+
+
+                      <span>YouTube Channel</span>   
+
+
+
+
+                      <ArrowUpRight size={17} />   
+
+
+
+
+                    </a>   
+
+
+
+
+                  </div>   
+
+
+
+
+                </div>   
+
+
+
+
+              </div>   
+
+
+
+
+            )}   
+
+
+
+
+            {page === "services" && (   
+
+
+
+
+              <div className="new-service-grid">   
+
+
+
+
+                {managedServices.map((item, index) => (   
+
+
+
+
+                  <motion.article   
+
+
+
+
+                    className="new-service-page-card"   
+
+
+
+
+                    key={item.title}   
+
+
+
+
+                    initial={{ opacity: 0, y: 20 }}   
+
+
+
+
+                    animate={{ opacity: 1, y: 0 }}   
+
+
+
+
+                    transition={{ delay: index * 0.07 }}   
+
+
+
+
+                  >   
+
+
+
+
+                    <div className="new-service-page-image">   
+
+
+
+
+                      <img src={item.image} alt={item.title} />   
+
+
+
+
+                      <span>0{index + 1}</span>   
+
+
+
+
+                    </div>   
+
+
+
+
+                    <div>   
+
+
+
+
+                      <span className="new-page-label">SERVICE 0{index + 1}</span>   
+
+
+
+
+                      <h3>{item.title}</h3>   
+
+
+
+
+                      <p>{item.text}</p>   
+
+
+
+
+                      <button   
+
+
+
+
+                        className="new-outline-button"   
+
+
+
+
+                        onClick={() =>   
+
+
+
+
+                          onWhatsApp(   
+
+
+
+
+                            `Hi Gururag Interior, I am interested in ${item.title}.`   
+
+
+
+
+                          )   
+
+
+
+
+                        }   
+
+
+
+
+                      >   
+
+
+
+
+                        Enquire About This <ArrowUpRight size={17} />   
+
+
+
+
+                      </button>   
+
+
+
+
+                    </div>   
+
+
+
+
+                  </motion.article>   
+
+
+
+
+                ))}   
+
+
+
+
+              </div>   
+
+
+
+
+            )}   
+
+
+
+
+            {page === "projects" && (   
+
+
+
+
+              <div className="new-project-page-grid">   
+
+
+
+
+                {managedProjects.map((project, index) => (   
+
+
+
+
+                  <motion.article   
+
+
+
+
+                    className="new-project-page-card"   
+
+
+
+
+                    key={project.title}   
+
+
+
+
+                    initial={{ opacity: 0, y: 25 }}   
+
+
+
+
+                    animate={{ opacity: 1, y: 0 }}   
+
+
+
+
+                    transition={{ delay: index * 0.08 }}   
+
+
+
+
+                  >   
+
+
+
+
+                    <div className="new-project-page-image">   
+
+
+
+
+                      <img src={project.image} alt={project.title} />   
+
+
+
+
+                      <div className="new-project-page-arrow">   
+
+
+
+
+                        <ArrowUpRight size={18} />   
+
+
+
+
+                      </div>   
+
+
+
+
+                    </div>   
+
+
+
+
+                    <span>{project.category}</span>   
+
+
+
+
+                    <h3>{project.title}</h3>   
+
+
+
+
+                  </motion.article>   
+
+
+
+
+                ))}   
+
+
+
+
+              </div>   
+
+
+
+
+            )}   
+
+
+
+
+            {page === "showcase" && (     
 
 
 
@@ -11660,560 +12114,398 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
 
-            {page === "contact" && (   
+            {page === "contact" && ( 
 
 
 
 
 
+              <div className="new-contact-page">   
 
 
-              <div className="new-contact-page">     
 
 
+                <div className="new-contact-intro">   
 
 
 
 
-                <div className="new-contact-intro">     
+                  <span className="new-page-label">GURURAG INTERIOR | CHENNAI</span>   
 
 
 
 
+                  <h3>   
 
 
-                  <span className="new-page-label">GURURAG INTERIOR | CHENNAI</span>     
 
 
+                    <TypewriterText   
 
 
 
 
-                  <h3>     
+                      lines={[   
 
 
 
 
+                        "Let's create something beautiful.",   
 
 
-                    <TypewriterText     
 
 
+                        "Let's plan your next interior.",   
 
 
 
 
-                      lines={[     
+                        "Let's talk about your space.",   
 
 
 
 
+                      ]}   
 
 
-                        "Let's create something beautiful.",     
 
 
+                    />   
 
 
 
 
-                        "Let's plan your next interior.",     
+                  </h3>   
 
 
 
 
+                  <p>   
 
 
-                        "Let's talk about your space.",     
 
 
+                    Share your home, office or renovation requirement with us.   
 
 
 
 
-                      ]}     
+                    One message is enough to start the conversation.   
 
 
 
 
+                  </p>   
 
 
-                    />     
 
 
+                </div>   
 
 
 
 
-                  </h3>     
+                <div className="new-contact-actions">   
 
 
 
 
+                  <a className="new-contact-action phone" href="tel:+919789695878">   
 
 
-                  <p>     
 
 
+                    <span className="new-action-icon"><Phone size={22} /></span>   
 
 
 
 
-                    Share your home, office or renovation requirement with us.     
+                    <span className="new-action-copy">   
 
 
 
 
+                      <small>CALL DIRECTLY</small>   
 
 
-                    One message is enough to start the conversation.     
 
 
+                      <strong>+91 97896 95878</strong>   
 
 
 
 
-                  </p>     
+                    </span>   
 
 
 
 
+                    <ArrowUpRight size={19} />   
 
 
-                </div>     
 
 
+                  </a>   
 
 
 
 
-                <div className="new-contact-actions">     
+                  <a   
 
 
 
 
+                    className="new-contact-action whatsapp"   
 
 
-                  <a className="new-contact-action phone" href="tel:+919789695878">     
 
 
+                    href={WHATSAPP}   
 
 
 
 
-                    <span className="new-action-icon"><Phone size={22} /></span>     
+                    target="_blank"   
 
 
 
 
+                    rel="noreferrer"   
 
 
-                    <span className="new-action-copy">     
 
 
+                  >   
 
 
 
 
-                      <small>CALL DIRECTLY</small>     
+                    <span className="new-action-icon"><WhatsAppIcon size={23} /></span>   
 
 
 
 
+                    <span className="new-action-copy">   
 
 
-                      <strong>+91 97896 95878</strong>     
 
 
+                      <small>CHAT ON WHATSAPP</small>   
 
 
 
 
-                    </span>     
+                      <strong>Send Your Requirement</strong>   
 
 
 
 
+                    </span>   
 
 
-                    <ArrowUpRight size={19} />     
 
 
+                    <ArrowUpRight size={19} />   
 
 
 
 
-                  </a>     
+                  </a>   
 
 
 
 
+                  <a   
 
 
-                  <a     
 
 
+                    className="new-contact-action instagram"   
 
 
 
 
-                    className="new-contact-action whatsapp"     
+                    href={INSTAGRAM}   
 
 
 
 
+                    target="_blank"   
 
 
-                    href={WHATSAPP}     
 
 
+                    rel="noreferrer"   
 
 
 
 
-                    target="_blank"     
+                  >   
 
 
 
 
+                    <span className="new-action-icon"><InstagramBrandIcon size={23} /></span>   
 
 
-                    rel="noreferrer"     
 
 
+                    <span className="new-action-copy">   
 
 
 
 
-                  >     
+                      <small>FOLLOW OUR WORK</small>   
 
 
 
 
+                      <strong>@sgr_decors_interior_designer</strong>   
 
 
-                    <span className="new-action-icon"><WhatsAppIcon size={23} /></span>     
 
 
+                    </span>   
 
 
 
 
-                    <span className="new-action-copy">     
+                    <ArrowUpRight size={19} />   
 
 
 
 
+                  </a>   
 
 
-                      <small>CHAT ON WHATSAPP</small>     
 
 
+                  <a   
 
 
 
 
-                      <strong>Send Your Requirement</strong>     
+                    className="new-contact-action youtube"   
 
 
 
 
+                    href={YOUTUBE}   
 
 
-                    </span>     
 
 
+                    target="_blank"   
 
 
 
 
-                    <ArrowUpRight size={19} />     
+                    rel="noreferrer"   
 
 
 
 
+                  >   
 
 
-                  </a>     
 
 
+                    <span className="new-action-icon"><YouTubeBrandIcon size={23} /></span>   
 
 
 
 
-                  <a     
+                    <span className="new-action-copy">   
 
 
 
 
+                      <small>WATCH OUR WORK</small>   
 
 
-                    className="new-contact-action instagram"     
 
 
+                      <strong>GuruRag Signature Home</strong>   
 
 
 
 
-                    href={INSTAGRAM}     
+                    </span>   
 
 
 
 
+                    <ArrowUpRight size={19} />   
 
 
-                    target="_blank"     
 
 
+                  </a>   
 
 
 
 
-                    rel="noreferrer"     
+                </div>   
 
 
 
 
+                <div className="new-contact-bottom-row">   
 
 
-                  >     
 
 
+                  <span>Available for residential & commercial enquiries</span>   
 
 
 
 
-                    <span className="new-action-icon"><InstagramBrandIcon size={23} /></span>     
+                  <span>Chennai | Tamil Nadu</span>   
 
 
 
 
+                </div>   
 
 
-                    <span className="new-action-copy">     
 
 
+              </div>   
 
 
 
 
-                      <small>FOLLOW OUR WORK</small>     
+            )}   
 
 
 
 
+          </div>   
 
 
-                      <strong>@sgr_decors_interior_designer</strong>     
 
 
+        </motion.div>   
 
 
 
 
-                    </span>     
+      </motion.div>   
 
 
 
 
+    </AnimatePresence>   
 
 
-                    <ArrowUpRight size={19} />     
 
 
+  );   
 
 
 
 
-                  </a>     
-
-
-
-
-
-
-                  <a     
-
-
-
-
-
-
-                    className="new-contact-action youtube"     
-
-
-
-
-
-
-                    href={YOUTUBE}     
-
-
-
-
-
-
-                    target="_blank"     
-
-
-
-
-
-
-                    rel="noreferrer"     
-
-
-
-
-
-
-                  >     
-
-
-
-
-
-
-                    <span className="new-action-icon"><YouTubeBrandIcon size={23} /></span>     
-
-
-
-
-
-
-                    <span className="new-action-copy">     
-
-
-
-
-
-
-                      <small>WATCH OUR WORK</small>     
-
-
-
-
-
-
-                      <strong>GuruRag Signature Home</strong>     
-
-
-
-
-
-
-                    </span>     
-
-
-
-
-
-
-                    <ArrowUpRight size={19} />     
-
-
-
-
-
-
-                  </a>     
-
-
-
-
-
-
-                </div>     
-
-
-
-
-
-
-                <div className="new-contact-bottom-row">     
-
-
-
-
-
-
-                  <span>Available for residential & commercial enquiries</span>     
-
-
-
-
-
-
-                  <span>Chennai | Tamil Nadu</span>     
-
-
-
-
-
-
-                </div>     
-
-
-
-
-
-
-              </div>     
-
-
-
-
-
-
-            )}     
-
-
-
-
-
-
-          </div>     
-
-
-
-          </div>  
-
-
-
-
-
-
-        </motion.div>     
-
-
-
-
-
-
-      </motion.div>     
-
-
-
-
-
-
-    </AnimatePresence>     
-
-
-
-
-
-
-  );     
-
-
-
-
-
-
-}     
-
-
+}   
 
 
 
@@ -12934,7 +13226,7 @@ function NewPageStyles() {
 
 
 
-      .new-page-top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex:0 0 auto;min-width:max-content}.new-page-top-whatsapp{display:flex;align-items:center;gap:8px;text-decoration:none;color:#dff8ef;border:1px solid rgba(158,231,207,.25);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:700;transition:.25s;white-space:nowrap}.new-page-top-whatsapp:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 24px rgba(158,231,207,.22)}.new-page-close{z-index:20;opacity:1;visibility:visible;width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;display:grid;place-items:center;cursor:pointer;transition:.25s}.new-page-close:hover{transform:rotate(90deg);background:#f3d36a;color:#071827;box-shadow:0 0 28px rgba(243,211,106,.28)}       
+      .new-page-top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex:0 0 auto;min-width:max-content}.new-page-top-whatsapp{display:flex;align-items:center;gap:8px;text-decoration:none;color:#dff8ef;border:1px solid rgba(158,231,207,.25);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:700;transition:.25s;white-space:nowrap}.new-page-top-whatsapp:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 24px rgba(158,231,207,.22)}.new-page-close{width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;display:grid;place-items:center;cursor:pointer;transition:.25s}.new-page-close:hover{transform:rotate(90deg);background:#f3d36a;color:#071827;box-shadow:0 0 28px rgba(243,211,106,.28)}       
 
 
 
@@ -22795,7 +23087,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                <button onClick={() => openPage("about")}><small>02</small>About Us<ArrowUpRight /></button>       
+                <button       
 
 
 
@@ -22804,7 +23096,7 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                <button onClick={() => openPage("services")}><small>03</small>Our Services<ArrowUpRight /></button>       
+                  onClick={() => { setMenu(false); scrollTo("about"); }}       
 
 
 
@@ -22813,7 +23105,169 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                <button onClick={() => openPage("projects")}><small>04</small>Our Projects<ArrowUpRight /></button>       
+                >       
+
+
+
+
+
+
+
+
+                  <small>02</small>       
+
+
+
+
+
+
+
+
+                  About Us       
+
+
+
+
+
+
+
+
+                  <ArrowUpRight />       
+
+
+
+
+
+
+
+
+                </button>       
+
+
+
+
+
+
+
+
+                <button       
+
+
+
+
+
+
+
+
+                  onClick={() => { setMenu(false); scrollTo("services"); }}       
+
+
+
+
+
+
+
+
+                >       
+
+
+
+
+
+
+
+
+                  <small>03</small>       
+
+
+
+
+
+
+
+
+                  Our Services       
+
+
+
+
+
+
+
+
+                  <ArrowUpRight />       
+
+
+
+
+
+
+
+
+                </button>       
+
+
+
+
+
+
+
+
+                <button       
+
+
+
+
+
+
+
+
+                  onClick={() => { setMenu(false); scrollTo("projects"); }}       
+
+
+
+
+
+
+
+
+                >       
+
+
+
+
+
+
+
+
+                  <small>04</small>       
+
+
+
+
+
+
+
+
+                  Our Projects       
+
+
+
+
+
+
+
+
+                  <ArrowUpRight />       
+
+
+
+
+
+
+
+
+                </button>       
 
 
 
