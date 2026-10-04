@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useRef, useState } from "react";  
 
 
@@ -6132,11 +6130,11 @@ function NewPageStyles() {
 
 
 
-      .new-page-overlay{position:fixed;inset:0;z-index:1200;background:rgba(5,16,29,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:14px;display:flex;align-items:center;justify-content:center}  
+      .new-page-overlay{position:fixed;inset:0;z-index:1200;background:rgba(5,16,29,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:18px;display:flex;align-items:center;justify-content:center}  
 
 
 
-      .new-page-shell{width:min(1180px,100%);height:min(94vh,900px);overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:#071827;color:#f7f5ed;box-shadow:0 35px 100px rgba(0,0,0,.48);position:relative}  
+      .new-page-shell{width:min(1080px,calc(100vw - 36px));height:min(88dvh,860px);min-height:0;overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:#071827;color:#f7f5ed;box-shadow:0 35px 100px rgba(0,0,0,.48);position:relative}  
 
 
 
@@ -6176,154 +6174,12 @@ function NewPageStyles() {
 
 
 
-      @media(max-width:800px){.new-page-overlay{padding:0}.new-page-shell{height:100dvh;min-height:100vh;border-radius:0;border:0}.new-page-topbar{height:70px;min-height:70px;padding:0 16px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 70px);padding:34px 17px 50px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}} 
+      @media(max-width:800px){.new-page-overlay{padding:10px}.new-page-shell{width:calc(100vw - 20px);height:88dvh;min-height:0;border-radius:24px;border:1px solid rgba(255,255,255,.13)}.new-page-topbar{height:64px;min-height:64px;padding:0 12px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 64px);padding:28px 17px 42px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}} 
 
 
-       @media(max-width:430px){.new-page-topbar{padding:0 11px;gap:5px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}}  
+       @media(max-width:430px){.new-page-overlay{padding:8px}.new-page-shell{width:calc(100vw - 16px);height:86dvh;border-radius:22px}.new-page-topbar{padding:0 9px;gap:5px;height:60px;min-height:60px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}.new-page-scroll{height:calc(100% - 60px);padding:25px 14px 36px}}  
 
 
-
-
-
-      .hero-trust-row{
-        margin-top:22px;
-        display:flex;
-        align-items:center;
-      }
-      .hero-warranty-badge{
-        display:inline-flex;
-        align-items:center;
-        gap:12px;
-        padding:10px 16px 10px 10px;
-        border:1px solid rgba(158,231,207,.32);
-        border-radius:18px;
-        background:rgba(7,24,39,.72);
-        box-shadow:0 14px 35px rgba(0,0,0,.22), inset 0 0 0 1px rgba(255,255,255,.04);
-        backdrop-filter:blur(12px);
-        -webkit-backdrop-filter:blur(12px);
-        color:#fff;
-      }
-      .hero-warranty-icon{
-        width:48px;
-        height:48px;
-        flex:0 0 48px;
-        display:grid;
-        place-items:center;
-        color:#071827;
-        background:linear-gradient(145deg,#f3d36a,#d8b33e);
-        clip-path:polygon(50% 0%,92% 16%,86% 62%,50% 100%,14% 62%,8% 16%);
-        filter:drop-shadow(0 7px 12px rgba(0,0,0,.2));
-      }
-      .hero-warranty-copy{
-        display:flex;
-        flex-direction:column;
-        gap:2px;
-      }
-      .hero-warranty-copy strong{
-        font-size:17px;
-        line-height:1;
-        letter-spacing:.08em;
-        font-weight:900;
-      }
-      .hero-warranty-copy small{
-        font-size:9px;
-        line-height:1;
-        letter-spacing:.28em;
-        color:#9ee7cf;
-        font-weight:800;
-      }
-      @media(max-width:650px){
-        .hero-trust-row{
-          margin-top:17px;
-        }
-        .hero-warranty-badge{
-          padding:8px 13px 8px 8px;
-          border-radius:15px;
-          gap:9px;
-        }
-        .hero-warranty-icon{
-          width:42px;
-          height:42px;
-          flex-basis:42px;
-        }
-        .hero-warranty-copy strong{
-          font-size:14px;
-        }
-        .hero-warranty-copy small{
-          font-size:8px;
-        }
-      }
-      @media(max-width:390px){
-        .hero-warranty-badge{
-          padding-right:11px;
-        }
-        .hero-warranty-copy strong{
-          font-size:13px;
-        }
-      }
-
-      /* Responsive new-page header: keep social buttons and close control visible while the page scrolls. */
-      .new-page-topbar{
-        position:absolute !important;
-        top:0 !important;
-        left:0 !important;
-        right:0 !important;
-        z-index:50 !important;
-        flex-shrink:0 !important;
-      }
-      .new-page-top-actions{
-        position:relative !important;
-        z-index:60 !important;
-        visibility:visible !important;
-        opacity:1 !important;
-        display:flex !important;
-        flex-shrink:0 !important;
-      }
-      .new-page-top-whatsapp,
-      .new-page-close{
-        visibility:visible !important;
-        opacity:1 !important;
-        position:relative !important;
-        z-index:61 !important;
-      }
-      .new-page-scroll{
-        height:100% !important;
-        padding-top:126px !important;
-      }
-      @media(max-width:800px){
-        .new-page-topbar{
-          position:absolute !important;
-          height:70px !important;
-          min-height:70px !important;
-        }
-        .new-page-scroll{
-          height:100% !important;
-          padding-top:104px !important;
-        }
-        .new-page-top-actions{
-          display:flex !important;
-          visibility:visible !important;
-          opacity:1 !important;
-        }
-      }
-      @media(max-width:430px){
-        .new-page-topbar{
-          padding-left:11px !important;
-          padding-right:11px !important;
-        }
-        .new-page-scroll{
-          padding-top:96px !important;
-        }
-        .new-page-top-actions{
-          gap:5px !important;
-        }
-        .new-page-top-whatsapp,
-        .new-page-close{
-          width:38px !important;
-          height:38px !important;
-          flex:0 0 38px !important;
-        }
-      }
 
     `}</style>  
 
@@ -8657,6 +8513,8 @@ function OfferPopupStyles() {
 
 
       }  
+      .warranty-floating-button{position:fixed;z-index:3001;right:24px;bottom:148px;min-height:45px;width:208px;padding:0 16px;border:1px solid rgba(243,211,106,.48);border-radius:999px;background:rgba(7,24,39,.96);color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:900;letter-spacing:.07em;box-shadow:0 12px 35px rgba(0,0,0,.24),0 0 25px rgba(243,211,106,.08);cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:.25s}.warranty-floating-badge{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;background:#f3d36a;color:#071827;clip-path:polygon(50% 0%,90% 15%,100% 52%,82% 86%,50% 100%,18% 86%,0 52%,10% 15%)}.warranty-floating-button:hover{transform:translateY(-3px);background:#9ee7cf;color:#071827;border-color:#9ee7cf;box-shadow:0 15px 40px rgba(0,0,0,.28)}
+
 
 
 
@@ -8994,7 +8852,7 @@ function OfferPopupStyles() {
           line-height:.88; 
 
 
-          overflow-wrap:anywhere; 
+          overflow-wrap:normal; word-break:normal; hyphens:none; 
 
 
         } 
@@ -9439,37 +9297,6 @@ function OfferPopupStyles() {
       }  
 
 
-
-
-      /* Popup headline fix: keep words intact on small screens. */
-      .offer-popup-banner-copy > strong{
-        overflow-wrap:normal !important;
-        word-break:normal !important;
-        hyphens:none !important;
-        white-space:normal !important;
-      }
-
-      @media(max-width:650px){
-        .offer-popup-banner-copy{
-          grid-template-columns:minmax(0,1.16fr) minmax(92px,.68fr) !important;
-          gap:7px 8px !important;
-        }
-        .offer-popup-banner-copy > strong{
-          font-size:clamp(34px,10vw,41px) !important;
-          line-height:.9 !important;
-          letter-spacing:-.055em !important;
-        }
-      }
-      @media(max-width:390px){
-        .offer-popup-banner-copy{
-          grid-template-columns:minmax(0,1.18fr) minmax(88px,.64fr) !important;
-          gap:6px 7px !important;
-        }
-        .offer-popup-banner-copy > strong{
-          font-size:35px !important;
-          line-height:.9 !important;
-        }
-      }
 
     `}</style>  
 
@@ -11099,18 +10926,7 @@ function App() {
 
 
 
-                  <div className="hero-trust-row">
-            <div className="hero-warranty-badge" aria-label="10 Years Warranty">
-              <span className="hero-warranty-icon" aria-hidden="true">
-                <Check size={25} strokeWidth={3} />
-              </span>
-              <span className="hero-warranty-copy">
-                <strong>10 YEARS</strong>
-                <small>WARRANTY</small>
-              </span>
-            </div>
-          </div>
-<div className="hero-bottom">  
+        <div className="hero-bottom">  
 
 
 
@@ -13134,7 +12950,20 @@ function App() {
 
 
 
-      <motion.button  
+            <motion.button
+        className="warranty-floating-button"
+        onClick={() => openOfferPopup()}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.35, duration: 0.4 }}
+      >
+        <span className="warranty-floating-badge" aria-hidden="true">
+          <Check size={17} strokeWidth={3} />
+        </span>
+        <span>10 YEARS WARRANTY</span>
+      </motion.button>
+
+<motion.button  
 
 
 
@@ -13282,4 +13111,4 @@ createRoot(
 
 
 
-).render(<App />);  
+).render(<App />);
