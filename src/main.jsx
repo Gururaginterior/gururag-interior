@@ -3121,8 +3121,16 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
             <div className="label mint">      
               THE PERSON BEHIND THE VISION      
             </div>      
-            <h3 style={{ whiteSpace: "nowrap" }}>      
-              S.SaranRaj , <span style={{ fontSize: "0.55em", fontWeight: 700 }}>B.E</span>      
+            <h3
+              style={{
+                whiteSpace: "nowrap",
+                fontFamily: "Helvetica Neue, Arial, sans-serif",
+                fontWeight: 800,
+                color: "#D4AF37",
+                letterSpacing: "0",
+              }}
+            >
+              Mr. S. Saran Raj
             </h3>      
             <div className="stats">      
               <div>      
