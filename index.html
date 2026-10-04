@@ -125,6 +125,9 @@
 
     <!-- ================================
          LOCAL BUSINESS STRUCTURED DATA
+         Exact address is provided only to
+         search engines through JSON-LD.
+         It is NOT visible on the website.
     ================================= -->
 
     <script type="application/ld+json">
@@ -148,6 +151,15 @@
       "image": "https://www.gururag.com/logo.jpg",
 
       "description": "Gururag Interiors provides professional home, office and turnkey interior design solutions in Chennai, Poonamallee and surrounding areas.",
+
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "No 9, Sakthi Nagar, near Water Tank, Kumananchavadi",
+        "addressLocality": "Chennai",
+        "addressRegion": "Tamil Nadu",
+        "postalCode": "600056",
+        "addressCountry": "IN"
+      },
 
       "serviceType": [
         "Interior Design",
