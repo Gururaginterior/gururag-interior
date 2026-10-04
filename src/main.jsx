@@ -1,1864 +1,6988 @@
-import React, { useEffect, useRef, useState } from "react";  
+import React, { useEffect, useRef, useState } from "react";    
 
 
 
-import { createRoot } from "react-dom/client";  
 
 
+import { createRoot } from "react-dom/client";    
 
-import {  
 
 
 
-  ArrowUpRight,  
 
+import {    
 
 
-  ArrowLeft,  
 
 
 
-  ArrowRight,  
+  ArrowUpRight,    
 
 
 
-  X,  
 
 
+  ArrowLeft,    
 
-  Phone,  
 
 
 
-  MapPin,  
 
+  ArrowRight,    
 
 
-  Check,  
 
 
 
-  Send,  
+  X,    
 
 
 
-  Bot,  
 
 
+  Phone,    
 
-} from "lucide-react";  
 
 
 
-import { motion, AnimatePresence } from "framer-motion";  
 
+  MapPin,    
 
 
-import { supabase } from "./supabaseClient";  
 
 
 
-import OwnerDashboard from "./OwnerDashboard";  
+  Check,    
 
 
 
-import "./styles.css";  
 
 
+  Send,    
 
-import logo from "./logo.jpg";  
 
 
 
-import founder from "./founder.jpg";  
 
+  Bot,    
 
 
-const WHATSAPP = "https://wa.me/919789695878";  
 
 
 
-const INSTAGRAM = "https://www.instagram.com/sgr_decors_interior_designer?stkn=bDNyaWVleDY2dDI=";  
+} from "lucide-react";    
 
 
 
-const YOUTUBE = "https://www.youtube.com/@GuruRagSignaturehome";  
 
 
+import { motion, AnimatePresence } from "framer-motion";    
 
-const services = [  
 
 
 
-  {  
 
+import { supabase } from "./supabaseClient";    
 
 
-    title: "Carpentry Works",  
 
 
 
-    text: "Precision-built interiors for kitchens, wardrobes, furniture and custom spaces.",  
+import OwnerDashboard from "./OwnerDashboard";    
 
 
 
-    chatbotDescription:  
 
 
+import "./styles.css";    
 
-      "Complete carpentry solutions designed around your space, lifestyle and storage needs.",  
 
 
 
-    keywords: [  
 
+import logo from "./logo.jpg";    
 
 
-      "carpentry",  
 
 
 
-      "kitchen",  
+import founder from "./founder.jpg";    
 
 
 
-      "modular kitchen",  
 
 
+const WHATSAPP = "https://wa.me/919789695878";    
 
-      "modular",  
 
 
 
-      "pvc kitchen",  
 
+const INSTAGRAM = "https://www.instagram.com/sgr_decors_interior_designer?stkn=bDNyaWVleDY2dDI=";    
 
 
-      "wardrobe",  
 
 
 
-      "wardrobes",  
+const YOUTUBE = "https://www.youtube.com/@GuruRagSignaturehome";    
 
 
 
-      "cupboard",  
 
 
+const services = [    
 
-      "door",  
 
 
 
-      "doors",  
 
+  {    
 
 
-      "furniture",  
 
 
 
-      "custom furniture",  
+    title: "Carpentry Works",    
 
 
 
-      "wpc",  
 
 
+    text: "Precision-built interiors for kitchens, wardrobes, furniture and custom spaces.",    
 
-      "upvc",  
 
 
 
-      "glass partition",  
 
+    chatbotDescription:    
 
 
-      "glass",  
 
 
 
-      "cnc",  
+      "Complete carpentry solutions designed around your space, lifestyle and storage needs.",    
 
 
 
-      "office furniture",  
 
 
+    keywords: [    
 
-    ],  
 
 
 
-    pros: [  
 
+      "carpentry",    
 
 
-      "Custom-built to match your space",  
 
 
 
-      "Wide range of kitchen and wardrobe solutions",  
+      "kitchen",    
 
 
 
-      "Better storage planning",  
 
 
+      "modular kitchen",    
 
-      "Flexible designs and finishes",  
 
 
 
-    ],  
 
+      "modular",    
 
 
-    considerations: [  
 
 
 
-      "Material selection affects the final cost",  
+      "pvc kitchen",    
 
 
 
-      "Custom work requires proper measurements",  
 
 
+      "wardrobe",    
 
-      "Finish and hardware quality should be checked before execution",  
 
 
 
-    ],  
 
+      "wardrobes",    
 
 
-    items: [  
 
 
 
-      "PVC Modular Kitchen",  
+      "cupboard",    
 
 
 
-      "PVC Wardrobes & Doors",  
 
 
+      "door",    
 
-      "WPC Door Works",  
 
 
 
-      "UPVC Windows",  
 
+      "doors",    
 
 
-      "Glass Partitions",  
 
 
 
-      "Office Furniture",  
+      "furniture",    
 
 
 
-      "Custom Furniture",  
 
 
+      "custom furniture",    
 
-      "CNC Cutting & Partition",  
 
 
 
-    ],  
 
+      "wpc",    
 
 
-    image:  
 
 
 
-      "https://images.unsplash.com/photo-1556912173-46c336c7fd55?auto=format&fit=crop&w=1600&q=90",  
+      "upvc",    
 
 
 
-  },  
 
 
+      "glass partition",    
 
-  {  
 
 
 
-    title: "Painting & Waterproofing",  
 
+      "glass",    
 
 
-    text: "Premium finishes combined with practical protection for beautiful, long-lasting spaces.",  
 
 
 
-    chatbotDescription:  
+      "cnc",    
 
 
 
-      "Interior and exterior painting combined with waterproofing solutions for better protection and finish.",  
 
 
+      "office furniture",    
 
-    keywords: [  
 
 
 
-      "painting",  
 
+    ],    
 
 
-      "paint",  
 
 
 
-      "colour",  
+    pros: [    
 
 
 
-      "color",  
 
 
+      "Custom-built to match your space",    
 
-      "wall paint",  
 
 
 
-      "3d painting",  
 
+      "Wide range of kitchen and wardrobe solutions",    
 
 
-      "elevation painting",  
 
 
 
-      "waterproofing",  
+      "Better storage planning",    
 
 
 
-      "water proofing",  
 
 
+      "Flexible designs and finishes",    
 
-      "leakage",  
 
 
 
-      "leak",  
 
+    ],    
 
 
-      "damp",  
 
 
 
-      "damp proof",  
+    considerations: [    
 
 
 
-      "terrace",  
 
 
+      "Material selection affects the final cost",    
 
-      "heat reflection",  
 
 
 
-      "bathroom waterproofing",  
 
+      "Custom work requires proper measurements",    
 
 
-    ],  
 
 
 
-    pros: [  
+      "Finish and hardware quality should be checked before execution",    
 
 
 
-      "Improves the overall appearance",  
 
 
+    ],    
 
-      "Multiple finish and colour options",  
 
 
 
-      "Helps protect walls and surfaces",  
 
+    items: [    
 
 
-      "Waterproofing can reduce moisture-related issues",  
 
 
 
-    ],  
+      "PVC Modular Kitchen",    
 
 
 
-    considerations: [  
 
 
+      "PVC Wardrobes & Doors",    
 
-      "Surface preparation is important",  
 
 
 
-      "Waterproofing requires identifying the source of leakage",  
 
+      "WPC Door Works",    
 
 
-      "Drying and curing time should be considered",  
 
 
 
-    ],  
+      "UPVC Windows",    
 
 
 
-    items: [  
 
 
+      "Glass Partitions",    
 
-      "Interior Painting",  
 
 
 
-      "3D Painting",  
 
+      "Office Furniture",    
 
 
-      "Elevation Painting",  
 
 
 
-      "Terrace Heat Reflection",  
+      "Custom Furniture",    
 
 
 
-      "Bathroom Waterproofing",  
 
 
+      "CNC Cutting & Partition",    
 
-      "Terrace Damp Proofing",  
 
 
 
-    ],  
 
+    ],    
 
 
-    image:  
 
 
 
-      "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1600&q=90",  
+    image:    
 
 
 
-  },  
 
 
+      "https://images.unsplash.com/photo-1556912173-46c336c7fd55?auto=format&fit=crop&w=1600&q=90",    
 
-  {  
 
 
 
-    title: "Civil Works",  
 
+  },    
 
 
-    text: "Complete civil and finishing solutions that bring your interior vision together.",  
 
 
 
-    chatbotDescription:  
+  {    
 
 
 
-      "Civil, flooring and finishing work coordinated as part of your interior or renovation project.",  
 
 
+    title: "Painting & Waterproofing",    
 
-    keywords: [  
 
 
 
-      "civil",  
 
+    text: "Premium finishes combined with practical protection for beautiful, long-lasting spaces.",    
 
 
-      "civil work",  
 
 
 
-      "renovation",  
+    chatbotDescription:    
 
 
 
-      "renovate",  
 
 
+      "Interior and exterior painting combined with waterproofing solutions for better protection and finish.",    
 
-      "tiles",  
 
 
 
-      "tile",  
 
+    keywords: [    
 
 
-      "flooring",  
 
 
 
-      "wooden flooring",  
+      "painting",    
 
 
 
-      "granite",  
 
 
+      "paint",    
 
-      "demolition",  
 
 
 
-      "wallpaper",  
 
+      "colour",    
 
 
-      "wall paper",  
 
 
 
-      "false ceiling",  
+      "color",    
 
 
 
-      "ceiling",  
 
 
+      "wall paint",    
 
-      "pvc ceiling",  
 
 
 
-    ],  
 
+      "3d painting",    
 
 
-    pros: [  
 
 
 
-      "Complete execution under one service",  
+      "elevation painting",    
 
 
 
-      "Suitable for renovation and new interiors",  
 
 
+      "waterproofing",    
 
-      "Better coordination between civil and interior work",  
 
 
 
-      "Wide range of finishing options",  
 
+      "water proofing",    
 
 
-    ],  
 
 
 
-    considerations: [  
+      "leakage",    
 
 
 
-      "Civil work can create dust and temporary disruption",  
 
 
+      "leak",    
 
-      "Project timelines depend on site conditions",  
 
 
 
-      "Material choices affect budget and maintenance",  
 
+      "damp",    
 
 
-    ],  
 
 
 
-    items: [  
+      "damp proof",    
 
 
 
-      "Tiles & Wooden Flooring",  
 
 
+      "terrace",    
 
-      "Granite Works",  
 
 
 
-      "Civil & Demolition",  
 
+      "heat reflection",    
 
 
-      "Wall Papers",  
 
 
 
-      "False Ceiling",  
+      "bathroom waterproofing",    
 
 
 
-      "PVC False Ceiling",  
 
 
+    ],    
 
-    ],  
 
 
 
-    image:  
 
+    pros: [    
 
 
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=90",  
 
 
 
-  },  
+      "Improves the overall appearance",    
 
 
 
-  {  
 
 
+      "Multiple finish and colour options",    
 
-    title: "Electrical & Plumbing",  
 
 
 
-    text: "Modern infrastructure designed around safety, comfort and everyday convenience.",  
 
+      "Helps protect walls and surfaces",    
 
 
-    chatbotDescription:  
 
 
 
-      "Electrical and plumbing solutions planned to support safe, practical and comfortable interiors.",  
+      "Waterproofing can reduce moisture-related issues",    
 
 
 
-    keywords: [  
 
 
+    ],    
 
-      "electrical",  
 
 
 
-      "electric",  
 
+    considerations: [    
 
 
-      "wiring",  
 
 
 
-      "plumbing",  
+      "Surface preparation is important",    
 
 
 
-      "plumber",  
 
 
+      "Waterproofing requires identifying the source of leakage",    
 
-      "cctv",  
 
 
 
-      "camera",  
 
+      "Drying and curing time should be considered",    
 
 
-      "inverter",  
 
 
 
-      "inverter wiring",  
+    ],    
 
 
 
-      "automation",  
 
 
+    items: [    
 
-      "smart home",  
 
 
 
-      "switch",  
 
+      "Interior Painting",    
 
 
-      "switches",  
 
 
 
-      "motor",  
+      "3D Painting",    
 
 
 
-      "gas pipe",  
 
 
+      "Elevation Painting",    
 
-      "gas pipeline",  
 
 
 
-    ],  
 
+      "Terrace Heat Reflection",    
 
 
-    pros: [  
 
 
 
-      "Better planning before finishing work",  
+      "Bathroom Waterproofing",    
 
 
 
-      "Supports modern appliances and automation",  
 
 
+      "Terrace Damp Proofing",    
 
-      "Improves everyday convenience",  
 
 
 
-      "Can be integrated with interior planning",  
 
+    ],    
 
 
-    ],  
 
 
 
-    considerations: [  
+    image:    
 
 
 
-      "Electrical work should be properly planned before walls are closed",  
 
 
+      "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1600&q=90",    
 
-      "Quality wiring and components matter",  
 
 
 
-      "Plumbing access should be considered for future maintenance",  
 
+  },    
 
 
-    ],  
 
 
 
-    items: [  
+  {    
 
 
 
-      "CCTV Installation",  
 
 
+    title: "Civil Works",    
 
-      "Inverter Wiring",  
 
 
 
-      "Automation Switches",  
 
+    text: "Complete civil and finishing solutions that bring your interior vision together.",    
 
 
-      "Motor Control",  
 
 
 
-      "Electrical Works",  
+    chatbotDescription:    
 
 
 
-      "Copper Gas Pipe Work",  
 
 
+      "Civil, flooring and finishing work coordinated as part of your interior or renovation project.",    
 
-    ],  
 
 
 
-    image:  
 
+    keywords: [    
 
 
-      "https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=1600&q=90",  
 
 
 
-  },  
+      "civil",    
 
 
 
-  {  
 
 
+      "civil work",    
 
-    title: "Metal Fabrication",  
 
 
 
-    text: "Strong and contemporary metal solutions for homes, offices and outdoor spaces.",  
 
+      "renovation",    
 
 
-    chatbotDescription:  
 
 
 
-      "Custom metal, aluminium and grille solutions for security, partitions, ventilation and modern design.",  
+      "renovate",    
 
 
 
-    keywords: [  
 
 
+      "tiles",    
 
-      "metal",  
 
 
 
-      "fabrication",  
 
+      "tile",    
 
 
-      "grill",  
 
 
 
-      "grille",  
+      "flooring",    
 
 
 
-      "gate",  
 
 
+      "wooden flooring",    
 
-      "gates",  
 
 
 
-      "ss gate",  
 
+      "granite",    
 
 
-      "ms gate",  
 
 
 
-      "aluminium",  
+      "demolition",    
 
 
 
-      "aluminum",  
 
 
+      "wallpaper",    
 
-      "mosquito net",  
 
 
 
-      "sliding door",  
 
+      "wall paper",    
 
 
-      "sliding doors",  
 
 
 
-      "aluminium partition",  
+      "false ceiling",    
 
 
 
-      "partition",  
 
 
+      "ceiling",    
 
-    ],  
 
 
 
-    pros: [  
 
+      "pvc ceiling",    
 
 
-      "Strong and durable solutions",  
 
 
 
-      "Custom sizes and designs",  
+    ],    
 
 
 
-      "Useful for security and partitions",  
 
 
+    pros: [    
 
-      "Suitable for residential and commercial spaces",  
 
 
 
-    ],  
 
+      "Complete execution under one service",    
 
 
-    considerations: [  
 
 
 
-      "Design and finish should match the overall interior",  
+      "Suitable for renovation and new interiors",    
 
 
 
-      "Outdoor metalwork needs suitable protection",  
 
 
+      "Better coordination between civil and interior work",    
 
-      "Measurements should be confirmed before fabrication",  
 
 
 
-    ],  
 
+      "Wide range of finishing options",    
 
 
-    items: [  
 
 
 
-      "SS Grille Gates",  
+    ],    
 
 
 
-      "MS Grille Gates",  
 
 
+    considerations: [    
 
-      "Aluminium Mosquito Nets",  
 
 
 
-      "Sliding Doors",  
 
+      "Civil work can create dust and temporary disruption",    
 
 
-      "Aluminium Partitions",  
 
 
 
-    ],  
+      "Project timelines depend on site conditions",    
 
 
 
-    image:  
 
 
+      "Material choices affect budget and maintenance",    
 
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=90",  
 
 
 
-  },  
 
+    ],    
 
 
-];  
 
 
 
-const projects = [  
+    items: [    
 
 
 
-  {  
 
 
+      "Tiles & Wooden Flooring",    
 
-    title: "Modern Kitchen",  
 
 
 
-    category: "Kitchen",  
 
+      "Granite Works",    
 
 
-    image:  
 
 
 
-      "https://images.unsplash.com/photo-1758240689297-d8613ca753f3?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=90&w=1600",  
+      "Civil & Demolition",    
 
 
 
-  },  
 
 
+      "Wall Papers",    
 
-  {  
 
 
 
-    title: "Contemporary Living",  
 
+      "False Ceiling",    
 
 
-    category: "Residential",  
 
 
 
-    image:  
+      "PVC False Ceiling",    
 
 
 
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",  
 
 
+    ],    
 
-  },  
 
 
 
-  {  
 
+    image:    
 
 
-    title: "Quiet Luxury Bedroom",  
 
 
 
-    category: "Bedroom",  
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=90",    
 
 
 
-    image:  
 
 
+  },    
 
-      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=90",  
 
 
 
-  },  
 
+  {    
 
 
-  {  
 
 
 
-    title: "Modern Workspace",  
+    title: "Electrical & Plumbing",    
 
 
 
-    category: "Commercial",  
 
 
+    text: "Modern infrastructure designed around safety, comfort and everyday convenience.",    
 
-    image:  
 
 
 
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=90",  
 
+    chatbotDescription:    
 
 
-  },  
 
 
 
-];  
+      "Electrical and plumbing solutions planned to support safe, practical and comfortable interiors.",    
 
 
 
-function InstagramBrandIcon({ size = 22 }) {  
 
 
+    keywords: [    
 
-  const gradientId = `instagramGradient-${size}`;  
 
 
 
-  return (  
 
+      "electrical",    
 
 
-    <svg  
 
 
 
-      width={size}  
+      "electric",    
 
 
 
-      height={size}  
 
 
+      "wiring",    
 
-      viewBox="0 0 24 24"  
 
 
 
-      fill="none"  
 
+      "plumbing",    
 
 
-      xmlns="http://www.w3.org/2000/svg"  
 
 
 
-      aria-label="Instagram"  
+      "plumber",    
 
 
 
-    >  
 
 
+      "cctv",    
 
-      <defs>  
 
 
 
-        <linearGradient id={gradientId} x1="3" y1="21" x2="21" y2="3" gradientUnits="userSpaceOnUse">  
 
+      "camera",    
 
 
-          <stop stopColor="#FFDC80" />  
 
 
 
-          <stop offset="0.35" stopColor="#F77737" />  
+      "inverter",    
 
 
 
-          <stop offset="0.65" stopColor="#E1306C" />  
 
 
+      "inverter wiring",    
 
-          <stop offset="1" stopColor="#833AB4" />  
 
 
 
-        </linearGradient>  
 
+      "automation",    
 
 
-      </defs>  
 
 
 
-      <rect x="3" y="3" width="18" height="18" rx="5" fill={`url(#${gradientId})`} />  
+      "smart home",    
 
 
 
-      <rect x="7.2" y="7.2" width="9.6" height="9.6" rx="3" stroke="white" strokeWidth="1.9" />  
 
 
+      "switch",    
 
-      <circle cx="12" cy="12" r="2.5" stroke="white" strokeWidth="1.9" />  
 
 
 
-      <circle cx="16.5" cy="7.6" r="1.05" fill="white" />  
 
+      "switches",    
 
 
-    </svg>  
 
 
 
-  );  
+      "motor",    
 
 
 
-}  
 
 
+      "gas pipe",    
 
-function YouTubeBrandIcon({ size = 22 }) {  
 
 
 
-  return (  
 
+      "gas pipeline",    
 
 
-    <svg  
 
 
 
-      width={size}  
+    ],    
 
 
 
-      height={size}  
 
 
+    pros: [    
 
-      viewBox="0 0 24 24"  
 
 
 
-      fill="none"  
 
+      "Better planning before finishing work",    
 
 
-      xmlns="http://www.w3.org/2000/svg"  
 
 
 
-      aria-label="YouTube"  
+      "Supports modern appliances and automation",    
 
 
 
-    >  
 
 
+      "Improves everyday convenience",    
 
-      <rect x="2.2" y="5" width="19.6" height="14" rx="4.2" fill="#FF0000" />  
 
 
 
-      <path d="M10.2 8.5L16.1 12L10.2 15.5V8.5Z" fill="white" />  
 
+      "Can be integrated with interior planning",    
 
 
-    </svg>  
 
 
 
-  );  
+    ],    
 
 
 
-}  
 
 
+    considerations: [    
 
-function WhatsAppIcon({ size = 22 }) {  
 
 
 
-  return (  
 
+      "Electrical work should be properly planned before walls are closed",    
 
 
-    <svg  
 
 
 
-      width={size}  
+      "Quality wiring and components matter",    
 
 
 
-      height={size}  
 
 
+      "Plumbing access should be considered for future maintenance",    
 
-      viewBox="0 0 32 32"  
 
 
 
-      fill="none"  
 
+    ],    
 
 
-      xmlns="http://www.w3.org/2000/svg"  
 
 
 
-      aria-label="WhatsApp"  
+    items: [    
 
 
 
-    >  
 
 
+      "CCTV Installation",    
 
-      <path  
 
 
 
-        d="M16 3C8.82 3 3 8.82 3 16C3 18.3 3.6 20.46 4.65 22.34L3.1 28.9L9.82 27.38C11.65 28.4 13.77 29 16 29C23.18 29 29 23.18 29 16C29 8.82 23.18 3 16 3Z"  
 
+      "Inverter Wiring",    
 
 
-        fill="#25D366"  
 
 
 
-      />  
+      "Automation Switches",    
 
 
 
-      <path  
 
 
+      "Motor Control",    
 
-        d="M21.55 18.78C21.26 18.64 19.88 17.96 19.62 17.87C19.35 17.77 19.16 17.72 18.97 18.01C18.77 18.3 18.24 18.96 18.08 19.15C17.91 19.34 17.74 19.36 17.45 19.21C17.16 19.07 16.22 18.76 15.11 17.77C14.24 17 13.65 16.05 13.49 15.76C13.33 15.47 13.47 15.31 13.61 15.17C13.75 15.03 13.9 14.81 14.04 14.64C14.18 14.47 14.23 14.35 14.33 14.16C14.42 13.97 14.38 13.81 14.31 13.67C14.23 13.53 13.65 12.11 13.41 11.53C13.18 10.97 12.95 11.06 12.77 11.05C12.6 11.04 12.41 11.03 12.22 11.03C12.03 11.03 11.72 11.1 11.46 11.39C11.2 11.68 10.46 12.38 10.46 13.8C10.46 15.22 11.48 16.59 11.62 16.78C11.76 16.97 13.62 19.83 16.46 21.06C17.14 21.35 17.67 21.52 18.09 21.65C18.77 21.87 19.39 21.84 19.88 21.77C20.43 21.69 21.57 21.08 21.81 20.42C22.05 19.75 22.05 19.18 21.98 19.06C21.92 18.94 21.78 18.88 21.55 18.78Z"  
 
 
 
-        fill="white"  
 
+      "Electrical Works",    
 
 
-      />  
 
 
 
-    </svg>  
+      "Copper Gas Pipe Work",    
 
 
 
-  );  
 
 
+    ],    
 
-}  
 
 
 
-function normalizeText(text = "") {  
 
+    image:    
 
 
-  return text  
 
 
 
-    .toLowerCase()  
+      "https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=1600&q=90",    
 
 
 
-    .replace(/[^\w\s.]/g, " ")  
 
 
+  },    
 
-    .replace(/\s+/g, " ")  
 
 
 
-    .trim();  
 
+  {    
 
 
-}  
 
 
 
-function includesAny(text, words) {  
+    title: "Metal Fabrication",    
 
 
 
-  return words.some((word) => text.includes(word));  
 
 
+    text: "Strong and contemporary metal solutions for homes, offices and outdoor spaces.",    
 
-}  
 
 
 
-function findService(text) {  
 
+    chatbotDescription:    
 
 
-  const normalized = normalizeText(text);  
 
 
 
-  let bestService = null;  
+      "Custom metal, aluminium and grille solutions for security, partitions, ventilation and modern design.",    
 
 
 
-  let bestScore = 0;  
 
 
+    keywords: [    
 
-  services.forEach((service) => {  
 
 
 
-    let score = 0;  
 
+      "metal",    
 
 
-    service.keywords.forEach((keyword) => {  
 
 
 
-      const key = normalizeText(keyword);  
+      "fabrication",    
 
 
 
-      if (normalized.includes(key)) {  
 
 
+      "grill",    
 
-        score += key.includes(" ")  
 
 
 
-          ? 4  
 
+      "grille",    
 
 
-          : 2;  
 
 
 
-      }  
+      "gate",    
 
 
 
-    });  
 
 
+      "gates",    
 
-    if (score > bestScore) {  
 
 
 
-      bestScore = score;  
 
+      "ss gate",    
 
 
-      bestService = service;  
 
 
 
-    }  
+      "ms gate",    
 
 
 
-  });  
 
 
+      "aluminium",    
 
-  return bestScore > 0 ? bestService : null;  
 
 
 
-}  
 
+      "aluminum",    
 
 
-function isGreeting(text) {  
 
 
 
-  return includesAny(normalizeText(text), [  
+      "mosquito net",    
 
 
 
-    "hi",  
 
 
+      "sliding door",    
 
-    "hello",  
 
 
 
-    "hey",  
 
+      "sliding doors",    
 
 
-    "hii",  
 
 
 
-    "hlo",  
+      "aluminium partition",    
 
 
 
-    "vanakkam",  
 
 
+      "partition",    
 
-    "good morning",  
 
 
 
-    "good evening",  
 
+    ],    
 
 
-    "good afternoon",  
 
 
 
-  ]);  
+    pros: [    
 
 
 
-}  
 
 
+      "Strong and durable solutions",    
 
-function isAboutQuestion(text) {  
 
 
 
-  const normalized = normalizeText(text);  
 
+      "Custom sizes and designs",    
 
 
-  return includesAny(normalized, [  
 
 
 
-    "about you",  
+      "Useful for security and partitions",    
 
 
 
-    "about us",  
 
 
+      "Suitable for residential and commercial spaces",    
 
-    "about gururag",  
 
 
 
-    "who are you",  
 
+    ],    
 
 
-    "founder",  
 
 
 
-    "owner",  
+    considerations: [    
 
 
 
-    "saran",  
 
 
+      "Design and finish should match the overall interior",    
 
-    "experience",  
 
 
 
-    "how many years",  
 
+      "Outdoor metalwork needs suitable protection",    
 
 
-    "years experience",  
 
 
 
-    "projects completed",  
+      "Measurements should be confirmed before fabrication",    
 
 
 
-  ]);  
 
 
+    ],    
 
-}  
 
 
 
-function isPriceQuestion(text) {  
 
+    items: [    
 
 
-  const normalized = normalizeText(text);  
 
 
 
-  return includesAny(normalized, [  
+      "SS Grille Gates",    
 
 
 
-    "price",  
 
 
+      "MS Grille Gates",    
 
-    "pricing",  
 
 
 
-    "cost",  
 
+      "Aluminium Mosquito Nets",    
 
 
-    "budget",  
 
 
 
-    "rate",  
+      "Sliding Doors",    
 
 
 
-    "rates",  
 
 
+      "Aluminium Partitions",    
 
-    "quotation",  
 
 
 
-    "quote",  
 
+    ],    
 
 
-    "estimate",  
 
 
 
-    "how much",  
+    image:    
 
 
 
-    "evlo",  
 
 
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=90",    
 
-    "evalo",  
 
 
 
-    "amount",  
 
+  },    
 
 
-    "lakh",  
 
 
 
-    "lakhs",  
+];    
 
 
 
-    "rs",  
 
 
+const projects = [    
 
-    "Rs",  
 
 
 
-  ]);  
 
+  {    
 
 
-}  
 
 
 
-function isContactQuestion(text) {  
+    title: "Modern Kitchen",    
 
 
 
-  const normalized = normalizeText(text);  
 
 
+    category: "Kitchen",    
 
-  return includesAny(normalized, [  
 
 
 
-    "contact",  
 
+    image:    
 
 
-    "phone",  
 
 
 
-    "call",  
+      "https://images.unsplash.com/photo-1758240689297-d8613ca753f3?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=90&w=1600",    
 
 
 
-    "number",  
 
 
+  },    
 
-    "whatsapp",  
 
 
 
-    "talk to designer",  
 
+  {    
 
 
-    "designer",  
 
 
 
-    "human",  
+    title: "Contemporary Living",    
 
 
 
-    "person",  
 
 
+    category: "Residential",    
 
-    "team",  
 
 
 
-  ]);  
 
+    image:    
 
 
-}  
 
 
 
-function isEnquiryRequest(text) {  
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90",    
 
 
 
-  const normalized = normalizeText(text);  
 
 
+  },    
 
-  return includesAny(normalized, [  
 
 
 
-    "enquire",  
 
+  {    
 
 
-    "enquiry",  
 
 
 
-    "enquire now",  
+    title: "Quiet Luxury Bedroom",    
 
 
 
-    "quote venum",  
 
 
+    category: "Bedroom",    
 
-    "quote",  
 
 
 
-    "book",  
 
+    image:    
 
 
-    "booking",  
 
 
 
-    "start project",  
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=90",    
 
 
 
-    "project venum",  
 
 
+  },    
 
-    "contact me",  
 
 
 
-    "talk to someone",  
 
+  {    
 
 
-    "yes",  
 
 
 
-    "okay",  
+    title: "Modern Workspace",    
 
 
 
-    "ok",  
 
 
+    category: "Commercial",    
 
-    "sure",  
 
 
 
-  ]);  
 
+    image:    
 
 
-}  
 
 
 
-function detectBudget(text) {  
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=90",    
 
 
 
-  const normalized = normalizeText(text);  
 
 
+  },    
 
-  const match = normalized.match(  
 
 
 
-    /(?:rs)?\s*(\d+(?:\.\d+)?)\s*(lakh|lakhs|k|thousand)?/  
 
+];    
 
 
-  );  
 
 
 
-  if (!match) return null;  
+function InstagramBrandIcon({ size = 22 }) {    
 
 
 
-  const number = Number(match[1]);  
 
 
+  const gradientId = `instagramGradient-${size}`;    
 
-  const unit = match[2];  
 
 
 
-  if (!number) return null;  
 
+  return (    
 
 
-  if (unit === "lakh" || unit === "lakhs") {  
 
 
 
-    return `Rs. ${number} lakh`;  
+    <svg    
+
+
+
+
+
+      width={size}    
+
+
+
+
+
+      height={size}    
+
+
+
+
+
+      viewBox="0 0 24 24"    
+
+
+
+
+
+      fill="none"    
+
+
+
+
+
+      xmlns="http://www.w3.org/2000/svg"    
+
+
+
+
+
+      aria-label="Instagram"    
+
+
+
+
+
+    >    
+
+
+
+
+
+      <defs>    
+
+
+
+
+
+        <linearGradient id={gradientId} x1="3" y1="21" x2="21" y2="3" gradientUnits="userSpaceOnUse">    
+
+
+
+
+
+          <stop stopColor="#FFDC80" />    
+
+
+
+
+
+          <stop offset="0.35" stopColor="#F77737" />    
+
+
+
+
+
+          <stop offset="0.65" stopColor="#E1306C" />    
+
+
+
+
+
+          <stop offset="1" stopColor="#833AB4" />    
+
+
+
+
+
+        </linearGradient>    
+
+
+
+
+
+      </defs>    
+
+
+
+
+
+      <rect x="3" y="3" width="18" height="18" rx="5" fill={`url(#${gradientId})`} />    
+
+
+
+
+
+      <rect x="7.2" y="7.2" width="9.6" height="9.6" rx="3" stroke="white" strokeWidth="1.9" />    
+
+
+
+
+
+      <circle cx="12" cy="12" r="2.5" stroke="white" strokeWidth="1.9" />    
+
+
+
+
+
+      <circle cx="16.5" cy="7.6" r="1.05" fill="white" />    
+
+
+
+
+
+    </svg>    
+
+
+
+
+
+  );    
+
+
+
+
+
+}    
+
+
+
+
+
+function YouTubeBrandIcon({ size = 22 }) {    
+
+
+
+
+
+  return (    
+
+
+
+
+
+    <svg    
+
+
+
+
+
+      width={size}    
+
+
+
+
+
+      height={size}    
+
+
+
+
+
+      viewBox="0 0 24 24"    
+
+
+
+
+
+      fill="none"    
+
+
+
+
+
+      xmlns="http://www.w3.org/2000/svg"    
+
+
+
+
+
+      aria-label="YouTube"    
+
+
+
+
+
+    >    
+
+
+
+
+
+      <rect x="2.2" y="5" width="19.6" height="14" rx="4.2" fill="#FF0000" />    
+
+
+
+
+
+      <path d="M10.2 8.5L16.1 12L10.2 15.5V8.5Z" fill="white" />    
+
+
+
+
+
+    </svg>    
+
+
+
+
+
+  );    
+
+
+
+
+
+}    
+
+
+
+
+
+function WhatsAppIcon({ size = 22 }) {    
+
+
+
+
+
+  return (    
+
+
+
+
+
+    <svg    
+
+
+
+
+
+      width={size}    
+
+
+
+
+
+      height={size}    
+
+
+
+
+
+      viewBox="0 0 32 32"    
+
+
+
+
+
+      fill="none"    
+
+
+
+
+
+      xmlns="http://www.w3.org/2000/svg"    
+
+
+
+
+
+      aria-label="WhatsApp"    
+
+
+
+
+
+    >    
+
+
+
+
+
+      <path    
+
+
+
+
+
+        d="M16 3C8.82 3 3 8.82 3 16C3 18.3 3.6 20.46 4.65 22.34L3.1 28.9L9.82 27.38C11.65 28.4 13.77 29 16 29C23.18 29 29 23.18 29 16C29 8.82 23.18 3 16 3Z"    
+
+
+
+
+
+        fill="#25D366"    
+
+
+
+
+
+      />    
+
+
+
+
+
+      <path    
+
+
+
+
+
+        d="M21.55 18.78C21.26 18.64 19.88 17.96 19.62 17.87C19.35 17.77 19.16 17.72 18.97 18.01C18.77 18.3 18.24 18.96 18.08 19.15C17.91 19.34 17.74 19.36 17.45 19.21C17.16 19.07 16.22 18.76 15.11 17.77C14.24 17 13.65 16.05 13.49 15.76C13.33 15.47 13.47 15.31 13.61 15.17C13.75 15.03 13.9 14.81 14.04 14.64C14.18 14.47 14.23 14.35 14.33 14.16C14.42 13.97 14.38 13.81 14.31 13.67C14.23 13.53 13.65 12.11 13.41 11.53C13.18 10.97 12.95 11.06 12.77 11.05C12.6 11.04 12.41 11.03 12.22 11.03C12.03 11.03 11.72 11.1 11.46 11.39C11.2 11.68 10.46 12.38 10.46 13.8C10.46 15.22 11.48 16.59 11.62 16.78C11.76 16.97 13.62 19.83 16.46 21.06C17.14 21.35 17.67 21.52 18.09 21.65C18.77 21.87 19.39 21.84 19.88 21.77C20.43 21.69 21.57 21.08 21.81 20.42C22.05 19.75 22.05 19.18 21.98 19.06C21.92 18.94 21.78 18.88 21.55 18.78Z"    
+
+
+
+
+
+        fill="white"    
+
+
+
+
+
+      />    
+
+
+
+
+
+    </svg>    
+
+
+
+
+
+  );    
+
+
+
+
+
+}    
+
+
+
+
+
+function normalizeText(text = "") {    
+
+
+
+
+
+  return text    
+
+
+
+
+
+    .toLowerCase()    
+
+
+
+
+
+    .replace(/[^\w\s.]/g, " ")    
+
+
+
+
+
+    .replace(/\s+/g, " ")    
+
+
+
+
+
+    .trim();    
+
+
+
+
+
+}    
+
+
+
+
+
+function includesAny(text, words) {    
+
+
+
+
+
+  return words.some((word) => text.includes(word));    
+
+
+
+
+
+}    
+
+
+
+
+
+function findService(text) {    
+
+
+
+
+
+  const normalized = normalizeText(text);    
+
+
+
+
+
+  let bestService = null;    
+
+
+
+
+
+  let bestScore = 0;    
+
+
+
+
+
+  services.forEach((service) => {    
+
+
+
+
+
+    let score = 0;    
+
+
+
+
+
+    service.keywords.forEach((keyword) => {    
+
+
+
+
+
+      const key = normalizeText(keyword);    
+
+
+
+
+
+      if (normalized.includes(key)) {    
+
+
+
+
+
+        score += key.includes(" ")    
+
+
+
+
+
+          ? 4    
+
+
+
+
+
+          : 2;    
+
+
+
+
+
+      }    
+
+
+
+
+
+    });    
+
+
+
+
+
+    if (score > bestScore) {    
+
+
+
+
+
+      bestScore = score;    
+
+
+
+
+
+      bestService = service;    
+
+
+
+
+
+    }    
+
+
+
+
+
+  });    
+
+
+
+
+
+  return bestScore > 0 ? bestService : null;    
+
+
+
+
+
+}    
+
+
+
+
+
+function isGreeting(text) {    
+
+
+
+
+
+  return includesAny(normalizeText(text), [    
+
+
+
+
+
+    "hi",    
+
+
+
+
+
+    "hello",    
+
+
+
+
+
+    "hey",    
+
+
+
+
+
+    "hii",    
+
+
+
+
+
+    "hlo",    
+
+
+
+
+
+    "vanakkam",    
+
+
+
+
+
+    "good morning",    
+
+
+
+
+
+    "good evening",    
+
+
+
+
+
+    "good afternoon",    
+
+
+
+
+
+  ]);    
+
+
+
+
+
+}    
+
+
+
+
+
+function isAboutQuestion(text) {    
+
+
+
+
+
+  const normalized = normalizeText(text);    
+
+
+
+
+
+  return includesAny(normalized, [    
+
+
+
+
+
+    "about you",    
+
+
+
+
+
+    "about us",    
+
+
+
+
+
+    "about gururag",    
+
+
+
+
+
+    "who are you",    
+
+
+
+
+
+    "founder",    
+
+
+
+
+
+    "owner",    
+
+
+
+
+
+    "saran",    
+
+
+
+
+
+    "experience",    
+
+
+
+
+
+    "how many years",    
+
+
+
+
+
+    "years experience",    
+
+
+
+
+
+    "projects completed",    
+
+
+
+
+
+  ]);    
+
+
+
+
+
+}    
+
+
+
+
+
+function isPriceQuestion(text) {    
+
+
+
+
+
+  const normalized = normalizeText(text);    
+
+
+
+
+
+  return includesAny(normalized, [    
+
+
+
+
+
+    "price",    
+
+
+
+
+
+    "pricing",    
+
+
+
+
+
+    "cost",    
+
+
+
+
+
+    "budget",    
+
+
+
+
+
+    "rate",    
+
+
+
+
+
+    "rates",    
+
+
+
+
+
+    "quotation",    
+
+
+
+
+
+    "quote",    
+
+
+
+
+
+    "estimate",    
+
+
+
+
+
+    "how much",    
+
+
+
+
+
+    "evlo",    
+
+
+
+
+
+    "evalo",    
+
+
+
+
+
+    "amount",    
+
+
+
+
+
+    "lakh",    
+
+
+
+
+
+    "lakhs",    
+
+
+
+
+
+    "rs",    
+
+
+
+
+
+    "Rs",    
+
+
+
+
+
+  ]);    
+
+
+
+
+
+}    
+
+
+
+
+
+function isContactQuestion(text) {    
+
+
+
+
+
+  const normalized = normalizeText(text);    
+
+
+
+
+
+  return includesAny(normalized, [    
+
+
+
+
+
+    "contact",    
+
+
+
+
+
+    "phone",    
+
+
+
+
+
+    "call",    
+
+
+
+
+
+    "number",    
+
+
+
+
+
+    "whatsapp",    
+
+
+
+
+
+    "talk to designer",    
+
+
+
+
+
+    "designer",    
+
+
+
+
+
+    "human",    
+
+
+
+
+
+    "person",    
+
+
+
+
+
+    "team",    
+
+
+
+
+
+  ]);    
+
+
+
+
+
+}    
+
+
+
+
+
+function isEnquiryRequest(text) {    
+
+
+
+
+
+  const normalized = normalizeText(text);    
+
+
+
+
+
+  return includesAny(normalized, [    
+
+
+
+
+
+    "enquire",    
+
+
+
+
+
+    "enquiry",    
+
+
+
+
+
+    "enquire now",    
+
+
+
+
+
+    "quote venum",    
+
+
+
+
+
+    "quote",    
+
+
+
+
+
+    "book",    
+
+
+
+
+
+    "booking",    
+
+
+
+
+
+    "start project",    
+
+
+
+
+
+    "project venum",    
+
+
+
+
+
+    "contact me",    
+
+
+
+
+
+    "talk to someone",    
+
+
+
+
+
+    "yes",    
+
+
+
+
+
+    "okay",    
+
+
+
+
+
+    "ok",    
+
+
+
+
+
+    "sure",    
+
+
+
+
+
+  ]);    
+
+
+
+
+
+}    
+
+
+
+
+
+function detectBudget(text) {    
+
+
+
+
+
+  const normalized = normalizeText(text);    
+
+
+
+
+
+  const match = normalized.match(    
+
+
+
+
+
+    /(?:rs)?\s*(\d+(?:\.\d+)?)\s*(lakh|lakhs|k|thousand)?/    
+
+
+
+
+
+  );    
+
+
+
+
+
+  if (!match) return null;    
+
+
+
+
+
+  const number = Number(match[1]);    
+
+
+
+
+
+  const unit = match[2];    
+
+
+
+
+
+  if (!number) return null;    
+
+
+
+
+
+  if (unit === "lakh" || unit === "lakhs") {    
+
+
+
+
+
+    return `Rs. ${number} lakh`;    
+
+
+
+
+
+  }    
+
+
+
+
+
+  if (unit === "k" || unit === "thousand") {    
+
+
+
+
+
+    return `Rs. ${number}k`;    
+
+
+
+
+
+  }    
+
+
+
+
+
+  if (    
+
+
+
+
+
+    normalized.includes("budget") ||    
+
+
+
+
+
+    normalized.includes("price") ||    
+
+
+
+
+
+    normalized.includes("cost")    
+
+
+
+
+
+  ) {    
+
+
+
+
+
+    return `Rs. ${number}`;    
+
+
+
+
+
+  }    
+
+
+
+
+
+  return null;    
+
+
+
+
+
+}    
+
+
+
+
+
+function Chatbot({ onWhatsApp }) {    
+
+
+
+
+
+  const [open, setOpen] = useState(false);    
+
+
+
+
+
+  const [messages, setMessages] = useState([    
+
+
+
+
+
+    {    
+
+
+
+
+
+      id: 1,    
+
+
+
+
+
+      role: "bot",    
+
+
+
+
+
+      type: "text",    
+
+
+
+
+
+      text:    
+
+
+
+
+
+        "Hi there! Welcome to Gururag Interior. Tell me what you're planning for your space - you can type naturally, like \"I need a modular kitchen\" or \"2 lakh budget kitchen possible ah?\"",    
+
+
+
+
+
+    },    
+
+
+
+
+
+  ]);    
+
+
+
+
+
+  const [input, setInput] = useState("");    
+
+
+
+
+
+  const [activeService, setActiveService] = useState(null);    
+
+
+
+
+
+  const [leadName, setLeadName] = useState("");    
+
+
+
+
+
+  const [waitingForName, setWaitingForName] = useState(false);    
+
+
+
+
+
+  const [isThinking, setIsThinking] = useState(false);    
+
+
+
+
+
+  const messagesEndRef = useRef(null);    
+
+
+
+
+
+  const inputRef = useRef(null);    
+
+
+
+
+
+  useEffect(() => {    
+
+
+
+
+
+    messagesEndRef.current?.scrollIntoView({    
+
+
+
+
+
+      behavior: "smooth",    
+
+
+
+
+
+    });    
+
+
+
+
+
+  }, [messages]);    
+
+
+
+
+
+  const addBotMessage = (text, extra = {}) => {    
+
+
+
+
+
+    setMessages((current) => [    
+
+
+
+
+
+      ...current,    
+
+
+
+
+
+      {    
+
+
+
+
+
+        id: Date.now() + Math.random(),    
+
+
+
+
+
+        role: "bot",    
+
+
+
+
+
+        type: "text",    
+
+
+
+
+
+        text,    
+
+
+
+
+
+        ...extra,    
+
+
+
+
+
+      },    
+
+
+
+
+
+    ]);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const addUserMessage = (text) => {    
+
+
+
+
+
+    setMessages((current) => [    
+
+
+
+
+
+      ...current,    
+
+
+
+
+
+      {    
+
+
+
+
+
+        id: Date.now() + Math.random(),    
+
+
+
+
+
+        role: "user",    
+
+
+
+
+
+        type: "text",    
+
+
+
+
+
+        text,    
+
+
+
+
+
+      },    
+
+
+
+
+
+    ]);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const showServiceCard = (service) => {    
+
+
+
+
+
+    setActiveService(service);    
+
+
+
+
+
+    setMessages((current) => [    
+
+
+
+
+
+      ...current,    
+
+
+
+
+
+      {    
+
+
+
+
+
+        id: Date.now() + Math.random(),    
+
+
+
+
+
+        role: "bot",    
+
+
+
+
+
+        type: "service",    
+
+
+
+
+
+        service,    
+
+
+
+
+
+      },    
+
+
+
+
+
+    ]);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const resetChat = () => {    
+
+
+
+
+
+    setMessages([    
+
+
+
+
+
+      {    
+
+
+
+
+
+        id: Date.now(),    
+
+
+
+
+
+        role: "bot",    
+
+
+
+
+
+        type: "text",    
+
+
+
+
+
+        text:    
+
+
+
+
+
+          "Hi there! Welcome to Gururag Interior. Tell me what you're planning for your space.",    
+
+
+
+
+
+      },    
+
+
+
+
+
+    ]);    
+
+
+
+
+
+    setInput("");    
+
+
+
+
+
+    setActiveService(null);    
+
+
+
+
+
+    setLeadName("");    
+
+
+
+
+
+    setWaitingForName(false);    
+
+
+
+
+
+    setIsThinking(false);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const startEnquiry = (service = activeService) => {    
+
+
+
+
+
+    if (service) {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        `Absolutely. I can help you enquire about ${service.title}. Before I connect you with Gururag Interior, may I know your name?`    
+
+
+
+
+
+      );    
+
+
+
+
+
+    } else {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        "Sure! I'd be happy to connect you with the Gururag Interior team. May I know your name first?"    
+
+
+
+
+
+      );    
+
+
+
+
+
+    }    
+
+
+
+
+
+    setWaitingForName(true);    
+
+
+
+
+
+    setTimeout(() => {    
+
+
+
+
+
+      inputRef.current?.focus();    
+
+
+
+
+
+    }, 100);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const sendWhatsAppEnquiry = () => {    
+
+
+
+
+
+    const serviceName =    
+
+
+
+
+
+      activeService?.title || "Interior Services";    
+
+
+
+
+
+    const customerName =    
+
+
+
+
+
+      leadName.trim() || "Customer";    
+
+
+
+
+
+    const message =    
+
+
+
+
+
+      `Hi Sir, I'm ${customerName}. ` +    
+
+
+
+
+
+      `I'm interested in ${serviceName} from Gururag Interior. ` +    
+
+
+
+
+
+      `I discussed my requirement with the website assistant and would like to know more and get a quotation.`;    
+
+
+
+
+
+    onWhatsApp(message);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const askAiAssistant = async (rawText) => {    
+
+
+
+
+
+    setIsThinking(true);    
+
+
+
+
+
+    try {    
+
+
+
+
+
+      const history = messages    
+
+
+
+
+
+        .filter((message) => message.type === "text")    
+
+
+
+
+
+        .slice(-10)    
+
+
+
+
+
+        .map((message) => ({    
+
+
+
+
+
+          role: message.role,    
+
+
+
+
+
+          text: message.text,    
+
+
+
+
+
+        }));    
+
+
+
+
+
+      const response = await fetch("/api/chat", {    
+
+
+
+
+
+        method: "POST",    
+
+
+
+
+
+        headers: {    
+
+
+
+
+
+          "Content-Type": "application/json",    
+
+
+
+
+
+        },    
+
+
+
+
+
+        body: JSON.stringify({    
+
+
+
+
+
+          message: rawText,    
+
+
+
+
+
+          history,    
+
+
+
+
+
+          service: activeService?.title || null,    
+
+
+
+
+
+        }),    
+
+
+
+
+
+      });    
+
+
+
+
+
+      const data = await response.json();    
+
+
+
+
+
+      if (!response.ok || !data.reply) {    
+
+
+
+
+
+        throw new Error(data.error || "AI request failed");    
+
+
+
+
+
+      }    
+
+
+
+
+
+      addBotMessage(data.reply);    
+
+
+
+
+
+    } catch (error) {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        "I can help with Gururag Interior services, design ideas, materials and project questions. For a live AI answer, please try again in a moment or contact us on WhatsApp at +91 97896 95878."    
+
+
+
+
+
+      );    
+
+
+
+
+
+    } finally {    
+
+
+
+
+
+      setIsThinking(false);    
+
+
+
+
+
+    }    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const handleBotResponse = async (rawText) => {    
+
+
+
+
+
+    const text = normalizeText(rawText);    
+
+
+
+
+
+    if (!text) return;    
+
+
+
+
+
+    if (waitingForName) {    
+
+
+
+
+
+      const cleanedName = rawText    
+
+
+
+
+
+        .replace(    
+
+
+
+
+
+          /^(my name is|i am|i'm|im|name is)\s+/i,    
+
+
+
+
+
+          ""    
+
+
+
+
+
+        )    
+
+
+
+
+
+        .trim();    
+
+
+
+
+
+      const finalName =    
+
+
+
+
+
+        cleanedName.length > 1    
+
+
+
+
+
+          ? cleanedName    
+
+
+
+
+
+          : rawText.trim();    
+
+
+
+
+
+      setLeadName(finalName);    
+
+
+
+
+
+      setWaitingForName(false);    
+
+
+
+
+
+      if (activeService) {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `Nice to meet you, ${finalName}! You're enquiring about ${activeService.title}.`    
+
+
+
+
+
+        );    
+
+
+
+
+
+        setTimeout(() => {    
+
+
+
+
+
+          addBotMessage(    
+
+
+
+
+
+            "You can continue asking me about the design, materials or budget. If you're ready, tap 'Send Enquiry on WhatsApp' below."    
+
+
+
+
+
+          );    
+
+
+
+
+
+        }, 250);    
+
+
+
+
+
+      } else {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `Nice to meet you, ${finalName}! Which service are you looking for? You can simply type something like "modular kitchen", "wardrobe", "painting" or "false ceiling".`    
+
+
+
+
+
+        );    
+
+
+
+
+
+      }    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    if (isGreeting(text)) {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        "Hello! What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."    
+
+
+
+
+
+      );    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    if (isAboutQuestion(text)) {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        "Gururag Interior is led by Saran Raj, with 13+ years of experience and 1,500+ completed projects. The team handles interior design, carpentry, civil works, finishing and allied solutions for residential and commercial spaces."    
+
+
+
+
+
+      );    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    if (isContactQuestion(text)) {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        "Sure. You can contact Gururag Interior directly on WhatsApp at +91 97896 95878. If you tell me your requirement first, I can also prepare the enquiry for you."    
+
+
+
+
+
+      );    
+
+
+
+
+
+      setTimeout(() => {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `For example: "I need a 2BHK interior", "modular kitchen", or "false ceiling for my living room".`    
+
+
+
+
+
+        );    
+
+
+
+
+
+      }, 250);    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    if (isEnquiryRequest(text)) {    
+
+
+
+
+
+      startEnquiry();    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    const budget = detectBudget(text);    
+
+
+
+
+
+    if (budget) {    
+
+
+
+
+
+      if (activeService) {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `Got it. You're considering around ${budget} for ${activeService.title}. The final cost depends on the size, materials, finish, hardware and site requirements.`    
+
+
+
+
+
+        );    
+
+
+
+
+
+        setTimeout(() => {    
+
+
+
+
+
+          addBotMessage(    
+
+
+
+
+
+            "I don't want to give you a misleading fixed price without seeing the actual requirement. The Gururag team can check the site/details and give you a proper quotation."    
+
+
+
+
+
+          );    
+
+
+
+
+
+        }, 300);    
+
+
+
+
+
+        setTimeout(() => {    
+
+
+
+
+
+          addBotMessage(    
+
+
+
+
+
+            "If you'd like, I can prepare a WhatsApp enquiry for this service."    
+
+
+
+
+
+          );    
+
+
+
+
+
+        }, 550);    
+
+
+
+
+
+      } else {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `Rs. ${budget.replace("Rs. ", "")} budget noted. Which space are you planning - kitchen, wardrobe, full home interior, office, painting or something else?`    
+
+
+
+
+
+        );    
+
+
+
+
+
+      }    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    const detectedService = findService(text);    
+
+
+
+
+
+    if (detectedService) {    
+
+
+
+
+
+      showServiceCard(detectedService);    
+
+
+
+
+
+      setTimeout(() => {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `Yes, ${detectedService.title} is something Gururag Interior can help with. You can ask me about options, advantages, materials, budget considerations, or how to enquire.`    
+
+
+
+
+
+        );    
+
+
+
+
+
+      }, 350);    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    if (activeService) {    
+
+
+
+
+
+      if (    
+
+
+
+
+
+        includesAny(text, [    
+
+
+
+
+
+          "advantage",    
+
+
+
+
+
+          "advantages",    
+
+
+
+
+
+          "benefit",    
+
+
+
+
+
+          "benefits",    
+
+
+
+
+
+          "pros",    
+
+
+
+
+
+          "good",    
+
+
+
+
+
+          "why",    
+
+
+
+
+
+        ])    
+
+
+
+
+
+      ) {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `For ${activeService.title}, some key advantages are:\n\n| ${activeService.pros.join(    
+
+
+
+
+
+            "\n| "    
+
+
+
+
+
+          )}`    
+
+
+
+
+
+        );    
+
+
+
+
+
+        return;    
+
+
+
+
+
+      }    
+
+
+
+
+
+      if (    
+
+
+
+
+
+        includesAny(text, [    
+
+
+
+
+
+          "consider",    
+
+
+
+
+
+          "cons",    
+
+
+
+
+
+          "disadvantage",    
+
+
+
+
+
+          "problem",    
+
+
+
+
+
+          "things to know",    
+
+
+
+
+
+          "before",    
+
+
+
+
+
+        ])    
+
+
+
+
+
+      ) {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `A few things to consider for ${activeService.title}:\n\n| ${activeService.considerations.join(    
+
+
+
+
+
+            "\n| "    
+
+
+
+
+
+          )}`    
+
+
+
+
+
+        );    
+
+
+
+
+
+        return;    
+
+
+
+
+
+      }    
+
+
+
+
+
+      if (    
+
+
+
+
+
+        includesAny(text, [    
+
+
+
+
+
+          "option",    
+
+
+
+
+
+          "options",    
+
+
+
+
+
+          "types",    
+
+
+
+
+
+          "what do you provide",    
+
+
+
+
+
+          "what you provide",    
+
+
+
+
+
+          "what is available",    
+
+
+
+
+
+          "available",    
+
+
+
+
+
+          "items",    
+
+
+
+
+
+        ])    
+
+
+
+
+
+      ) {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `For ${activeService.title}, we can provide:\n\n| ${activeService.items.join(    
+
+
+
+
+
+            "\n| "    
+
+
+
+
+
+          )}`    
+
+
+
+
+
+        );    
+
+
+
+
+
+        return;    
+
+
+
+
+
+      }    
+
+
+
+
+
+      if (    
+
+
+
+
+
+        includesAny(text, [    
+
+
+
+
+
+          "quote",    
+
+
+
+
+
+          "quotation",    
+
+
+
+
+
+          "estimate",    
+
+
+
+
+
+          "enquiry",    
+
+
+
+
+
+          "enquire",    
+
+
+
+
+
+          "book",    
+
+
+
+
+
+        ])    
+
+
+
+
+
+      ) {    
+
+
+
+
+
+        startEnquiry(activeService);    
+
+
+
+
+
+        return;    
+
+
+
+
+
+      }    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        `Sure, I can help with ${activeService.title}. Are you looking for information about the options, advantages, things to consider, budget, or a quotation?`    
+
+
+
+
+
+      );    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    if (    
+
+
+
+
+
+      includesAny(text, [    
+
+
+
+
+
+        "full interior",    
+
+
+
+
+
+        "home interior",    
+
+
+
+
+
+        "house interior",    
+
+
+
+
+
+        "complete interior",    
+
+
+
+
+
+        "interior design",    
+
+
+
+
+
+        "interior work",    
+
+
+
+
+
+        "interior works",    
+
+
+
+
+
+        "2bhk",    
+
+
+
+
+
+        "3bhk",    
+
+
+
+
+
+        "4bhk",    
+
+
+
+
+
+        "flat interior",    
+
+
+
+
+
+        "apartment interior",    
+
+
+
+
+
+      ])    
+
+
+
+
+
+    ) {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        "Absolutely. Gururag Interior can coordinate multiple parts of a home interior - carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."    
+
+
+
+
+
+      );    
+
+
+
+
+
+      setTimeout(() => {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          `If you tell me your home type, like "3BHK", and your approximate budget, I can guide you on what to discuss with the designer.`    
+
+
+
+
+
+        );    
+
+
+
+
+
+      }, 300);    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    if (    
+
+
+
+
+
+      includesAny(text, [    
+
+
+
+
+
+        "office",    
+
+
+
+
+
+        "commercial interior",    
+
+
+
+
+
+        "shop interior",    
+
+
+
+
+
+        "showroom",    
+
+
+
+
+
+        "workspace",    
+
+
+
+
+
+      ])    
+
+
+
+
+
+    ) {    
+
+
+
+
+
+      addBotMessage(    
+
+
+
+
+
+        "Yes  Gururag Interior also provides commercial interior solutions such as office furniture, partitions, electrical planning, painting, civil work and custom spaces."    
+
+
+
+
+
+      );    
+
+
+
+
+
+      setTimeout(() => {    
+
+
+
+
+
+        addBotMessage(    
+
+
+
+
+
+          "Tell me what type of space you have - office, showroom, shop or workspace - and I can guide you further."    
+
+
+
+
+
+        );    
+
+
+
+
+
+      }, 300);    
+
+
+
+
+
+      return;    
+
+
+
+
+
+    }    
+
+
+
+
+
+    await askAiAssistant(rawText);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  const sendMessage = () => {    
+
+
+
+
+
+    const value = input.trim();    
+
+
+
+
+
+    if (!value) return;    
+
+
+
+
+
+    addUserMessage(value);    
+
+
+
+
+
+    setInput("");    
+
+
+
+
+
+    handleBotResponse(value);    
+
+
+
+
+
+  };    
+
+
+
+
+
+  return (    
+
+
+
+
+
+    <>    
+
+
+
+
+
+      <AnimatePresence>    
+
+
+
+
+
+        {!open && (    
+
+
+
+
+
+          <motion.button    
+
+
+
+
+
+            className="chatbot-launcher"    
+
+
+
+
+
+            onClick={() => setOpen(true)}    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              scale: 0.7,    
+
+
+
+
+
+              y: 30,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            animate={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              scale: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            transition={{    
+
+
+
+
+
+              delay: 1,    
+
+
+
+
+
+              duration: 0.5,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            <span className="chatbot-live-dot" />    
+
+
+
+
+
+            <Bot size={23} />    
+
+
+
+
+
+            <span>Live Now</span>    
+
+
+
+
+
+          </motion.button>    
+
+
+
+
+
+        )}    
+
+
+
+
+
+      </AnimatePresence>    
+
+
+
+
+
+      <AnimatePresence>    
+
+
+
+
+
+        {open && (    
+
+
+
+
+
+          <motion.div    
+
+
+
+
+
+            className="chatbot-window"    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 30,    
+
+
+
+
+
+              scale: 0.94,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            animate={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+              scale: 1,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            exit={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 30,    
+
+
+
+
+
+              scale: 0.94,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            transition={{    
+
+
+
+
+
+              duration: 0.25,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            <div className="chatbot-header">    
+
+
+
+
+
+              <div className="chatbot-agent">    
+
+
+
+
+
+                <div className="chatbot-avatar">    
+
+
+
+
+
+                  <Bot size={21} />    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+                <div>    
+
+
+
+
+
+                  <strong>Gururag Assistant</strong>    
+
+
+
+
+
+                  <span>    
+
+
+
+
+
+                    <i />    
+
+
+
+
+
+                    Live Now | 24/7    
+
+
+
+
+
+                  </span>    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+              <button    
+
+
+
+
+
+                className="chatbot-close"    
+
+
+
+
+
+                onClick={() => setOpen(false)}    
+
+
+
+
+
+                aria-label="Close chatbot"    
+
+
+
+
+
+              >    
+
+
+
+
+
+                <X size={19} />    
+
+
+
+
+
+              </button>    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+            <div className="chatbot-body">    
+
+
+
+
+
+              <div className="chatbot-conversation">    
+
+
+
+
+
+                {messages.map((message) => {    
+
+
+
+
+
+                  if (message.type === "service") {    
+
+
+
+
+
+                    const item = message.service;    
+
+
+
+
+
+                    return (    
+
+
+
+
+
+                      <motion.div    
+
+
+
+
+
+                        key={message.id}    
+
+
+
+
+
+                        className="chat-service-card"    
+
+
+
+
+
+                        initial={{    
+
+
+
+
+
+                          opacity: 0,    
+
+
+
+
+
+                          y: 15,    
+
+
+
+
+
+                        }}    
+
+
+
+
+
+                        animate={{    
+
+
+
+
+
+                          opacity: 1,    
+
+
+
+
+
+                          y: 0,    
+
+
+
+
+
+                        }}    
+
+
+
+
+
+                      >    
+
+
+
+
+
+                        <div className="chat-service-image">    
+
+
+
+
+
+                          <img    
+
+
+
+
+
+                            src={item.image}    
+
+
+
+
+
+                            alt={item.title}    
+
+
+
+
+
+                          />    
+
+
+
+
+
+                        </div>    
+
+
+
+
+
+                        <div className="chat-service-card-content">    
+
+
+
+
+
+                          <span className="chat-mini-label">    
+
+
+
+
+
+                            GURURAG INTERIOR    
+
+
+
+
+
+                          </span>    
+
+
+
+
+
+                          <h4>{item.title}</h4>    
+
+
+
+
+
+                          <p>    
+
+
+
+
+
+                            {item.chatbotDescription}    
+
+
+
+
+
+                          </p>    
+
+
+
+
+
+                          <div className="chat-detail-section">    
+
+
+
+
+
+                            <strong>    
+
+
+
+
+
+                              What you get    
+
+
+
+
+
+                            </strong>    
+
+
+
+
+
+                            {item.items    
+
+
+
+
+
+                              .slice(0, 5)    
+
+
+
+
+
+                              .map((serviceItem) => (    
+
+
+
+
+
+                                <div    
+
+
+
+
+
+                                  key={serviceItem}    
+
+
+
+
+
+                                >    
+
+
+
+
+
+                                  <Check size={14} />    
+
+
+
+
+
+                                  {serviceItem}    
+
+
+
+
+
+                                </div>    
+
+
+
+
+
+                              ))}    
+
+
+
+
+
+                          </div>    
+
+
+
+
+
+                          <div className="chat-detail-section">    
+
+
+
+
+
+                            <strong>    
+
+
+
+
+
+                              Advantages    
+
+
+
+
+
+                            </strong>    
+
+
+
+
+
+                            {item.pros    
+
+
+
+
+
+                              .slice(0, 4)    
+
+
+
+
+
+                              .map((pros) => (    
+
+
+
+
+
+                                <div key={pros}>    
+
+
+
+
+
+                                  <Check size={14} />    
+
+
+
+
+
+                                  {pros}    
+
+
+
+
+
+                                </div>    
+
+
+
+
+
+                              ))}    
+
+
+
+
+
+                          </div>    
+
+
+
+
+
+                          <div className="chat-detail-section consideration">    
+
+
+
+
+
+                            <strong>    
+
+
+
+
+
+                              Things to consider    
+
+
+
+
+
+                            </strong>    
+
+
+
+
+
+                            {item.considerations    
+
+
+
+
+
+                              .slice(0, 3)    
+
+
+
+
+
+                              .map(    
+
+
+
+
+
+                                (consideration) => (    
+
+
+
+
+
+                                  <div    
+
+
+
+
+
+                                    key={    
+
+
+
+
+
+                                      consideration    
+
+
+
+
+
+                                    }    
+
+
+
+
+
+                                  >    
+
+
+
+
+
+                                    <span>|</span>    
+
+
+
+
+
+                                    {consideration}    
+
+
+
+
+
+                                  </div>    
+
+
+
+
+
+                                )    
+
+
+
+
+
+                              )}    
+
+
+
+
+
+                          </div>    
+
+
+
+
+
+                          <button    
+
+
+
+
+
+                            className="chat-primary-button"    
+
+
+
+
+
+                            onClick={() =>    
+
+
+
+
+
+                              startEnquiry(item)    
+
+
+
+
+
+                            }    
+
+
+
+
+
+                          >    
+
+
+
+
+
+                            Enquire About This    
+
+
+
+
+
+                            <ArrowUpRight    
+
+
+
+
+
+                              size={17}    
+
+
+
+
+
+                            />    
+
+
+
+
+
+                          </button>    
+
+
+
+
+
+                        </div>    
+
+
+
+
+
+                      </motion.div>    
+
+
+
+
+
+                    );    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                  return (    
+
+
+
+
+
+                    <motion.div    
+
+
+
+
+
+                      key={message.id}    
+
+
+
+
+
+                      className={`chat-message ${    
+
+
+
+
+
+                        message.role === "user"    
+
+
+
+
+
+                          ? "user-message"    
+
+
+
+
+
+                          : "bot-message"    
+
+
+
+
+
+                      }`}    
+
+
+
+
+
+                      initial={{    
+
+
+
+
+
+                        opacity: 0,    
+
+
+
+
+
+                        y: 10,    
+
+
+
+
+
+                      }}    
+
+
+
+
+
+                      animate={{    
+
+
+
+
+
+                        opacity: 1,    
+
+
+
+
+
+                        y: 0,    
+
+
+
+
+
+                      }}    
+
+
+
+
+
+                    >    
+
+
+
+
+
+                      {message.role === "bot" && (    
+
+
+
+
+
+                        <div className="message-avatar">    
+
+
+
+
+
+                          <Bot size={14} />    
+
+
+
+
+
+                        </div>    
+
+
+
+
+
+                      )}    
+
+
+
+
+
+                      <div className="message-bubble">    
+
+
+
+
+
+                        {message.text    
+
+
+
+
+
+                          .split("\n")    
+
+
+
+
+
+                          .map((line, index) => (    
+
+
+
+
+
+                            <React.Fragment    
+
+
+
+
+
+                              key={index}    
+
+
+
+
+
+                            >    
+
+
+
+
+
+                              {line}    
+
+
+
+
+
+                              {index <    
+
+
+
+
+
+                                message.text.split(    
+
+
+
+
+
+                                  "\n"    
+
+
+
+
+
+                                ).length -    
+
+
+
+
+
+                                  1 && <br />}    
+
+
+
+
+
+                            </React.Fragment>    
+
+
+
+
+
+                          ))}    
+
+
+
+
+
+                      </div>    
+
+
+
+
+
+                    </motion.div>    
+
+
+
+
+
+                  );    
+
+
+
+
+
+                })}    
+
+
+
+
+
+                {isThinking && (    
+
+
+
+
+
+                  <motion.div    
+
+
+
+
+
+                    className="chat-message bot-message"    
+
+
+
+
+
+                    initial={{ opacity: 0, y: 10 }}    
+
+
+
+
+
+                    animate={{ opacity: 1, y: 0 }}    
+
+
+
+
+
+                  >    
+
+
+
+
+
+                    <div className="message-avatar">    
+
+
+
+
+
+                      <Bot size={14} />    
+
+
+
+
+
+                    </div>    
+
+
+
+
+
+                    <div className="message-bubble">Thinking...</div>    
+
+
+
+
+
+                  </motion.div>    
+
+
+
+
+
+                )}    
+
+
+
+
+
+                <div ref={messagesEndRef} />    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+              {leadName && (    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  className="chat-whatsapp-button"    
+
+
+
+
+
+                  onClick={    
+
+
+
+
+
+                    sendWhatsAppEnquiry    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  <WhatsAppIcon size={20} />    
+
+
+
+
+
+                  Send Enquiry on WhatsApp    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+              )}    
+
+
+
+
+
+              <div className="chat-input-wrap">    
+
+
+
+
+
+                <input    
+
+
+
+
+
+                  ref={inputRef}    
+
+
+
+
+
+                  className="chat-input"    
+
+
+
+
+
+                  type="text"    
+
+
+
+
+
+                  value={input}    
+
+
+
+
+
+                  disabled={isThinking}    
+
+
+
+
+
+                  placeholder={    
+
+
+
+
+
+                    waitingForName    
+
+
+
+
+
+                      ? "Type your name..."    
+
+
+
+
+
+                      : "Type your message..."    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                  onChange={(e) =>    
+
+
+
+
+
+                    setInput(e.target.value)    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                  onKeyDown={(e) => {    
+
+
+
+
+
+                    if (    
+
+
+
+
+
+                      e.key === "Enter" &&    
+
+
+
+
+
+                      !e.shiftKey    
+
+
+
+
+
+                    ) {    
+
+
+
+
+
+                      e.preventDefault();    
+
+
+
+
+
+                      sendMessage();    
+
+
+
+
+
+                    }    
+
+
+
+
+
+                  }}    
+
+
+
+
+
+                />    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  className="chat-send-button"    
+
+
+
+
+
+                  onClick={sendMessage}    
+
+
+
+
+
+                  disabled={!input.trim() || isThinking}    
+
+
+
+
+
+                  aria-label="Send message"    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  <Send size={17} />    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+              <div className="chat-bottom-actions">    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  onClick={() => {    
+
+
+
+
+
+                    resetChat();    
+
+
+
+
+
+                    setTimeout(() => {    
+
+
+
+
+
+                      inputRef.current?.focus();    
+
+
+
+
+
+                    }, 100);    
+
+
+
+
+
+                  }}    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  Start New Chat    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  onClick={() =>    
+
+
+
+
+
+                    startEnquiry()    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  Talk to Designer    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+            <div className="chatbot-footer">    
+
+
+
+
+
+              <span>GURURAG INTERIOR</span>    
+
+
+
+
+
+              <span>CHENNAI</span>    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+          </motion.div>    
+
+
+
+
+
+        )}    
+
+
+
+
+
+      </AnimatePresence>    
+
+
+
+
+
+    </>    
+
+
+
+
+
+  );    
+
+
+
+
+
+}    
+
+
+
+
+
+function TypewriterText({ lines }) {    
+
+
+
+
+
+  const [lineIndex, setLineIndex] = useState(0);    
+
+
+
+
+
+  const [text, setText] = useState("");    
+
+
+
+
+
+  const [deleting, setDeleting] = useState(false);    
+
+
+
+
+
+  useEffect(() => {    
+
+
+
+
+
+    const current = lines[lineIndex] || "";    
+
+
+
+
+
+    const speed = deleting ? 38 : 72;    
+
+
+
+
+
+    const timer = setTimeout(() => {    
+
+
+
+
+
+      if (!deleting) {    
+
+
+
+
+
+        const next = current.slice(0, text.length + 1);    
+
+
+
+
+
+        setText(next);    
+
+
+
+
+
+        if (next === current) {    
+
+
+
+
+
+          setTimeout(() => setDeleting(true), 1400);    
+
+
+
+
+
+        }    
+
+
+
+
+
+      } else {    
+
+
+
+
+
+        const next = current.slice(0, Math.max(0, text.length - 1));    
+
+
+
+
+
+        setText(next);    
+
+
+
+
+
+        if (!next) {    
+
+
+
+
+
+          setDeleting(false);    
+
+
+
+
+
+          setLineIndex((index) => (index + 1) % lines.length);    
+
+
+
+
+
+        }    
+
+
+
+
+
+      }    
+
+
+
+
+
+    }, speed);    
+
+
+
+
+
+    return () => clearTimeout(timer);    
+
+
+
+
+
+  }, [text, deleting, lineIndex, lines]);    
+
+
+
+
+
+  return (    
+
+
+
+
+
+    <span className="new-page-typewriter">    
+
+
+
+
+
+      {text}    
+
+
+
+
+
+      <span className="typewriter-cursor">|</span>    
+
+
+
+
+
+    </span>    
+
+
+
+
+
+  );    
+
+
+
+
+
+}    
+
+
+
+
+
+function getYouTubeVideoId(url = "") {  
+
+
+
+  const value = String(url || "").trim();  
+
+
+
+  if (!value) return "";  
+
+
+
+  const patterns = [/[?&]v=([^&#]+)/i, /youtu\.be\/([^?&#/]+)/i, /youtube\.com\/(?:shorts|embed|live)\/([^?&#/]+)/i];  
+
+
+
+  for (const pattern of patterns) {  
+
+
+
+    const match = value.match(pattern);  
+
+
+
+    if (match?.[1]) return match[1];  
 
 
 
@@ -1866,47 +6990,7 @@ function detectBudget(text) {
 
 
 
-  if (unit === "k" || unit === "thousand") {  
-
-
-
-    return `Rs. ${number}k`;  
-
-
-
-  }  
-
-
-
-  if (  
-
-
-
-    normalized.includes("budget") ||  
-
-
-
-    normalized.includes("price") ||  
-
-
-
-    normalized.includes("cost")  
-
-
-
-  ) {  
-
-
-
-    return `Rs. ${number}`;  
-
-
-
-  }  
-
-
-
-  return null;  
+  return "";  
 
 
 
@@ -1914,39 +6998,133 @@ function detectBudget(text) {
 
 
 
-function Chatbot({ onWhatsApp }) {  
+function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedProjects, managedProjectVideos, showcaseProjects }) {    
 
 
 
-  const [open, setOpen] = useState(false);  
+
+
+  const pageData = {    
 
 
 
-  const [messages, setMessages] = useState([  
+
+
+    about: {    
 
 
 
-    {  
+
+
+      number: "02",    
 
 
 
-      id: 1,  
+
+
+      eyebrow: "ABOUT US",    
 
 
 
-      role: "bot",  
+
+
+      title: "Designing Spaces.\nCreating Experiences.",    
 
 
 
-      type: "text",  
+
+
+    },    
 
 
 
-      text:  
+
+
+    services: {    
 
 
 
-        "Hi there! Welcome to Gururag Interior. Tell me what you're planning for your space - you can type naturally, like \"I need a modular kitchen\" or \"2 lakh budget kitchen possible ah?\"",  
+
+
+      number: "03",    
+
+
+
+
+
+      eyebrow: "WHAT WE CREATE",    
+
+
+
+
+
+      title: "From first idea\nto final detail.",    
+
+
+
+
+
+    },    
+
+
+
+
+
+    projects: {    
+
+
+
+
+
+      number: "04",    
+
+
+
+
+
+      eyebrow: "SELECTED DIRECTIONS",    
+
+
+
+
+
+      title: "Spaces made\nto be lived in.",    
+
+
+
+
+
+    },    
+
+
+
+
+
+    showcase: {  
+
+
+
+
+
+
+      number: "05",  
+
+
+
+
+
+
+      eyebrow: "PROJECT SHOWCASE",  
+
+
+
+
+
+
+      title: "Project images.\nProject videos.",  
+
+
+
 
 
 
@@ -1954,35 +7132,1314 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-  ]);  
 
 
 
-  const [input, setInput] = useState("");  
+    contact: {  
 
 
 
-  const [activeService, setActiveService] = useState(null);  
 
 
 
-  const [leadName, setLeadName] = useState("");  
+      number: "06",    
 
 
 
-  const [waitingForName, setWaitingForName] = useState(false);  
+
+
+      eyebrow: "LET'S TALK",    
 
 
 
-  const [isThinking, setIsThinking] = useState(false);  
+
+
+      title: "Your space.\nOur next conversation.",    
 
 
 
-  const messagesEndRef = useRef(null);  
+
+
+    },    
 
 
 
-  const inputRef = useRef(null);  
+
+
+  };    
+
+
+
+
+
+  const data = pageData[page];    
+
+
+
+
+
+  if (!data) return null;    
+
+
+
+
+
+  return (    
+
+
+
+
+
+    <AnimatePresence>    
+
+
+
+
+
+      <motion.div    
+
+
+
+
+
+        className="new-page-overlay"    
+
+
+
+
+
+        initial={{ opacity: 0 }}    
+
+
+
+
+
+        animate={{ opacity: 1 }}    
+
+
+
+
+
+        exit={{ opacity: 0 }}    
+
+
+
+
+
+      >    
+
+
+
+
+
+        <motion.div    
+
+
+
+
+
+          className="new-page-shell"    
+
+
+
+
+
+          initial={{ y: 45, scale: 0.985 }}    
+
+
+
+
+
+          animate={{ y: 0, scale: 1 }}    
+
+
+
+
+
+          exit={{ y: 30, scale: 0.985 }}    
+
+
+
+
+
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}    
+
+
+
+
+
+        >    
+
+
+
+
+
+          <div className="new-page-topbar">    
+
+
+
+
+
+            <button className="new-page-brand" onClick={onClose}>    
+
+
+
+
+
+              <span className="new-page-logo">    
+
+
+
+
+
+                <img src={logo} alt="Gururag Interior" />    
+
+
+
+
+
+              </span>    
+
+
+
+
+
+              <span>    
+
+
+
+
+
+                <strong>GURURAG</strong>    
+
+
+
+
+
+                <small>INTERIOR</small>    
+
+
+
+
+
+              </span>    
+
+
+
+
+
+            </button>    
+
+
+
+
+
+            <div className="new-page-top-actions">    
+
+
+
+
+
+              <a    
+
+
+
+
+
+                className="new-page-top-whatsapp"    
+
+
+
+
+
+                href={WHATSAPP}    
+
+
+
+
+
+                target="_blank"    
+
+
+
+
+
+                rel="noreferrer"    
+
+
+
+
+
+                aria-label="WhatsApp Gururag Interior"    
+
+
+
+
+
+              >    
+
+
+
+
+
+                <WhatsAppIcon size={19} />    
+
+
+
+
+
+                <span>WhatsApp</span>    
+
+
+
+
+
+              </a>    
+
+
+
+
+
+              <a    
+
+
+
+
+
+                className="new-page-top-whatsapp"    
+
+
+
+
+
+                href={YOUTUBE}    
+
+
+
+
+
+                target="_blank"    
+
+
+
+
+
+                rel="noreferrer"    
+
+
+
+
+
+                aria-label="YouTube GuruRag Signature Home"    
+
+
+
+
+
+              >    
+
+
+
+
+
+                <YouTubeBrandIcon size={19} />    
+
+
+
+
+
+                <span>YouTube</span>    
+
+
+
+
+
+              </a>    
+
+
+
+
+
+              <button    
+
+
+
+
+
+                className="new-page-close"    
+
+
+
+
+
+                onClick={onClose}    
+
+
+
+
+
+                aria-label="Close page"    
+
+
+
+
+
+              >    
+
+
+
+
+
+                <X size={21} />    
+
+
+
+
+
+              </button>    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+          <div className="new-page-scroll">    
+
+
+
+
+
+            <div className="new-page-hero-copy">    
+
+
+
+
+
+              <div>    
+
+
+
+
+
+                <span className="new-page-eyebrow">    
+
+
+
+
+
+                  {data.number} - {data.eyebrow}    
+
+
+
+
+
+                </span>    
+
+
+
+
+
+                <h2>    
+
+
+
+
+
+                  {data.title.split("\n").map((line, index) => (    
+
+
+
+
+
+                    <React.Fragment key={line}>    
+
+
+
+
+
+                      {index > 0 && <br />}    
+
+
+
+
+
+                      {index === data.title.split("\n").length - 1 ? (    
+
+
+
+
+
+                        <em>{line}</em>    
+
+
+
+
+
+                      ) : (    
+
+
+
+
+
+                        line    
+
+
+
+
+
+                      )}    
+
+
+
+
+
+                    </React.Fragment>    
+
+
+
+
+
+                  ))}    
+
+
+
+
+
+                </h2>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+              {page === "about" && (    
+
+
+
+
+
+                <p>    
+
+
+
+
+
+                  <TypewriterText    
+
+
+
+
+
+                    lines={[    
+
+
+
+
+
+                      "13+ years of experience.",    
+
+
+
+
+
+                      "1,500+ completed projects.",    
+
+
+
+
+
+                      "One clear vision for every space.",    
+
+
+
+
+
+                    ]}    
+
+
+
+
+
+                  />    
+
+
+
+
+
+                </p>    
+
+
+
+
+
+              )}    
+
+
+
+
+
+              {page === "contact" && (    
+
+
+
+
+
+                <p>    
+
+
+
+
+
+                  <TypewriterText    
+
+
+
+
+
+                    lines={[    
+
+
+
+
+
+                      "Let's turn your idea into a space.",    
+
+
+
+
+
+                      "Tell Saran Raj what you are planning.",    
+
+
+
+
+
+                      "Your project can start with one message.",    
+
+
+
+
+
+                    ]}    
+
+
+
+
+
+                  />    
+
+
+
+
+
+                </p>    
+
+
+
+
+
+              )}    
+
+
+
+
+
+              {page === "services" && (    
+
+
+
+
+
+                <p>    
+
+
+
+
+
+                  <TypewriterText    
+
+
+
+
+
+                    lines={[    
+
+
+
+
+
+                      "Carpentry. Civil. Painting. Electrical.",    
+
+
+
+
+
+                      "Every layer, thoughtfully coordinated.",    
+
+
+
+
+
+                      "Residential and commercial solutions.",    
+
+
+
+
+
+                    ]}    
+
+
+
+
+
+                  />    
+
+
+
+
+
+                </p>    
+
+
+
+
+
+              )}    
+
+
+
+
+
+              {page === "projects" && (    
+
+
+
+
+
+                <p>    
+
+
+
+
+
+                  <TypewriterText    
+
+
+
+
+
+                    lines={[    
+
+
+
+
+
+                      "Contemporary living spaces.",    
+
+
+
+
+
+                      "Modern kitchens and bedrooms.",    
+
+
+
+
+
+                      "Workspaces with character.",    
+
+
+
+
+
+                    ]}    
+
+
+
+
+
+                  />    
+
+
+
+
+
+                </p>    
+
+
+
+
+
+              )}  
+
+
+
+              {page === "showcase" && (  
+
+
+
+              <div className="project-showcase-content">  
+
+
+
+                <section className="project-showcase-section">  
+
+
+
+                  <div className="project-showcase-section-heading">  
+
+
+
+                    <span className="new-page-label">PROJECT IMAGES</span>  
+
+
+
+                  </div>  
+
+
+
+                  <ProjectImageCarousel projects={showcaseProjects} />  
+
+
+
+                </section>  
+
+
+
+                <section className="project-showcase-section">  
+
+
+
+                  <div className="project-showcase-section-heading">  
+
+
+
+                    <span className="new-page-label">PROJECT VIDEOS</span>  
+
+
+
+                  </div>  
+
+
+
+                  <ProjectVideoGallery videos={managedProjectVideos} />  
+
+
+
+                </section>  
+
+
+
+              </div>  
+
+
+
+            )}  
+
+
+
+            {page === "contact" && (  
+
+
+
+
+
+
+              <div className="new-contact-page">    
+
+
+
+
+
+                <div className="new-contact-intro">    
+
+
+
+
+
+                  <span className="new-page-label">GURURAG INTERIOR | CHENNAI</span>    
+
+
+
+
+
+                  <h3>    
+
+
+
+
+
+                    <TypewriterText    
+
+
+
+
+
+                      lines={[    
+
+
+
+
+
+                        "Let's create something beautiful.",    
+
+
+
+
+
+                        "Let's plan your next interior.",    
+
+
+
+
+
+                        "Let's talk about your space.",    
+
+
+
+
+
+                      ]}    
+
+
+
+
+
+                    />    
+
+
+
+
+
+                  </h3>    
+
+
+
+
+
+                  <p>    
+
+
+
+
+
+                    Share your home, office or renovation requirement with us.    
+
+
+
+
+
+                    One message is enough to start the conversation.    
+
+
+
+
+
+                  </p>    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+                <div className="new-contact-actions">    
+
+
+
+
+
+                  <a className="new-contact-action phone" href="tel:+919789695878">    
+
+
+
+
+
+                    <span className="new-action-icon"><Phone size={22} /></span>    
+
+
+
+
+
+                    <span className="new-action-copy">    
+
+
+
+
+
+                      <small>CALL DIRECTLY</small>    
+
+
+
+
+
+                      <strong>+91 97896 95878</strong>    
+
+
+
+
+
+                    </span>    
+
+
+
+
+
+                    <ArrowUpRight size={19} />    
+
+
+
+
+
+                  </a>    
+
+
+
+
+
+                  <a    
+
+
+
+
+
+                    className="new-contact-action whatsapp"    
+
+
+
+
+
+                    href={WHATSAPP}    
+
+
+
+
+
+                    target="_blank"    
+
+
+
+
+
+                    rel="noreferrer"    
+
+
+
+
+
+                  >    
+
+
+
+
+
+                    <span className="new-action-icon"><WhatsAppIcon size={23} /></span>    
+
+
+
+
+
+                    <span className="new-action-copy">    
+
+
+
+
+
+                      <small>CHAT ON WHATSAPP</small>    
+
+
+
+
+
+                      <strong>Send Your Requirement</strong>    
+
+
+
+
+
+                    </span>    
+
+
+
+
+
+                    <ArrowUpRight size={19} />    
+
+
+
+
+
+                  </a>    
+
+
+
+
+
+                  <a    
+
+
+
+
+
+                    className="new-contact-action instagram"    
+
+
+
+
+
+                    href={INSTAGRAM}    
+
+
+
+
+
+                    target="_blank"    
+
+
+
+
+
+                    rel="noreferrer"    
+
+
+
+
+
+                  >    
+
+
+
+
+
+                    <span className="new-action-icon"><InstagramBrandIcon size={23} /></span>    
+
+
+
+
+
+                    <span className="new-action-copy">    
+
+
+
+
+
+                      <small>FOLLOW OUR WORK</small>    
+
+
+
+
+
+                      <strong>@sgr_decors_interior_designer</strong>    
+
+
+
+
+
+                    </span>    
+
+
+
+
+
+                    <ArrowUpRight size={19} />    
+
+
+
+
+
+                  </a>    
+
+
+
+
+
+                  <a    
+
+
+
+
+
+                    className="new-contact-action youtube"    
+
+
+
+
+
+                    href={YOUTUBE}    
+
+
+
+
+
+                    target="_blank"    
+
+
+
+
+
+                    rel="noreferrer"    
+
+
+
+
+
+                  >    
+
+
+
+
+
+                    <span className="new-action-icon"><YouTubeBrandIcon size={23} /></span>    
+
+
+
+
+
+                    <span className="new-action-copy">    
+
+
+
+
+
+                      <small>WATCH OUR WORK</small>    
+
+
+
+
+
+                      <strong>GuruRag Signature Home</strong>    
+
+
+
+
+
+                    </span>    
+
+
+
+
+
+                    <ArrowUpRight size={19} />    
+
+
+
+
+
+                  </a>    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+                <div className="new-contact-bottom-row">    
+
+
+
+
+
+                  <span>Available for residential & commercial enquiries</span>    
+
+
+
+
+
+                  <span>Chennai | Tamil Nadu</span>    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+            )}    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </motion.div>    
+
+
+
+
+
+      </motion.div>    
+
+
+
+
+
+    </AnimatePresence>    
+
+
+
+
+
+  );    
+
+
+
+
+
+}    
+
+
+
+
+
+function ProjectImageCarousel({ projects = [] }) {  
+
+
+
+  const [activeIndex, setActiveIndex] = useState(0);  
 
 
 
@@ -1990,11 +8447,15 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-    messagesEndRef.current?.scrollIntoView({  
+    setActiveIndex((current) => {  
 
 
 
-      behavior: "smooth",  
+      if (!projects.length) return 0;  
+
+
+
+      return Math.min(current, projects.length - 1);  
 
 
 
@@ -2002,51 +8463,35 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-  }, [messages]);  
+  }, [projects.length]);  
 
 
 
-  const addBotMessage = (text, extra = {}) => {  
+  if (!projects.length) {  
 
 
 
-    setMessages((current) => [  
+    return <div className="project-showcase-empty">No project images added yet.</div>;  
 
 
 
-      ...current,  
+  }  
 
 
 
-      {  
+  const activeProject = projects[activeIndex] || projects[0];  
 
 
 
-        id: Date.now() + Math.random(),  
+  const hasMultiple = projects.length > 1;  
 
 
 
-        role: "bot",  
+  const showPrevious = () => {  
 
 
 
-        type: "text",  
-
-
-
-        text,  
-
-
-
-        ...extra,  
-
-
-
-      },  
-
-
-
-    ]);  
+    setActiveIndex((current) => (current - 1 + projects.length) % projects.length);  
 
 
 
@@ -2054,43 +8499,11 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-  const addUserMessage = (text) => {  
+  const showNext = () => {  
 
 
 
-    setMessages((current) => [  
-
-
-
-      ...current,  
-
-
-
-      {  
-
-
-
-        id: Date.now() + Math.random(),  
-
-
-
-        role: "user",  
-
-
-
-        type: "text",  
-
-
-
-        text,  
-
-
-
-      },  
-
-
-
-    ]);  
+    setActiveIndex((current) => (current + 1) % projects.length);  
 
 
 
@@ -2098,1231 +8511,195 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-  const showServiceCard = (service) => {  
+  return (  
 
 
 
-    setActiveService(service);  
+    <motion.div  
 
 
 
-    setMessages((current) => [  
+      className="project-showcase-carousel"  
 
 
 
-      ...current,  
+      initial={{ opacity: 0, y: 22 }}  
 
 
 
-      {  
+      animate={{ opacity: 1, y: 0 }}  
 
 
 
-        id: Date.now() + Math.random(),  
+    >  
 
 
 
-        role: "bot",  
+      <div className="project-showcase-carousel-frame">  
 
 
 
-        type: "service",  
+        <AnimatePresence mode="wait">  
 
 
 
-        service,  
+          <motion.img  
 
 
 
-      },  
+            key={activeProject.id || activeProject.image || activeIndex}  
 
 
 
-    ]);  
+            src={activeProject.image}  
 
 
 
-  };  
+            alt={activeProject.title || "Project"}  
 
 
 
-  const resetChat = () => {  
+            initial={{ opacity: 0.35, x: 18 }}  
 
 
 
-    setMessages([  
+            animate={{ opacity: 1, x: 0 }}  
 
 
 
-      {  
+            exit={{ opacity: 0.35, x: -18 }}  
 
 
 
-        id: Date.now(),  
+            transition={{ duration: 0.28, ease: "easeOut" }}  
 
 
 
-        role: "bot",  
+          />  
 
 
 
-        type: "text",  
+        </AnimatePresence>  
 
 
 
-        text:  
+        {hasMultiple && (  
 
 
 
-          "Hi there! Welcome to Gururag Interior. Tell me what you're planning for your space.",  
+          <>  
 
 
 
-      },  
+            <button  
 
 
 
-    ]);  
+              type="button"  
 
 
 
-    setInput("");  
+              className="project-showcase-carousel-arrow previous"  
 
 
 
-    setActiveService(null);  
+              onClick={showPrevious}  
 
 
 
-    setLeadName("");  
+              aria-label="Previous project image"  
 
 
 
-    setWaitingForName(false);  
+            >  
 
 
 
-    setIsThinking(false);  
+              <ArrowLeft size={20} />  
 
 
 
-  };  
+            </button>  
 
 
 
-  const startEnquiry = (service = activeService) => {  
+            <button  
 
 
 
-    if (service) {  
+              type="button"  
 
 
 
-      addBotMessage(  
+              className="project-showcase-carousel-arrow next"  
 
 
 
-        `Absolutely. I can help you enquire about ${service.title}. Before I connect you with Gururag Interior, may I know your name?`  
+              onClick={showNext}  
 
 
 
-      );  
+              aria-label="Next project image"  
 
 
 
-    } else {  
+            >  
 
 
 
-      addBotMessage(  
+              <ArrowRight size={20} />  
 
 
 
-        "Sure! I'd be happy to connect you with the Gururag Interior team. May I know your name first?"  
+            </button>  
 
 
 
-      );  
+          </>  
 
 
 
-    }  
+        )}  
 
 
 
-    setWaitingForName(true);  
+      </div>  
 
 
 
-    setTimeout(() => {  
+    </motion.div>  
 
 
 
-      inputRef.current?.focus();  
+  );  
 
 
 
-    }, 100);  
+}  
 
 
 
-  };  
+function ProjectVideoGallery({ videos = [] }) {  
 
 
 
-  const sendWhatsAppEnquiry = () => {  
+  const [activeVideo, setActiveVideo] = useState(null);  
 
 
 
-    const serviceName =  
+  const validVideos = videos.map((video) => ({  
 
 
 
-      activeService?.title || "Interior Services";  
+    ...video,  
 
 
 
-    const customerName =  
+    youtubeId: video.youtube_id || getYouTubeVideoId(video.youtube_url || video.url || ""),  
 
 
 
-      leadName.trim() || "Customer";  
-
-
-
-    const message =  
-
-
-
-      `Hi Sir, I'm ${customerName}. ` +  
-
-
-
-      `I'm interested in ${serviceName} from Gururag Interior. ` +  
-
-
-
-      `I discussed my requirement with the website assistant and would like to know more and get a quotation.`;  
-
-
-
-    onWhatsApp(message);  
-
-
-
-  };  
-
-
-
-  const askAiAssistant = async (rawText) => {  
-
-
-
-    setIsThinking(true);  
-
-
-
-    try {  
-
-
-
-      const history = messages  
-
-
-
-        .filter((message) => message.type === "text")  
-
-
-
-        .slice(-10)  
-
-
-
-        .map((message) => ({  
-
-
-
-          role: message.role,  
-
-
-
-          text: message.text,  
-
-
-
-        }));  
-
-
-
-      const response = await fetch("/api/chat", {  
-
-
-
-        method: "POST",  
-
-
-
-        headers: {  
-
-
-
-          "Content-Type": "application/json",  
-
-
-
-        },  
-
-
-
-        body: JSON.stringify({  
-
-
-
-          message: rawText,  
-
-
-
-          history,  
-
-
-
-          service: activeService?.title || null,  
-
-
-
-        }),  
-
-
-
-      });  
-
-
-
-      const data = await response.json();  
-
-
-
-      if (!response.ok || !data.reply) {  
-
-
-
-        throw new Error(data.error || "AI request failed");  
-
-
-
-      }  
-
-
-
-      addBotMessage(data.reply);  
-
-
-
-    } catch (error) {  
-
-
-
-      addBotMessage(  
-
-
-
-        "I can help with Gururag Interior services, design ideas, materials and project questions. For a live AI answer, please try again in a moment or contact us on WhatsApp at +91 97896 95878."  
-
-
-
-      );  
-
-
-
-    } finally {  
-
-
-
-      setIsThinking(false);  
-
-
-
-    }  
-
-
-
-  };  
-
-
-
-  const handleBotResponse = async (rawText) => {  
-
-
-
-    const text = normalizeText(rawText);  
-
-
-
-    if (!text) return;  
-
-
-
-    if (waitingForName) {  
-
-
-
-      const cleanedName = rawText  
-
-
-
-        .replace(  
-
-
-
-          /^(my name is|i am|i'm|im|name is)\s+/i,  
-
-
-
-          ""  
-
-
-
-        )  
-
-
-
-        .trim();  
-
-
-
-      const finalName =  
-
-
-
-        cleanedName.length > 1  
-
-
-
-          ? cleanedName  
-
-
-
-          : rawText.trim();  
-
-
-
-      setLeadName(finalName);  
-
-
-
-      setWaitingForName(false);  
-
-
-
-      if (activeService) {  
-
-
-
-        addBotMessage(  
-
-
-
-          `Nice to meet you, ${finalName}! You're enquiring about ${activeService.title}.`  
-
-
-
-        );  
-
-
-
-        setTimeout(() => {  
-
-
-
-          addBotMessage(  
-
-
-
-            "You can continue asking me about the design, materials or budget. If you're ready, tap 'Send Enquiry on WhatsApp' below."  
-
-
-
-          );  
-
-
-
-        }, 250);  
-
-
-
-      } else {  
-
-
-
-        addBotMessage(  
-
-
-
-          `Nice to meet you, ${finalName}! Which service are you looking for? You can simply type something like "modular kitchen", "wardrobe", "painting" or "false ceiling".`  
-
-
-
-        );  
-
-
-
-      }  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    if (isGreeting(text)) {  
-
-
-
-      addBotMessage(  
-
-
-
-        "Hello! What are you planning for your space? You can ask me anything about kitchens, wardrobes, painting, false ceiling, civil work, electrical work, metal fabrication, or complete interiors."  
-
-
-
-      );  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    if (isAboutQuestion(text)) {  
-
-
-
-      addBotMessage(  
-
-
-
-        "Gururag Interior is led by Saran Raj, with 13+ years of experience and 1,500+ completed projects. The team handles interior design, carpentry, civil works, finishing and allied solutions for residential and commercial spaces."  
-
-
-
-      );  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    if (isContactQuestion(text)) {  
-
-
-
-      addBotMessage(  
-
-
-
-        "Sure. You can contact Gururag Interior directly on WhatsApp at +91 97896 95878. If you tell me your requirement first, I can also prepare the enquiry for you."  
-
-
-
-      );  
-
-
-
-      setTimeout(() => {  
-
-
-
-        addBotMessage(  
-
-
-
-          `For example: "I need a 2BHK interior", "modular kitchen", or "false ceiling for my living room".`  
-
-
-
-        );  
-
-
-
-      }, 250);  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    if (isEnquiryRequest(text)) {  
-
-
-
-      startEnquiry();  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    const budget = detectBudget(text);  
-
-
-
-    if (budget) {  
-
-
-
-      if (activeService) {  
-
-
-
-        addBotMessage(  
-
-
-
-          `Got it. You're considering around ${budget} for ${activeService.title}. The final cost depends on the size, materials, finish, hardware and site requirements.`  
-
-
-
-        );  
-
-
-
-        setTimeout(() => {  
-
-
-
-          addBotMessage(  
-
-
-
-            "I don't want to give you a misleading fixed price without seeing the actual requirement. The Gururag team can check the site/details and give you a proper quotation."  
-
-
-
-          );  
-
-
-
-        }, 300);  
-
-
-
-        setTimeout(() => {  
-
-
-
-          addBotMessage(  
-
-
-
-            "If you'd like, I can prepare a WhatsApp enquiry for this service."  
-
-
-
-          );  
-
-
-
-        }, 550);  
-
-
-
-      } else {  
-
-
-
-        addBotMessage(  
-
-
-
-          `Rs. ${budget.replace("Rs. ", "")} budget noted. Which space are you planning - kitchen, wardrobe, full home interior, office, painting or something else?`  
-
-
-
-        );  
-
-
-
-      }  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    const detectedService = findService(text);  
-
-
-
-    if (detectedService) {  
-
-
-
-      showServiceCard(detectedService);  
-
-
-
-      setTimeout(() => {  
-
-
-
-        addBotMessage(  
-
-
-
-          `Yes, ${detectedService.title} is something Gururag Interior can help with. You can ask me about options, advantages, materials, budget considerations, or how to enquire.`  
-
-
-
-        );  
-
-
-
-      }, 350);  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    if (activeService) {  
-
-
-
-      if (  
-
-
-
-        includesAny(text, [  
-
-
-
-          "advantage",  
-
-
-
-          "advantages",  
-
-
-
-          "benefit",  
-
-
-
-          "benefits",  
-
-
-
-          "pros",  
-
-
-
-          "good",  
-
-
-
-          "why",  
-
-
-
-        ])  
-
-
-
-      ) {  
-
-
-
-        addBotMessage(  
-
-
-
-          `For ${activeService.title}, some key advantages are:\n\n| ${activeService.pros.join(  
-
-
-
-            "\n| "  
-
-
-
-          )}`  
-
-
-
-        );  
-
-
-
-        return;  
-
-
-
-      }  
-
-
-
-      if (  
-
-
-
-        includesAny(text, [  
-
-
-
-          "consider",  
-
-
-
-          "cons",  
-
-
-
-          "disadvantage",  
-
-
-
-          "problem",  
-
-
-
-          "things to know",  
-
-
-
-          "before",  
-
-
-
-        ])  
-
-
-
-      ) {  
-
-
-
-        addBotMessage(  
-
-
-
-          `A few things to consider for ${activeService.title}:\n\n| ${activeService.considerations.join(  
-
-
-
-            "\n| "  
-
-
-
-          )}`  
-
-
-
-        );  
-
-
-
-        return;  
-
-
-
-      }  
-
-
-
-      if (  
-
-
-
-        includesAny(text, [  
-
-
-
-          "option",  
-
-
-
-          "options",  
-
-
-
-          "types",  
-
-
-
-          "what do you provide",  
-
-
-
-          "what you provide",  
-
-
-
-          "what is available",  
-
-
-
-          "available",  
-
-
-
-          "items",  
-
-
-
-        ])  
-
-
-
-      ) {  
-
-
-
-        addBotMessage(  
-
-
-
-          `For ${activeService.title}, we can provide:\n\n| ${activeService.items.join(  
-
-
-
-            "\n| "  
-
-
-
-          )}`  
-
-
-
-        );  
-
-
-
-        return;  
-
-
-
-      }  
-
-
-
-      if (  
-
-
-
-        includesAny(text, [  
-
-
-
-          "quote",  
-
-
-
-          "quotation",  
-
-
-
-          "estimate",  
-
-
-
-          "enquiry",  
-
-
-
-          "enquire",  
-
-
-
-          "book",  
-
-
-
-        ])  
-
-
-
-      ) {  
-
-
-
-        startEnquiry(activeService);  
-
-
-
-        return;  
-
-
-
-      }  
-
-
-
-      addBotMessage(  
-
-
-
-        `Sure, I can help with ${activeService.title}. Are you looking for information about the options, advantages, things to consider, budget, or a quotation?`  
-
-
-
-      );  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    if (  
-
-
-
-      includesAny(text, [  
-
-
-
-        "full interior",  
-
-
-
-        "home interior",  
-
-
-
-        "house interior",  
-
-
-
-        "complete interior",  
-
-
-
-        "interior design",  
-
-
-
-        "interior work",  
-
-
-
-        "interior works",  
-
-
-
-        "2bhk",  
-
-
-
-        "3bhk",  
-
-
-
-        "4bhk",  
-
-
-
-        "flat interior",  
-
-
-
-        "apartment interior",  
-
-
-
-      ])  
-
-
-
-    ) {  
-
-
-
-      addBotMessage(  
-
-
-
-        "Absolutely. Gururag Interior can coordinate multiple parts of a home interior - carpentry, kitchen, wardrobes, civil work, flooring, false ceiling, painting, electrical and more."  
-
-
-
-      );  
-
-
-
-      setTimeout(() => {  
-
-
-
-        addBotMessage(  
-
-
-
-          `If you tell me your home type, like "3BHK", and your approximate budget, I can guide you on what to discuss with the designer.`  
-
-
-
-        );  
-
-
-
-      }, 300);  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    if (  
-
-
-
-      includesAny(text, [  
-
-
-
-        "office",  
-
-
-
-        "commercial interior",  
-
-
-
-        "shop interior",  
-
-
-
-        "showroom",  
-
-
-
-        "workspace",  
-
-
-
-      ])  
-
-
-
-    ) {  
-
-
-
-      addBotMessage(  
-
-
-
-        "Yes  Gururag Interior also provides commercial interior solutions such as office furniture, partitions, electrical planning, painting, civil work and custom spaces."  
-
-
-
-      );  
-
-
-
-      setTimeout(() => {  
-
-
-
-        addBotMessage(  
-
-
-
-          "Tell me what type of space you have - office, showroom, shop or workspace - and I can guide you further."  
-
-
-
-        );  
-
-
-
-      }, 300);  
-
-
-
-      return;  
-
-
-
-    }  
-
-
-
-    await askAiAssistant(rawText);  
-
-
-
-  };  
-
-
-
-  const sendMessage = () => {  
-
-
-
-    const value = input.trim();  
-
-
-
-    if (!value) return;  
-
-
-
-    addUserMessage(value);  
-
-
-
-    setInput("");  
-
-
-
-    handleBotResponse(value);  
-
-
-
-  };  
+  })).filter((video) => video.youtubeId);  
 
 
 
@@ -3334,95 +8711,23 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-      <AnimatePresence>  
+      <div className="project-showcase-video-grid">  
 
 
 
-        {!open && (  
+        {validVideos.length ? validVideos.map((video, index) => (  
 
 
 
-          <motion.button  
+          <motion.button type="button" className="project-showcase-video-card" key={video.id || video.youtubeId || index} onClick={() => setActiveVideo(video)} initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}>  
 
 
 
-            className="chatbot-launcher"  
+            <img src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`} alt="Project video" />  
 
 
 
-            onClick={() => setOpen(true)}  
-
-
-
-            initial={{  
-
-
-
-              opacity: 0,  
-
-
-
-              scale: 0.7,  
-
-
-
-              y: 30,  
-
-
-
-            }}  
-
-
-
-            animate={{  
-
-
-
-              opacity: 1,  
-
-
-
-              scale: 1,  
-
-
-
-              y: 0,  
-
-
-
-            }}  
-
-
-
-            transition={{  
-
-
-
-              delay: 1,  
-
-
-
-              duration: 0.5,  
-
-
-
-            }}  
-
-
-
-          >  
-
-
-
-            <span className="chatbot-live-dot" />  
-
-
-
-            <Bot size={23} />  
-
-
-
-            <span>Live Now</span>  
+            <span className="project-showcase-play" aria-hidden="true"><span /></span>  
 
 
 
@@ -3430,11 +8735,11 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-        )}  
+        )) : <div className="project-showcase-empty">No project videos added yet.</div>}  
 
 
 
-      </AnimatePresence>  
+      </div>  
 
 
 
@@ -3442,139 +8747,27 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-        {open && (  
+        {activeVideo?.youtubeId && (  
 
 
 
-          <motion.div  
+          <motion.div className="project-video-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveVideo(null); }}>  
 
 
 
-            className="chatbot-window"  
+            <motion.div className="project-video-modal-card" initial={{ opacity: 0, scale: 0.94, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.94, y: 18 }}>  
 
 
 
-            initial={{  
+              <button type="button" className="project-video-modal-close" onClick={() => setActiveVideo(null)} aria-label="Close project video"><X size={21} /></button>  
 
 
 
-              opacity: 0,  
+              <div className="project-video-frame">  
 
 
 
-              y: 30,  
-
-
-
-              scale: 0.94,  
-
-
-
-            }}  
-
-
-
-            animate={{  
-
-
-
-              opacity: 1,  
-
-
-
-              y: 0,  
-
-
-
-              scale: 1,  
-
-
-
-            }}  
-
-
-
-            exit={{  
-
-
-
-              opacity: 0,  
-
-
-
-              y: 30,  
-
-
-
-              scale: 0.94,  
-
-
-
-            }}  
-
-
-
-            transition={{  
-
-
-
-              duration: 0.25,  
-
-
-
-            }}  
-
-
-
-          >  
-
-
-
-            <div className="chatbot-header">  
-
-
-
-              <div className="chatbot-agent">  
-
-
-
-                <div className="chatbot-avatar">  
-
-
-
-                  <Bot size={21} />  
-
-
-
-                </div>  
-
-
-
-                <div>  
-
-
-
-                  <strong>Gururag Assistant</strong>  
-
-
-
-                  <span>  
-
-
-
-                    <i />  
-
-
-
-                    Live Now | 24/7  
-
-
-
-                  </span>  
-
-
-
-                </div>  
+                <iframe src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`} title="Project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />  
 
 
 
@@ -3582,907 +8775,7 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-              <button  
-
-
-
-                className="chatbot-close"  
-
-
-
-                onClick={() => setOpen(false)}  
-
-
-
-                aria-label="Close chatbot"  
-
-
-
-              >  
-
-
-
-                <X size={19} />  
-
-
-
-              </button>  
-
-
-
-            </div>  
-
-
-
-            <div className="chatbot-body">  
-
-
-
-              <div className="chatbot-conversation">  
-
-
-
-                {messages.map((message) => {  
-
-
-
-                  if (message.type === "service") {  
-
-
-
-                    const item = message.service;  
-
-
-
-                    return (  
-
-
-
-                      <motion.div  
-
-
-
-                        key={message.id}  
-
-
-
-                        className="chat-service-card"  
-
-
-
-                        initial={{  
-
-
-
-                          opacity: 0,  
-
-
-
-                          y: 15,  
-
-
-
-                        }}  
-
-
-
-                        animate={{  
-
-
-
-                          opacity: 1,  
-
-
-
-                          y: 0,  
-
-
-
-                        }}  
-
-
-
-                      >  
-
-
-
-                        <div className="chat-service-image">  
-
-
-
-                          <img  
-
-
-
-                            src={item.image}  
-
-
-
-                            alt={item.title}  
-
-
-
-                          />  
-
-
-
-                        </div>  
-
-
-
-                        <div className="chat-service-card-content">  
-
-
-
-                          <span className="chat-mini-label">  
-
-
-
-                            GURURAG INTERIOR  
-
-
-
-                          </span>  
-
-
-
-                          <h4>{item.title}</h4>  
-
-
-
-                          <p>  
-
-
-
-                            {item.chatbotDescription}  
-
-
-
-                          </p>  
-
-
-
-                          <div className="chat-detail-section">  
-
-
-
-                            <strong>  
-
-
-
-                              What you get  
-
-
-
-                            </strong>  
-
-
-
-                            {item.items  
-
-
-
-                              .slice(0, 5)  
-
-
-
-                              .map((serviceItem) => (  
-
-
-
-                                <div  
-
-
-
-                                  key={serviceItem}  
-
-
-
-                                >  
-
-
-
-                                  <Check size={14} />  
-
-
-
-                                  {serviceItem}  
-
-
-
-                                </div>  
-
-
-
-                              ))}  
-
-
-
-                          </div>  
-
-
-
-                          <div className="chat-detail-section">  
-
-
-
-                            <strong>  
-
-
-
-                              Advantages  
-
-
-
-                            </strong>  
-
-
-
-                            {item.pros  
-
-
-
-                              .slice(0, 4)  
-
-
-
-                              .map((pros) => (  
-
-
-
-                                <div key={pros}>  
-
-
-
-                                  <Check size={14} />  
-
-
-
-                                  {pros}  
-
-
-
-                                </div>  
-
-
-
-                              ))}  
-
-
-
-                          </div>  
-
-
-
-                          <div className="chat-detail-section consideration">  
-
-
-
-                            <strong>  
-
-
-
-                              Things to consider  
-
-
-
-                            </strong>  
-
-
-
-                            {item.considerations  
-
-
-
-                              .slice(0, 3)  
-
-
-
-                              .map(  
-
-
-
-                                (consideration) => (  
-
-
-
-                                  <div  
-
-
-
-                                    key={  
-
-
-
-                                      consideration  
-
-
-
-                                    }  
-
-
-
-                                  >  
-
-
-
-                                    <span>|</span>  
-
-
-
-                                    {consideration}  
-
-
-
-                                  </div>  
-
-
-
-                                )  
-
-
-
-                              )}  
-
-
-
-                          </div>  
-
-
-
-                          <button  
-
-
-
-                            className="chat-primary-button"  
-
-
-
-                            onClick={() =>  
-
-
-
-                              startEnquiry(item)  
-
-
-
-                            }  
-
-
-
-                          >  
-
-
-
-                            Enquire About This  
-
-
-
-                            <ArrowUpRight  
-
-
-
-                              size={17}  
-
-
-
-                            />  
-
-
-
-                          </button>  
-
-
-
-                        </div>  
-
-
-
-                      </motion.div>  
-
-
-
-                    );  
-
-
-
-                  }  
-
-
-
-                  return (  
-
-
-
-                    <motion.div  
-
-
-
-                      key={message.id}  
-
-
-
-                      className={`chat-message ${  
-
-
-
-                        message.role === "user"  
-
-
-
-                          ? "user-message"  
-
-
-
-                          : "bot-message"  
-
-
-
-                      }`}  
-
-
-
-                      initial={{  
-
-
-
-                        opacity: 0,  
-
-
-
-                        y: 10,  
-
-
-
-                      }}  
-
-
-
-                      animate={{  
-
-
-
-                        opacity: 1,  
-
-
-
-                        y: 0,  
-
-
-
-                      }}  
-
-
-
-                    >  
-
-
-
-                      {message.role === "bot" && (  
-
-
-
-                        <div className="message-avatar">  
-
-
-
-                          <Bot size={14} />  
-
-
-
-                        </div>  
-
-
-
-                      )}  
-
-
-
-                      <div className="message-bubble">  
-
-
-
-                        {message.text  
-
-
-
-                          .split("\n")  
-
-
-
-                          .map((line, index) => (  
-
-
-
-                            <React.Fragment  
-
-
-
-                              key={index}  
-
-
-
-                            >  
-
-
-
-                              {line}  
-
-
-
-                              {index <  
-
-
-
-                                message.text.split(  
-
-
-
-                                  "\n"  
-
-
-
-                                ).length -  
-
-
-
-                                  1 && <br />}  
-
-
-
-                            </React.Fragment>  
-
-
-
-                          ))}  
-
-
-
-                      </div>  
-
-
-
-                    </motion.div>  
-
-
-
-                  );  
-
-
-
-                })}  
-
-
-
-                {isThinking && (  
-
-
-
-                  <motion.div  
-
-
-
-                    className="chat-message bot-message"  
-
-
-
-                    initial={{ opacity: 0, y: 10 }}  
-
-
-
-                    animate={{ opacity: 1, y: 0 }}  
-
-
-
-                  >  
-
-
-
-                    <div className="message-avatar">  
-
-
-
-                      <Bot size={14} />  
-
-
-
-                    </div>  
-
-
-
-                    <div className="message-bubble">Thinking...</div>  
-
-
-
-                  </motion.div>  
-
-
-
-                )}  
-
-
-
-                <div ref={messagesEndRef} />  
-
-
-
-              </div>  
-
-
-
-              {leadName && (  
-
-
-
-                <button  
-
-
-
-                  className="chat-whatsapp-button"  
-
-
-
-                  onClick={  
-
-
-
-                    sendWhatsAppEnquiry  
-
-
-
-                  }  
-
-
-
-                >  
-
-
-
-                  <WhatsAppIcon size={20} />  
-
-
-
-                  Send Enquiry on WhatsApp  
-
-
-
-                </button>  
-
-
-
-              )}  
-
-
-
-              <div className="chat-input-wrap">  
-
-
-
-                <input  
-
-
-
-                  ref={inputRef}  
-
-
-
-                  className="chat-input"  
-
-
-
-                  type="text"  
-
-
-
-                  value={input}  
-
-
-
-                  disabled={isThinking}  
-
-
-
-                  placeholder={  
-
-
-
-                    waitingForName  
-
-
-
-                      ? "Type your name..."  
-
-
-
-                      : "Type your message..."  
-
-
-
-                  }  
-
-
-
-                  onChange={(e) =>  
-
-
-
-                    setInput(e.target.value)  
-
-
-
-                  }  
-
-
-
-                  onKeyDown={(e) => {  
-
-
-
-                    if (  
-
-
-
-                      e.key === "Enter" &&  
-
-
-
-                      !e.shiftKey  
-
-
-
-                    ) {  
-
-
-
-                      e.preventDefault();  
-
-
-
-                      sendMessage();  
-
-
-
-                    }  
-
-
-
-                  }}  
-
-
-
-                />  
-
-
-
-                <button  
-
-
-
-                  className="chat-send-button"  
-
-
-
-                  onClick={sendMessage}  
-
-
-
-                  disabled={!input.trim() || isThinking}  
-
-
-
-                  aria-label="Send message"  
-
-
-
-                >  
-
-
-
-                  <Send size={17} />  
-
-
-
-                </button>  
-
-
-
-              </div>  
-
-
-
-              <div className="chat-bottom-actions">  
-
-
-
-                <button  
-
-
-
-                  onClick={() => {  
-
-
-
-                    resetChat();  
-
-
-
-                    setTimeout(() => {  
-
-
-
-                      inputRef.current?.focus();  
-
-
-
-                    }, 100);  
-
-
-
-                  }}  
-
-
-
-                >  
-
-
-
-                  Start New Chat  
-
-
-
-                </button>  
-
-
-
-                <button  
-
-
-
-                  onClick={() =>  
-
-
-
-                    startEnquiry()  
-
-
-
-                  }  
-
-
-
-                >  
-
-
-
-                  Talk to Designer  
-
-
-
-                </button>  
-
-
-
-              </div>  
-
-
-
-            </div>  
-
-
-
-            <div className="chatbot-footer">  
-
-
-
-              <span>GURURAG INTERIOR</span>  
-
-
-
-              <span>CHENNAI</span>  
-
-
-
-            </div>  
+            </motion.div>  
 
 
 
@@ -4510,4553 +8803,5259 @@ function Chatbot({ onWhatsApp }) {
 
 
 
-function TypewriterText({ lines }) {  
+function NewPageStyles() {    
 
 
 
-  const [lineIndex, setLineIndex] = useState(0);  
 
 
+  return (    
 
-  const [text, setText] = useState("");  
 
 
 
-  const [deleting, setDeleting] = useState(false);  
 
+    <style>{`    
 
 
-  useEffect(() => {  
 
 
 
-    const current = lines[lineIndex] || "";  
+      .menu-owner-trigger{border:0;background:transparent;color:inherit;font:inherit;padding:0;cursor:pointer;text-align:left}    
 
 
 
-    const speed = deleting ? 38 : 72;  
 
 
+      .new-page-overlay{position:fixed;inset:0;z-index:1200;background:rgba(5,16,29,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:18px;display:flex;align-items:center;justify-content:center}    
 
-    const timer = setTimeout(() => {  
 
 
 
-      if (!deleting) {  
 
+      .new-page-shell{width:min(1080px,calc(100vw - 36px));height:min(88dvh,860px);min-height:0;overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:#071827;color:#f7f5ed;box-shadow:0 35px 100px rgba(0,0,0,.48);position:relative}    
 
 
-        const next = current.slice(0, text.length + 1);  
 
 
 
-        setText(next);  
+      .new-page-topbar{height:78px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(7,24,39,.92);position:sticky;top:0;z-index:5}    
 
 
 
-        if (next === current) {  
 
 
+      .new-page-brand{border:0;background:transparent;color:#fff;display:flex;align-items:center;gap:11px;cursor:pointer;padding:0;text-align:left;min-width:0;flex-shrink:1}.new-page-brand>span:last-child{display:flex;flex-direction:column}.new-page-brand strong{font-size:14px;letter-spacing:.18em}.new-page-brand small{font-size:8px;letter-spacing:.28em;color:#9ee7cf;margin-top:2px}.new-page-logo{width:34px;height:34px;border-radius:8px;overflow:hidden;display:block;flex:0 0 34px;border:1px solid rgba(255,255,255,.18)}.new-page-logo img{width:100%;height:100%;object-fit:cover}    
 
-          setTimeout(() => setDeleting(true), 1400);  
 
 
 
-        }  
 
+      .new-page-top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex:0 0 auto;min-width:max-content}.new-page-top-whatsapp{display:flex;align-items:center;gap:8px;text-decoration:none;color:#dff8ef;border:1px solid rgba(158,231,207,.25);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:700;transition:.25s;white-space:nowrap}.new-page-top-whatsapp:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 24px rgba(158,231,207,.22)}.new-page-close{width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;display:grid;place-items:center;cursor:pointer;transition:.25s}.new-page-close:hover{transform:rotate(90deg);background:#f3d36a;color:#071827;box-shadow:0 0 28px rgba(243,211,106,.28)}    
 
 
-      } else {  
 
 
 
-        const next = current.slice(0, Math.max(0, text.length - 1));  
+      .new-page-scroll{height:calc(100% - 78px);overflow:auto;padding:48px clamp(20px,5vw,64px) 60px;scroll-behavior:smooth}.new-page-scroll::-webkit-scrollbar{width:5px}.new-page-scroll::-webkit-scrollbar-thumb{background:rgba(158,231,207,.35);border-radius:20px}    
 
 
 
-        setText(next);  
 
 
+      .new-page-hero-copy{display:grid;grid-template-columns:1.2fr .8fr;gap:35px;align-items:end;margin-bottom:42px}.new-page-eyebrow,.new-page-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9ee7cf;font-weight:800}.new-page-hero-copy h2{font-size:clamp(38px,6vw,76px);line-height:.98;letter-spacing:-.045em;margin:15px 0 0;font-weight:500}.new-page-hero-copy h2 em{font-family:Georgia,serif;font-weight:400;color:#f3d36a}.new-page-hero-copy p{margin:0;color:rgba(255,255,255,.68);font-size:16px;line-height:1.8;max-width:390px}.new-page-typewriter{display:inline}.typewriter-cursor{color:#f3d36a;font-weight:800;margin-left:2px;animation:typeBlink .8s infinite}@keyframes typeBlink{0%,45%{opacity:1}46%,100%{opacity:0}}    
 
-        if (!next) {  
 
 
 
-          setDeleting(false);  
 
+      .new-about-grid{display:grid;grid-template-columns:1.6fr .75fr;gap:22px}.new-founder-card{display:grid;grid-template-columns:.82fr 1.18fr;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden}.new-founder-image-wrap{min-height:500px;position:relative;overflow:hidden}.new-founder-image-wrap img{width:100%;height:100%;object-fit:cover;display:block}.new-founder-image-overlay{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.78))}.new-founder-image-wrap>span{position:absolute;left:22px;bottom:20px;font-size:9px;letter-spacing:.17em;line-height:1.6;color:#fff}.new-founder-content{padding:34px;display:flex;flex-direction:column;justify-content:center}.new-founder-content h3{font-size:46px;line-height:.95;margin:13px 0 22px}.new-founder-content h3 em{font-family:Georgia,serif;color:#f3d36a;font-weight:400}.new-founder-content p{color:rgba(255,255,255,.68);line-height:1.75;font-size:14px;margin:0 0 15px}.new-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.new-stat-row>div{padding:17px;border-radius:15px;background:rgba(158,231,207,.07);border:1px solid rgba(158,231,207,.12)}.new-stat-row strong{display:block;font-size:28px;color:#9ee7cf}.new-stat-row span{display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-top:5px}.new-about-side{display:flex;flex-direction:column;gap:22px}.new-info-card,.new-contact-mini{border-radius:24px;padding:28px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}.new-info-card>span,.new-contact-mini>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;font-weight:800}.new-info-card h4{font-size:25px;line-height:1.2;margin:14px 0}.new-info-card p{color:rgba(255,255,255,.63);line-height:1.7;font-size:13px}.new-contact-mini{display:flex;flex-direction:column;gap:10px}.new-contact-mini>a{display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff;padding:14px;border-radius:13px;border:1px solid rgba(255,255,255,.09);transition:.25s}.new-contact-mini>a span{flex:1;font-size:12px;font-weight:700}.new-contact-mini>a:hover{transform:translateX(4px);border-color:rgba(243,211,106,.42);background:rgba(243,211,106,.07);box-shadow:0 0 25px rgba(243,211,106,.08)}    
 
 
-          setLineIndex((index) => (index + 1) % lines.length);  
 
 
 
-        }  
+      .new-service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.new-service-page-card{display:grid;grid-template-columns:.9fr 1.1fr;min-height:240px;border-radius:22px;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)}.new-service-page-image{position:relative;min-height:240px}.new-service-page-image img{width:100%;height:100%;object-fit:cover}.new-service-page-image>span{position:absolute;top:14px;left:14px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827;font-size:10px;font-weight:900}.new-service-page-card>div:last-child{padding:24px}.new-service-page-card h3{font-size:23px;margin:9px 0}.new-service-page-card p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.62);margin-bottom:17px}.new-outline-button{border:1px solid rgba(158,231,207,.28);background:transparent;color:#9ee7cf;padding:10px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;cursor:pointer;transition:.25s}.new-outline-button:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 25px rgba(158,231,207,.2)}    
 
 
 
-      }  
 
 
+      .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}  
 
-    }, speed);  
 
 
+      .project-showcase-content{display:flex;flex-direction:column;gap:42px;padding-bottom:20px}.project-showcase-section{display:flex;flex-direction:column;gap:16px}.project-showcase-section-heading{display:flex;align-items:center;justify-content:space-between}.project-showcase-image-grid,.project-showcase-video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.project-showcase-image-card,.project-showcase-video-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(255,255,255,.045);padding:0}.project-showcase-image-card{aspect-ratio:1.25}.project-showcase-image-card img,.project-showcase-video-card img{width:100%;height:100%;object-fit:cover;display:block}.project-showcase-video-card{aspect-ratio:16/9;cursor:pointer;text-align:left}.project-showcase-video-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.32));pointer-events:none}.project-showcase-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:#f3d36a;color:#071827;display:grid;place-items:center;z-index:2;box-shadow:0 10px 30px rgba(0,0,0,.3)}.project-showcase-play span{display:block;margin-left:4px;width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid #071827}.project-showcase-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.16);border-radius:18px;padding:34px;text-align:center;color:rgba(255,255,255,.48);font-size:12px}.project-video-modal{position:fixed;inset:0;z-index:2500;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px}.project-video-modal-card{position:relative;width:min(900px,94vw);background:#071827;border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:12px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.project-video-modal-close{position:absolute;right:-12px;top:-12px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:#071827;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:3}.project-video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:13px;overflow:hidden;background:#000}.project-video-frame iframe{width:100%;height:100%;border:0;display:block}  
 
-    return () => clearTimeout(timer);  
 
 
+      .project-showcase-carousel{width:100%}.project-showcase-carousel-frame{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.045);box-shadow:0 18px 45px rgba(0,0,0,.18)}.project-showcase-carousel-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.project-showcase-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(7,24,39,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:3;transition:.25s}.project-showcase-carousel-arrow:hover{background:#f3d36a;color:#071827;border-color:#f3d36a;transform:translateY(-50%) scale(1.05)}.project-showcase-carousel-arrow.previous{left:16px}.project-showcase-carousel-arrow.next{right:16px}  
 
-  }, [text, deleting, lineIndex, lines]);  
 
 
+      .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action.youtube:before{background:#ff6b6b}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-contact-action.youtube .new-action-icon{color:#ff8a8a}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}    
 
-  return (  
 
 
 
-    <span className="new-page-typewriter">  
 
+      @media(max-width:800px){.new-page-overlay{padding:10px}.new-page-shell{width:calc(100vw - 20px);height:88dvh;min-height:0;border-radius:24px;border:1px solid rgba(255,255,255,.13)}.new-page-topbar{height:64px;min-height:64px;padding:0 12px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 64px);padding:28px 17px 42px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:repeat(2,1fr)}.project-showcase-carousel-frame{aspect-ratio:1.2}.project-showcase-carousel-arrow{width:42px;height:42px}.project-video-modal{padding:12px}.project-video-modal-card{width:96vw}.project-video-modal-close{right:6px;top:6px}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}}   
 
 
-      {text}  
 
 
+       @media(max-width:430px){.new-page-overlay{padding:8px}.new-page-shell{width:calc(100vw - 16px);height:86dvh;border-radius:22px}.new-page-topbar{padding:0 9px;gap:5px;height:60px;min-height:60px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}.new-page-scroll{height:calc(100% - 60px);padding:25px 14px 36px}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:1fr;gap:13px}.project-showcase-image-card{aspect-ratio:1.15}.project-showcase-carousel-frame{aspect-ratio:1.05;border-radius:18px}.project-showcase-carousel-arrow{width:38px;height:38px}.project-showcase-carousel-arrow.previous{left:10px}.project-showcase-carousel-arrow.next{right:10px}.project-showcase-carousel-arrow svg{width:17px;height:17px}.project-showcase-play{width:52px;height:52px}}    
 
-      <span className="typewriter-cursor">|</span>  
 
 
 
-    </span>  
 
+    `}</style>    
 
 
-  );  
 
 
 
-}  
+  );    
 
 
 
-function getYouTubeVideoId(url = "") {
-  const value = String(url || "").trim();
-  if (!value) return "";
-  const patterns = [/[?&]v=([^&#]+)/i, /youtu\.be\/([^?&#/]+)/i, /youtube\.com\/(?:shorts|embed|live)\/([^?&#/]+)/i];
-  for (const pattern of patterns) {
-    const match = value.match(pattern);
-    if (match?.[1]) return match[1];
-  }
-  return "";
-}
 
-function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedProjects, managedProjectVideos, showcaseProjects }) {  
 
+}    
 
 
-  const pageData = {  
 
 
 
-    about: {  
+const FESTIVAL_IMAGES = {    
 
 
 
-      number: "02",  
 
 
+  Diwali:"https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=1600&q=90",    
 
-      eyebrow: "ABOUT US",  
 
 
 
-      title: "Designing Spaces.\nCreating Experiences.",  
 
+  "Gandhi Jayanti":"https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=1600&q=90",    
 
 
-    },  
 
 
 
-    services: {  
+  Pongal:"https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1600&q=90",    
 
 
 
-      number: "03",  
 
 
+  "Vinayagar Chaturthi":"https://images.unsplash.com/photo-1599629954294-14df9b3b7c04?auto=format&fit=crop&w=1600&q=90",    
 
-      eyebrow: "WHAT WE CREATE",  
 
 
 
-      title: "From first idea\nto final detail.",  
 
+  "New Year":"https://images.unsplash.com/photo-1513159446162-54eb8bdaa79b?auto=format&fit=crop&w=1600&q=90",    
 
 
-    },  
 
 
 
-    projects: {  
+  Christmas:"https://images.unsplash.com/photo-1482517967863-00e15c9b44be?auto=format&fit=crop&w=1600&q=90",    
 
 
 
-      number: "04",  
 
 
+  "Ramzan / Eid":"https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1600&q=90",    
 
-      eyebrow: "SELECTED DIRECTIONS",  
 
 
 
-      title: "Spaces made\nto be lived in.",  
 
+  "Bakrid / Eid-ul-Adha":"https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=90",    
 
 
-    },  
 
 
 
-    showcase: {
+  "Krishna Jayanti":"https://images.unsplash.com/photo-1567591414240-e9c1e608c9c7?auto=format&fit=crop&w=1600&q=90"    
 
 
 
 
-      number: "05",
 
+};    
 
 
 
-      eyebrow: "PROJECT SHOWCASE",
 
 
+const DEFAULT_PROMO = {type:"normal",name:"LIMITED TIME OFFER",title:"FREE DESIGN",description:"Tell us about your space, property type and location. Our team will guide you towards the right interior solution.",offer_text:"15% OFF",button_text:"Book a Free Consultation",image_url:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90"};    
 
 
-      title: "Project images.\nProject videos.",
 
 
 
+const FESTIVAL_DATES = {   
 
-    },
 
 
 
+  2026: {   
 
-    contact: {
 
 
 
+    "New Year": "2026-01-01",   
 
-      number: "06",  
 
 
 
-      eyebrow: "LET'S TALK",  
+    Pongal: "2026-01-14",   
 
 
 
-      title: "Your space.\nOur next conversation.",  
 
+    "Ramzan / Eid": "2026-03-21",   
 
 
-    },  
 
 
+    "Bakrid / Eid-ul-Adha": "2026-05-27",   
 
-  };  
 
 
 
-  const data = pageData[page];  
+    "Krishna Jayanti": "2026-09-04",   
 
 
 
-  if (!data) return null;  
 
+    "Vinayagar Chaturthi": "2026-09-14",   
 
 
-  return (  
 
 
+    "Gandhi Jayanti": "2026-10-02",   
 
-    <AnimatePresence>  
 
 
 
-      <motion.div  
+    "Ayudha Pooja": "2026-10-20",   
 
 
 
-        className="new-page-overlay"  
 
+    Diwali: "2026-11-08",   
 
 
-        initial={{ opacity: 0 }}  
 
 
+    Christmas: "2026-12-25"   
 
-        animate={{ opacity: 1 }}  
 
 
 
-        exit={{ opacity: 0 }}  
+  },   
 
 
 
-      >  
 
+  2027: {   
 
 
-        <motion.div  
 
 
+    "New Year": "2027-01-01",   
 
-          className="new-page-shell"  
 
 
 
-          initial={{ y: 45, scale: 0.985 }}  
+    Pongal: "2027-01-14",   
 
 
 
-          animate={{ y: 0, scale: 1 }}  
 
+    "Ramzan / Eid": "2027-03-10",   
 
 
-          exit={{ y: 30, scale: 0.985 }}  
 
 
+    "Bakrid / Eid-ul-Adha": "2027-05-17",   
 
-          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}  
 
 
 
-        >  
+    "Krishna Jayanti": "2027-08-25",   
 
 
 
-          <div className="new-page-topbar">  
 
+    "Vinayagar Chaturthi": "2027-09-04",   
 
 
-            <button className="new-page-brand" onClick={onClose}>  
 
 
+    "Gandhi Jayanti": "2027-10-02",   
 
-              <span className="new-page-logo">  
 
 
 
-                <img src={logo} alt="Gururag Interior" />  
+    "Ayudha Pooja": "2027-10-09",   
 
 
 
-              </span>  
 
+    Diwali: "2027-10-28",   
 
 
-              <span>  
 
 
+    Christmas: "2027-12-25"   
 
-                <strong>GURURAG</strong>  
 
 
 
-                <small>INTERIOR</small>  
+  },   
 
 
 
-              </span>  
 
+  2028: {   
 
 
-            </button>  
 
 
+    "New Year": "2028-01-01",   
 
-            <div className="new-page-top-actions">  
 
 
 
-              <a  
+    Pongal: "2028-01-14",   
 
 
 
-                className="new-page-top-whatsapp"  
 
+    "Krishna Jayanti": "2028-08-18",   
 
 
-                href={WHATSAPP}  
 
 
+    "Vinayagar Chaturthi": "2028-08-25",   
 
-                target="_blank"  
 
 
 
-                rel="noreferrer"  
+    "Gandhi Jayanti": "2028-10-02",   
 
 
 
-                aria-label="WhatsApp Gururag Interior"  
 
+    "Ayudha Pooja": "2028-09-27",   
 
 
-              >  
 
 
+    Diwali: "2028-10-17",   
 
-                <WhatsAppIcon size={19} />  
 
 
 
-                <span>WhatsApp</span>  
+    Christmas: "2028-12-25"   
 
 
 
-              </a>  
 
+  },   
 
 
-              <a  
 
 
+  2029: {   
 
-                className="new-page-top-whatsapp"  
 
 
 
-                href={YOUTUBE}  
+    "New Year": "2029-01-01",   
 
 
 
-                target="_blank"  
 
+    Pongal: "2029-01-15",   
 
 
-                rel="noreferrer"  
 
 
+    "Krishna Jayanti": "2029-08-24",   
 
-                aria-label="YouTube GuruRag Signature Home"  
 
 
 
-              >  
+    "Vinayagar Chaturthi": "2029-09-11",   
 
 
 
-                <YouTubeBrandIcon size={19} />  
 
+    "Gandhi Jayanti": "2029-10-02",   
 
 
-                <span>YouTube</span>  
 
 
+    "Ayudha Pooja": "2029-10-15",   
 
-              </a>  
 
 
 
-              <button  
+    Diwali: "2029-11-05",   
 
 
 
-                className="new-page-close"  
 
+    Christmas: "2029-12-25"   
 
 
-                onClick={onClose}  
 
 
+  },   
 
-                aria-label="Close page"  
 
 
 
-              >  
+  2030: {   
 
 
 
-                <X size={21} />  
 
+    "New Year": "2030-01-01",   
 
 
-              </button>  
 
 
+    Pongal: "2030-01-15",   
 
-            </div>  
 
 
 
-          </div>  
+    "Krishna Jayanti": "2030-09-01",   
 
 
 
-          <div className="new-page-scroll">  
 
+    "Vinayagar Chaturthi": "2030-09-03",   
 
 
-            <div className="new-page-hero-copy">  
 
 
+    "Gandhi Jayanti": "2030-10-02",   
 
-              <div>  
 
 
 
-                <span className="new-page-eyebrow">  
+    "Ayudha Pooja": "2030-10-05",   
 
 
 
-                  {data.number} - {data.eyebrow}  
 
+    Diwali: "2030-11-03",   
 
 
-                </span>  
 
 
+    Christmas: "2030-12-25"   
 
-                <h2>  
 
 
 
-                  {data.title.split("\n").map((line, index) => (  
+  }   
 
 
 
-                    <React.Fragment key={line}>  
 
+};   
 
 
-                      {index > 0 && <br />}  
 
 
+function getFestivalWindow(festivalDate) {   
 
-                      {index === data.title.split("\n").length - 1 ? (  
 
 
 
-                        <em>{line}</em>  
+  const end = new Date(`${festivalDate}T00:00:00`);   
 
 
 
-                      ) : (  
 
+  const start = new Date(end);   
 
 
-                        line  
 
 
+  start.setDate(start.getDate() - 4);   
 
-                      )}  
 
 
 
-                    </React.Fragment>  
+  return {   
 
 
 
-                  ))}  
 
+    start: start.toISOString().slice(0, 10),   
 
 
-                </h2>  
 
 
+    end: festivalDate   
 
-              </div>  
 
 
 
-              {page === "about" && (  
+  };   
 
 
 
-                <p>  
 
+}   
 
 
-                  <TypewriterText  
 
 
+function autoFestivalPromo() {   
 
-                    lines={[  
 
 
 
-                      "13+ years of experience.",  
+  const now = new Date();   
 
 
 
-                      "1,500+ completed projects.",  
 
+  const today = now.toISOString().slice(0, 10);   
 
 
-                      "One clear vision for every space.",  
 
 
+  const dates = FESTIVAL_DATES[now.getFullYear()] || {};   
 
-                    ]}  
 
 
 
-                  />  
+  for (const [name, festivalDate] of Object.entries(dates)) {   
 
 
 
-                </p>  
 
+    const window = getFestivalWindow(festivalDate);   
 
 
-              )}  
 
 
+    if (today >= window.start && today <= window.end) {   
 
-              {page === "contact" && (  
 
 
 
-                <p>  
+      return {   
 
 
 
-                  <TypewriterText  
 
+        ...DEFAULT_PROMO,   
 
 
-                    lines={[  
 
 
+        type: "festival",   
 
-                      "Let's turn your idea into a space.",  
 
 
 
-                      "Tell Saran Raj what you are planning.",  
+        name,   
 
 
 
-                      "Your project can start with one message.",  
 
+        title: name,   
 
 
-                    ]}  
 
 
+        image_url: FESTIVAL_IMAGES[name] || DEFAULT_PROMO.image_url,   
 
-                  />  
 
 
 
-                </p>  
+        offer_text: DEFAULT_PROMO.offer_text   
 
 
 
-              )}  
 
+      };   
 
 
-              {page === "services" && (  
 
 
+    }   
 
-                <p>  
 
 
 
-                  <TypewriterText  
+  }   
 
 
 
-                    lines={[  
 
+  return null;   
 
 
-                      "Carpentry. Civil. Painting. Electrical.",  
 
 
+}   
 
-                      "Every layer, thoughtfully coordinated.",  
 
 
 
-                      "Residential and commercial solutions.",  
+function promoToPopup(item=DEFAULT_PROMO){    
 
 
 
-                    ]}  
 
 
+  const festival=item.type==="festival";    
 
-                  />  
 
 
 
-                </p>  
 
+  const name=(item.name||"GURURAG INTERIOR").trim();    
 
 
-              )}  
 
 
 
-              {page === "projects" && (  
+  const heading=(item.title||DEFAULT_PROMO.title).trim();    
 
 
 
-                <p>  
 
 
+  return {    
 
-                  <TypewriterText  
 
 
 
-                    lines={[  
 
+    eyebrow:festival?(name||"FESTIVE OFFER"):(name||"GURURAG INTERIOR"),    
 
 
-                      "Contemporary living spaces.",  
 
 
 
-                      "Modern kitchens and bedrooms.",  
+    title:festival?(name||"FESTIVE OFFER"):(heading||DEFAULT_PROMO.title),    
 
 
 
-                      "Workspaces with character.",  
 
 
+    highlight:festival?(heading||"SPECIAL OFFER"):"CONSULTATION",    
 
-                    ]}  
 
 
 
-                  />  
 
+    description:item.description||DEFAULT_PROMO.description,    
 
 
-                </p>  
 
 
 
-              )}
+    badge:item.offer_text||DEFAULT_PROMO.offer_text,    
 
-              {page === "showcase" && (
 
-              <div className="project-showcase-content">
 
-                <section className="project-showcase-section">
 
-                  <div className="project-showcase-section-heading">
 
-                    <span className="new-page-label">PROJECT IMAGES</span>
+    button:item.button_text||"Book a Free Consultation",    
 
-                  </div>
 
-                  <ProjectImageCarousel projects={showcaseProjects} />
 
-                </section>
 
-                <section className="project-showcase-section">
 
-                  <div className="project-showcase-section-heading">
+    image:item.image_url||FESTIVAL_IMAGES[item.name]||DEFAULT_PROMO.image_url,    
 
-                    <span className="new-page-label">PROJECT VIDEOS</span>
 
-                  </div>
 
-                  <ProjectVideoGallery videos={managedProjectVideos} />
 
-                </section>
 
-              </div>
+    isFestival:festival    
 
-            )}
 
-            {page === "contact" && (
-  
 
 
 
-              <div className="new-contact-page">  
+  };    
 
 
 
-                <div className="new-contact-intro">  
 
 
+}    
 
-                  <span className="new-page-label">GURURAG INTERIOR | CHENNAI</span>  
 
 
 
-                  <h3>  
 
+function OfferPopup({ open, promo, onClose }) {    
 
 
-                    <TypewriterText  
 
 
 
-                      lines={[  
+  const [propertyType, setPropertyType] = useState("1 BHK");    
 
 
 
-                        "Let's create something beautiful.",  
 
 
+  const [location, setLocation] = useState("");    
 
-                        "Let's plan your next interior.",  
 
 
 
-                        "Let's talk about your space.",  
 
+  const [name, setName] = useState("");    
 
 
-                      ]}  
 
 
 
-                    />  
+  const [phone, setPhone] = useState("");    
 
 
 
-                  </h3>  
 
 
+  const [whatsappUpdates, setWhatsappUpdates] = useState(false);    
 
-                  <p>  
 
 
 
-                    Share your home, office or renovation requirement with us.  
 
+  const [submitted, setSubmitted] = useState(false);    
 
 
-                    One message is enough to start the conversation.  
 
 
 
-                  </p>  
+  const currentPromo = promo || promoToPopup(DEFAULT_PROMO);    
 
 
 
-                </div>  
 
 
+  useEffect(() => {    
 
-                <div className="new-contact-actions">  
 
 
 
-                  <a className="new-contact-action phone" href="tel:+919789695878">  
 
+    if (!open) return;    
 
 
-                    <span className="new-action-icon"><Phone size={22} /></span>  
 
 
 
-                    <span className="new-action-copy">  
+    const previousOverflow = document.body.style.overflow;    
 
 
 
-                      <small>CALL DIRECTLY</small>  
 
 
+    document.body.style.overflow = "hidden";    
 
-                      <strong>+91 97896 95878</strong>  
 
 
 
-                    </span>  
 
+    return () => {    
 
 
-                    <ArrowUpRight size={19} />  
 
 
 
-                  </a>  
+      document.body.style.overflow = previousOverflow;    
 
 
 
-                  <a  
 
 
+    };    
 
-                    className="new-contact-action whatsapp"  
 
 
 
-                    href={WHATSAPP}  
 
+  }, [open]);    
 
 
-                    target="_blank"  
 
 
 
-                    rel="noreferrer"  
+  useEffect(() => {    
 
 
 
-                  >  
 
 
+    if (!open) return;    
 
-                    <span className="new-action-icon"><WhatsAppIcon size={23} /></span>  
 
 
 
-                    <span className="new-action-copy">  
 
+    setSubmitted(false);    
 
 
-                      <small>CHAT ON WHATSAPP</small>  
 
 
 
-                      <strong>Send Your Requirement</strong>  
+  }, [open]);    
 
 
 
-                    </span>  
 
 
+  const submitLead = async (event) => {    
 
-                    <ArrowUpRight size={19} />  
 
 
 
-                  </a>  
 
+    event.preventDefault();    
 
 
-                  <a  
 
 
 
-                    className="new-contact-action instagram"  
+    const cleanName=name.trim(),cleanPhone=phone.trim(),cleanLocation=location.trim();    
 
 
 
-                    href={INSTAGRAM}  
 
 
+    if(!cleanName||cleanPhone.length<10)return;    
 
-                    target="_blank"  
 
 
 
-                    rel="noreferrer"  
 
+    const booking={customer_name:cleanName,phone:cleanPhone,service:"Interior Consultation",preferred_date:null,message:`Offer: ${currentPromo.badge} | Property: ${propertyType} | Location: ${cleanLocation||"Not provided"} | WhatsApp Updates: ${whatsappUpdates?"Yes":"No"}`,source:"Offer Popup"};    
 
 
-                  >  
 
 
 
-                    <span className="new-action-icon"><InstagramBrandIcon size={23} /></span>  
+    setSubmitted(true);    
 
 
 
-                    <span className="new-action-copy">  
 
 
+    try{const {data,error}=await supabase.from("bookings").insert(booking).select("*").single();if(!error){try{await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking:data||booking})});}catch{}}}catch{}    
 
-                      <small>FOLLOW OUR WORK</small>  
 
 
 
-                      <strong>@sgr_decors_interior_designer</strong>  
 
+  };    
 
 
-                    </span>  
 
 
 
-                    <ArrowUpRight size={19} />  
+  if (!open) return null;    
 
 
 
-                  </a>  
 
 
+  return (    
 
-                  <a  
 
 
 
-                    className="new-contact-action youtube"  
 
+    <AnimatePresence>    
 
 
-                    href={YOUTUBE}  
 
 
 
-                    target="_blank"  
+      <motion.div    
 
 
 
-                    rel="noreferrer"  
 
 
+        className="offer-popup-backdrop"    
 
-                  >  
 
 
 
-                    <span className="new-action-icon"><YouTubeBrandIcon size={23} /></span>  
 
+        initial={{ opacity: 0 }}    
 
 
-                    <span className="new-action-copy">  
 
 
 
-                      <small>WATCH OUR WORK</small>  
+        animate={{ opacity: 1 }}    
 
 
 
-                      <strong>GuruRag Signature Home</strong>  
 
 
+        exit={{ opacity: 0 }}    
 
-                    </span>  
 
 
 
-                    <ArrowUpRight size={19} />  
 
+        onMouseDown={(event) => {    
 
 
-                  </a>  
 
 
 
-                </div>  
+          if (event.target === event.currentTarget) onClose();    
 
 
 
-                <div className="new-contact-bottom-row">  
 
 
+        }}    
 
-                  <span>Available for residential & commercial enquiries</span>  
 
 
 
-                  <span>Chennai | Tamil Nadu</span>  
 
+      >    
 
 
-                </div>  
 
 
 
-              </div>  
+        <motion.div    
 
 
 
-            )}  
 
 
+          className="offer-popup-card"    
 
-          </div>  
 
 
 
-        </div>  
 
+          initial={{ opacity: 0, y: 28, scale: 0.96 }}    
 
 
-      </motion.div>  
 
 
 
-      </motion.div>  
+          animate={{ opacity: 1, y: 0, scale: 1 }}    
 
 
 
-    </AnimatePresence>  
 
 
+          exit={{ opacity: 0, y: 22, scale: 0.96 }}    
 
-  );  
 
 
 
-}  
 
+          transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}    
 
 
-function ProjectImageCarousel({ projects = [] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
-    setActiveIndex((current) => {
-      if (!projects.length) return 0;
-      return Math.min(current, projects.length - 1);
-    });
-  }, [projects.length]);
 
-  if (!projects.length) {
-    return <div className="project-showcase-empty">No project images added yet.</div>;
-  }
 
-  const activeProject = projects[activeIndex] || projects[0];
-  const hasMultiple = projects.length > 1;
+          role="dialog"    
 
-  const showPrevious = () => {
-    setActiveIndex((current) => (current - 1 + projects.length) % projects.length);
-  };
 
-  const showNext = () => {
-    setActiveIndex((current) => (current + 1) % projects.length);
-  };
 
-  return (
-    <motion.div
-      className="project-showcase-carousel"
-      initial={{ opacity: 0, y: 22 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <div className="project-showcase-carousel-frame">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={activeProject.id || activeProject.image || activeIndex}
-            src={activeProject.image}
-            alt={activeProject.title || "Project"}
-            initial={{ opacity: 0.35, x: 18 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0.35, x: -18 }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
-          />
-        </AnimatePresence>
 
-        {hasMultiple && (
-          <>
-            <button
-              type="button"
-              className="project-showcase-carousel-arrow previous"
-              onClick={showPrevious}
-              aria-label="Previous project image"
-            >
-              <ArrowLeft size={20} />
-            </button>
-            <button
-              type="button"
-              className="project-showcase-carousel-arrow next"
-              onClick={showNext}
-              aria-label="Next project image"
-            >
-              <ArrowRight size={20} />
-            </button>
-          </>
-        )}
-      </div>
-    </motion.div>
-  );
-}
 
-function ProjectVideoGallery({ videos = [] }) {
-  const [activeVideo, setActiveVideo] = useState(null);
-  const validVideos = videos.map((video) => ({
-    ...video,
-    youtubeId: video.youtube_id || getYouTubeVideoId(video.youtube_url || video.url || ""),
-  })).filter((video) => video.youtubeId);
+          aria-modal="true"    
 
-  return (
-    <>
-      <div className="project-showcase-video-grid">
-        {validVideos.length ? validVideos.map((video, index) => (
-          <motion.button type="button" className="project-showcase-video-card" key={video.id || video.youtubeId || index} onClick={() => setActiveVideo(video)} initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}>
-            <img src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`} alt="Project video" />
-            <span className="project-showcase-play" aria-hidden="true"><span /></span>
-          </motion.button>
-        )) : <div className="project-showcase-empty">No project videos added yet.</div>}
-      </div>
-      <AnimatePresence>
-        {activeVideo?.youtubeId && (
-          <motion.div className="project-video-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveVideo(null); }}>
-            <motion.div className="project-video-modal-card" initial={{ opacity: 0, scale: 0.94, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.94, y: 18 }}>
-              <button type="button" className="project-video-modal-close" onClick={() => setActiveVideo(null)} aria-label="Close project video"><X size={21} /></button>
-              <div className="project-video-frame">
-                <iframe src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`} title="Project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-}
 
-function NewPageStyles() {  
 
 
 
-  return (  
+          aria-label="Gururag Interior free consultation"    
 
 
 
-    <style>{`  
 
 
+        >    
 
-      .menu-owner-trigger{border:0;background:transparent;color:inherit;font:inherit;padding:0;cursor:pointer;text-align:left}  
 
 
 
-      .new-page-overlay{position:fixed;inset:0;z-index:1200;background:rgba(5,16,29,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:18px;display:flex;align-items:center;justify-content:center}  
 
+          <button    
 
 
-      .new-page-shell{width:min(1080px,calc(100vw - 36px));height:min(88dvh,860px);min-height:0;overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:#071827;color:#f7f5ed;box-shadow:0 35px 100px rgba(0,0,0,.48);position:relative}  
 
 
 
-      .new-page-topbar{height:78px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(7,24,39,.92);position:sticky;top:0;z-index:5}  
+            className="offer-popup-close"    
 
 
 
-      .new-page-brand{border:0;background:transparent;color:#fff;display:flex;align-items:center;gap:11px;cursor:pointer;padding:0;text-align:left;min-width:0;flex-shrink:1}.new-page-brand>span:last-child{display:flex;flex-direction:column}.new-page-brand strong{font-size:14px;letter-spacing:.18em}.new-page-brand small{font-size:8px;letter-spacing:.28em;color:#9ee7cf;margin-top:2px}.new-page-logo{width:34px;height:34px;border-radius:8px;overflow:hidden;display:block;flex:0 0 34px;border:1px solid rgba(255,255,255,.18)}.new-page-logo img{width:100%;height:100%;object-fit:cover}  
 
 
+            onClick={onClose}    
 
-      .new-page-top-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex:0 0 auto;min-width:max-content}.new-page-top-whatsapp{display:flex;align-items:center;gap:8px;text-decoration:none;color:#dff8ef;border:1px solid rgba(158,231,207,.25);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:700;transition:.25s;white-space:nowrap}.new-page-top-whatsapp:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 24px rgba(158,231,207,.22)}.new-page-close{width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;display:grid;place-items:center;cursor:pointer;transition:.25s}.new-page-close:hover{transform:rotate(90deg);background:#f3d36a;color:#071827;box-shadow:0 0 28px rgba(243,211,106,.28)}  
 
 
 
-      .new-page-scroll{height:calc(100% - 78px);overflow:auto;padding:48px clamp(20px,5vw,64px) 60px;scroll-behavior:smooth}.new-page-scroll::-webkit-scrollbar{width:5px}.new-page-scroll::-webkit-scrollbar-thumb{background:rgba(158,231,207,.35);border-radius:20px}  
 
+            aria-label="Close offer"    
 
 
-      .new-page-hero-copy{display:grid;grid-template-columns:1.2fr .8fr;gap:35px;align-items:end;margin-bottom:42px}.new-page-eyebrow,.new-page-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#9ee7cf;font-weight:800}.new-page-hero-copy h2{font-size:clamp(38px,6vw,76px);line-height:.98;letter-spacing:-.045em;margin:15px 0 0;font-weight:500}.new-page-hero-copy h2 em{font-family:Georgia,serif;font-weight:400;color:#f3d36a}.new-page-hero-copy p{margin:0;color:rgba(255,255,255,.68);font-size:16px;line-height:1.8;max-width:390px}.new-page-typewriter{display:inline}.typewriter-cursor{color:#f3d36a;font-weight:800;margin-left:2px;animation:typeBlink .8s infinite}@keyframes typeBlink{0%,45%{opacity:1}46%,100%{opacity:0}}  
 
 
 
-      .new-about-grid{display:grid;grid-template-columns:1.6fr .75fr;gap:22px}.new-founder-card{display:grid;grid-template-columns:.82fr 1.18fr;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:24px;overflow:hidden}.new-founder-image-wrap{min-height:500px;position:relative;overflow:hidden}.new-founder-image-wrap img{width:100%;height:100%;object-fit:cover;display:block}.new-founder-image-overlay{position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.78))}.new-founder-image-wrap>span{position:absolute;left:22px;bottom:20px;font-size:9px;letter-spacing:.17em;line-height:1.6;color:#fff}.new-founder-content{padding:34px;display:flex;flex-direction:column;justify-content:center}.new-founder-content h3{font-size:46px;line-height:.95;margin:13px 0 22px}.new-founder-content h3 em{font-family:Georgia,serif;color:#f3d36a;font-weight:400}.new-founder-content p{color:rgba(255,255,255,.68);line-height:1.75;font-size:14px;margin:0 0 15px}.new-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}.new-stat-row>div{padding:17px;border-radius:15px;background:rgba(158,231,207,.07);border:1px solid rgba(158,231,207,.12)}.new-stat-row strong{display:block;font-size:28px;color:#9ee7cf}.new-stat-row span{display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-top:5px}.new-about-side{display:flex;flex-direction:column;gap:22px}.new-info-card,.new-contact-mini{border-radius:24px;padding:28px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}.new-info-card>span,.new-contact-mini>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;font-weight:800}.new-info-card h4{font-size:25px;line-height:1.2;margin:14px 0}.new-info-card p{color:rgba(255,255,255,.63);line-height:1.7;font-size:13px}.new-contact-mini{display:flex;flex-direction:column;gap:10px}.new-contact-mini>a{display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff;padding:14px;border-radius:13px;border:1px solid rgba(255,255,255,.09);transition:.25s}.new-contact-mini>a span{flex:1;font-size:12px;font-weight:700}.new-contact-mini>a:hover{transform:translateX(4px);border-color:rgba(243,211,106,.42);background:rgba(243,211,106,.07);box-shadow:0 0 25px rgba(243,211,106,.08)}  
+          >    
 
 
 
-      .new-service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.new-service-page-card{display:grid;grid-template-columns:.9fr 1.1fr;min-height:240px;border-radius:22px;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)}.new-service-page-image{position:relative;min-height:240px}.new-service-page-image img{width:100%;height:100%;object-fit:cover}.new-service-page-image>span{position:absolute;top:14px;left:14px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827;font-size:10px;font-weight:900}.new-service-page-card>div:last-child{padding:24px}.new-service-page-card h3{font-size:23px;margin:9px 0}.new-service-page-card p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.62);margin-bottom:17px}.new-outline-button{border:1px solid rgba(158,231,207,.28);background:transparent;color:#9ee7cf;padding:10px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;cursor:pointer;transition:.25s}.new-outline-button:hover{background:#9ee7cf;color:#071827;box-shadow:0 0 25px rgba(158,231,207,.2)}  
 
 
+            <X size={22} />    
 
-      .new-project-page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}.new-project-page-card{cursor:default}.new-project-page-image{height:340px;border-radius:22px;overflow:hidden;position:relative;margin-bottom:14px}.new-project-page-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.new-project-page-card:hover img{transform:scale(1.05)}.new-project-page-arrow{position:absolute;right:15px;top:15px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#f3d36a;color:#071827}.new-project-page-card>span{font-size:9px;letter-spacing:.18em;color:#9ee7cf;text-transform:uppercase}.new-project-page-card h3{font-size:23px;margin:7px 0 0}
-      .project-showcase-content{display:flex;flex-direction:column;gap:42px;padding-bottom:20px}.project-showcase-section{display:flex;flex-direction:column;gap:16px}.project-showcase-section-heading{display:flex;align-items:center;justify-content:space-between}.project-showcase-image-grid,.project-showcase-video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.project-showcase-image-card,.project-showcase-video-card{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:rgba(255,255,255,.045);padding:0}.project-showcase-image-card{aspect-ratio:1.25}.project-showcase-image-card img,.project-showcase-video-card img{width:100%;height:100%;object-fit:cover;display:block}.project-showcase-video-card{aspect-ratio:16/9;cursor:pointer;text-align:left}.project-showcase-video-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.32));pointer-events:none}.project-showcase-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:#f3d36a;color:#071827;display:grid;place-items:center;z-index:2;box-shadow:0 10px 30px rgba(0,0,0,.3)}.project-showcase-play span{display:block;margin-left:4px;width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid #071827}.project-showcase-empty{grid-column:1/-1;border:1px dashed rgba(255,255,255,.16);border-radius:18px;padding:34px;text-align:center;color:rgba(255,255,255,.48);font-size:12px}.project-video-modal{position:fixed;inset:0;z-index:2500;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px}.project-video-modal-card{position:relative;width:min(900px,94vw);background:#071827;border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:12px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.project-video-modal-close{position:absolute;right:-12px;top:-12px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:#071827;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:3}.project-video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:13px;overflow:hidden;background:#000}.project-video-frame iframe{width:100%;height:100%;border:0;display:block}
-      .project-showcase-carousel{width:100%}.project-showcase-carousel-frame{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.045);box-shadow:0 18px 45px rgba(0,0,0,.18)}.project-showcase-carousel-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.project-showcase-carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(7,24,39,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:3;transition:.25s}.project-showcase-carousel-arrow:hover{background:#f3d36a;color:#071827;border-color:#f3d36a;transform:translateY(-50%) scale(1.05)}.project-showcase-carousel-arrow.previous{left:16px}.project-showcase-carousel-arrow.next{right:16px}
 
-      .new-contact-page{padding-bottom:20px}.new-contact-intro{max-width:680px}.new-contact-intro h3{font-size:clamp(34px,5vw,62px);line-height:1.05;margin:18px 0;font-weight:500;letter-spacing:-.04em}.new-contact-intro>p{color:rgba(255,255,255,.65);font-size:15px;line-height:1.8;max-width:600px}.new-contact-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:35px}.new-contact-action{position:relative;overflow:hidden;min-height:170px;border-radius:22px;padding:24px;text-decoration:none;color:#fff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.11);display:flex;flex-direction:column;justify-content:space-between;transition:.3s}.new-contact-action:before{content:"";position:absolute;inset:-80px auto auto -70px;width:170px;height:170px;border-radius:50%;filter:blur(30px);opacity:.18;transition:.3s}.new-contact-action.phone:before{background:#f3d36a}.new-contact-action.whatsapp:before{background:#9ee7cf}.new-contact-action.instagram:before{background:#f1a7cf}.new-contact-action.youtube:before{background:#ff6b6b}.new-contact-action:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(0,0,0,.25);border-color:rgba(255,255,255,.25)}.new-contact-action:hover:before{opacity:.32}.new-action-icon{position:relative;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.08)}.new-contact-action.phone .new-action-icon{color:#f3d36a}.new-contact-action.whatsapp .new-action-icon{color:#9ee7cf}.new-contact-action.instagram .new-action-icon{color:#f1a7cf}.new-contact-action.youtube .new-action-icon{color:#ff8a8a}.new-action-copy{position:relative;display:flex;flex-direction:column;gap:6px}.new-action-copy small{font-size:8px;letter-spacing:.17em;color:rgba(255,255,255,.48);font-weight:800}.new-action-copy strong{font-size:13px;line-height:1.35}.new-contact-action>svg{position:absolute;right:20px;top:20px;color:rgba(255,255,255,.5)}.new-contact-bottom-row{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.09);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45)}  
 
 
 
-      @media(max-width:800px){.new-page-overlay{padding:10px}.new-page-shell{width:calc(100vw - 20px);height:88dvh;min-height:0;border-radius:24px;border:1px solid rgba(255,255,255,.13)}.new-page-topbar{height:64px;min-height:64px;padding:0 12px;gap:8px}.new-page-brand{max-width:34%;gap:8px}.new-page-brand>span:last-child{min-width:0}.new-page-brand strong{font-size:11px;letter-spacing:.14em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.new-page-brand small{font-size:6px;letter-spacing:.22em}.new-page-top-actions{gap:6px}.new-page-top-whatsapp{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;flex:0 0 40px}.new-page-top-whatsapp span{display:none}.new-page-close{width:40px;height:40px;flex-basis:40px}.new-page-scroll{height:calc(100% - 64px);padding:28px 17px 42px}.new-page-hero-copy{grid-template-columns:1fr;gap:20px;margin-bottom:28px}.new-page-hero-copy h2{font-size:42px}.new-page-hero-copy p{font-size:14px}.new-about-grid,.new-founder-card{grid-template-columns:1fr}.new-founder-image-wrap{min-height:360px}.new-founder-content{padding:24px}.new-about-side{gap:14px}.new-service-grid,.new-project-page-grid,.new-contact-actions{grid-template-columns:1fr}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:repeat(2,1fr)}.project-showcase-carousel-frame{aspect-ratio:1.2}.project-showcase-carousel-arrow{width:42px;height:42px}.project-video-modal{padding:12px}.project-video-modal-card{width:96vw}.project-video-modal-close{right:6px;top:6px}.new-service-page-card{grid-template-columns:1fr}.new-service-page-image{min-height:210px}.new-project-page-image{height:270px}.new-contact-action{min-height:145px}.new-contact-bottom-row{flex-direction:column;gap:8px}.new-founder-content h3{font-size:38px}} 
+          </button>    
 
 
-       @media(max-width:430px){.new-page-overlay{padding:8px}.new-page-shell{width:calc(100vw - 16px);height:86dvh;border-radius:22px}.new-page-topbar{padding:0 9px;gap:5px;height:60px;min-height:60px}.new-page-brand{max-width:32%}.new-page-brand>span:last-child{display:none}.new-page-logo{width:32px;height:32px;flex-basis:32px}.new-page-top-actions{gap:5px}.new-page-top-whatsapp,.new-page-close{width:38px;height:38px;flex-basis:38px}.new-page-top-whatsapp svg{width:18px;height:18px}.new-page-close svg{width:20px;height:20px}.new-page-scroll{height:calc(100% - 60px);padding:25px 14px 36px}.project-showcase-image-grid,.project-showcase-video-grid{grid-template-columns:1fr;gap:13px}.project-showcase-image-card{aspect-ratio:1.15}.project-showcase-carousel-frame{aspect-ratio:1.05;border-radius:18px}.project-showcase-carousel-arrow{width:38px;height:38px}.project-showcase-carousel-arrow.previous{left:10px}.project-showcase-carousel-arrow.next{right:10px}.project-showcase-carousel-arrow svg{width:17px;height:17px}.project-showcase-play{width:52px;height:52px}}  
 
 
 
-    `}</style>  
+          <div className={`offer-popup-banner ${currentPromo.isFestival ? "festival-banner" : ""}`}>    
 
 
 
-  );  
 
 
+            <img src={currentPromo.image} alt="Gururag Interior interior" />    
 
-}  
 
 
 
-const FESTIVAL_IMAGES = {  
 
+            <div className="offer-popup-banner-overlay" />    
 
 
-  Diwali:"https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=1600&q=90",  
 
 
 
-  "Gandhi Jayanti":"https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=1600&q=90",  
+            <div className="offer-popup-brand">    
 
 
 
-  Pongal:"https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1600&q=90",  
 
 
+              <span className="offer-popup-brand-logo">    
 
-  "Vinayagar Chaturthi":"https://images.unsplash.com/photo-1599629954294-14df9b3b7c04?auto=format&fit=crop&w=1600&q=90",  
 
 
 
-  "New Year":"https://images.unsplash.com/photo-1513159446162-54eb8bdaa79b?auto=format&fit=crop&w=1600&q=90",  
 
+                <img src={logo} alt="Gururag Interior" />    
 
 
-  Christmas:"https://images.unsplash.com/photo-1482517967863-00e15c9b44be?auto=format&fit=crop&w=1600&q=90",  
 
 
 
-  "Ramzan / Eid":"https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1600&q=90",  
+              </span>    
 
 
 
-  "Bakrid / Eid-ul-Adha":"https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=90",  
 
 
+              <span>    
 
-  "Krishna Jayanti":"https://images.unsplash.com/photo-1567591414240-e9c1e608c9c7?auto=format&fit=crop&w=1600&q=90"  
 
 
 
-};  
 
+                <strong>GURURAG</strong>    
 
 
-const DEFAULT_PROMO = {type:"normal",name:"LIMITED TIME OFFER",title:"FREE DESIGN",description:"Tell us about your space, property type and location. Our team will guide you towards the right interior solution.",offer_text:"15% OFF",button_text:"Book a Free Consultation",image_url:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=90"};  
 
 
 
-const FESTIVAL_DATES = { 
+                <small>INTERIOR</small>    
 
 
-  2026: { 
 
 
-    "New Year": "2026-01-01", 
 
+              </span>    
 
-    Pongal: "2026-01-14", 
 
 
-    "Ramzan / Eid": "2026-03-21", 
 
 
-    "Bakrid / Eid-ul-Adha": "2026-05-27", 
+            </div>    
 
 
-    "Krishna Jayanti": "2026-09-04", 
 
 
-    "Vinayagar Chaturthi": "2026-09-14", 
 
+            <div className="offer-popup-banner-copy">    
 
-    "Gandhi Jayanti": "2026-10-02", 
 
 
-    "Ayudha Pooja": "2026-10-20", 
 
 
-    Diwali: "2026-11-08", 
+              <span>{currentPromo.eyebrow}</span>    
 
 
-    Christmas: "2026-12-25" 
 
 
-  }, 
 
+              <strong>{currentPromo.title}</strong>    
 
-  2027: { 
 
 
-    "New Year": "2027-01-01", 
 
 
-    Pongal: "2027-01-14", 
+              <em>{currentPromo.highlight}</em>    
 
 
-    "Ramzan / Eid": "2027-03-10", 
 
 
-    "Bakrid / Eid-ul-Adha": "2027-05-17", 
 
+              <b className="offer-popup-dynamic-badge">{currentPromo.badge}</b>    
 
-    "Krishna Jayanti": "2027-08-25", 
 
 
-    "Vinayagar Chaturthi": "2027-09-04", 
 
 
-    "Gandhi Jayanti": "2027-10-02", 
+            </div>    
 
 
-    "Ayudha Pooja": "2027-10-09", 
 
 
-    Diwali: "2027-10-28", 
 
+          </div>    
 
-    Christmas: "2027-12-25" 
 
 
-  }, 
 
 
-  2028: { 
+          <div className="offer-popup-consultation-title">    
 
 
-    "New Year": "2028-01-01", 
 
 
-    Pongal: "2028-01-14", 
 
+            Get a free design consultation    
 
-    "Krishna Jayanti": "2028-08-18", 
 
 
-    "Vinayagar Chaturthi": "2028-08-25", 
 
 
-    "Gandhi Jayanti": "2028-10-02", 
+          </div>    
 
 
-    "Ayudha Pooja": "2028-09-27", 
 
 
-    Diwali: "2028-10-17", 
 
+          <form className="offer-popup-form" onSubmit={submitLead}>    
 
-    Christmas: "2028-12-25" 
 
 
-  }, 
 
 
-  2029: { 
+            <div className="offer-popup-content">    
 
 
-    "New Year": "2029-01-01", 
 
 
-    Pongal: "2029-01-15", 
 
+              <div className="offer-popup-description">    
 
-    "Krishna Jayanti": "2029-08-24", 
 
 
-    "Vinayagar Chaturthi": "2029-09-11", 
 
 
-    "Gandhi Jayanti": "2029-10-02", 
+                {currentPromo.description}    
 
 
-    "Ayudha Pooja": "2029-10-15", 
 
 
-    Diwali: "2029-11-05", 
 
+              </div>    
 
-    Christmas: "2029-12-25" 
 
 
-  }, 
 
 
-  2030: { 
+              <div className="offer-popup-label">    
 
 
-    "New Year": "2030-01-01", 
 
 
-    Pongal: "2030-01-15", 
 
+                Property type    
 
-    "Krishna Jayanti": "2030-09-01", 
 
 
-    "Vinayagar Chaturthi": "2030-09-03", 
 
 
-    "Gandhi Jayanti": "2030-10-02", 
+              </div>    
 
 
-    "Ayudha Pooja": "2030-10-05", 
 
 
-    Diwali: "2030-11-03", 
 
+              <div className="property-type-grid">    
 
-    Christmas: "2030-12-25" 
 
 
-  } 
 
 
-}; 
+                {["1 BHK", "2 BHK", "3 BHK", "4+ BHK / Duplex"].map(    
 
 
-function getFestivalWindow(festivalDate) { 
 
 
-  const end = new Date(`${festivalDate}T00:00:00`); 
 
+                  (type) => (    
 
-  const start = new Date(end); 
 
 
-  start.setDate(start.getDate() - 4); 
 
 
-  return { 
+                    <button    
 
 
-    start: start.toISOString().slice(0, 10), 
 
 
-    end: festivalDate 
 
+                      type="button"    
 
-  }; 
 
 
-} 
 
 
-function autoFestivalPromo() { 
+                      key={type}    
 
 
-  const now = new Date(); 
 
 
-  const today = now.toISOString().slice(0, 10); 
 
+                      className={    
 
-  const dates = FESTIVAL_DATES[now.getFullYear()] || {}; 
 
 
-  for (const [name, festivalDate] of Object.entries(dates)) { 
 
 
-    const window = getFestivalWindow(festivalDate); 
+                        propertyType === type    
 
 
-    if (today >= window.start && today <= window.end) { 
 
 
-      return { 
 
+                          ? "property-type-button active"    
 
-        ...DEFAULT_PROMO, 
 
 
-        type: "festival", 
 
 
-        name, 
+                          : "property-type-button"    
 
 
-        title: name, 
 
 
-        image_url: FESTIVAL_IMAGES[name] || DEFAULT_PROMO.image_url, 
 
+                      }    
 
-        offer_text: DEFAULT_PROMO.offer_text 
 
 
-      }; 
 
 
-    } 
+                      onClick={() => setPropertyType(type)}    
 
 
-  } 
 
 
-  return null; 
 
+                    >    
 
-} 
 
 
-function promoToPopup(item=DEFAULT_PROMO){  
 
 
+                      {type}    
 
-  const festival=item.type==="festival";  
 
 
 
-  const name=(item.name||"GURURAG INTERIOR").trim();  
 
+                    </button>    
 
 
-  const heading=(item.title||DEFAULT_PROMO.title).trim();  
 
 
 
-  return {  
+                  )    
 
 
 
-    eyebrow:festival?(name||"FESTIVE OFFER"):(name||"GURURAG INTERIOR"),  
 
 
+                )}    
 
-    title:festival?(name||"FESTIVE OFFER"):(heading||DEFAULT_PROMO.title),  
 
 
 
-    highlight:festival?(heading||"SPECIAL OFFER"):"CONSULTATION",  
 
+              </div>    
 
 
-    description:item.description||DEFAULT_PROMO.description,  
 
 
 
-    badge:item.offer_text||DEFAULT_PROMO.offer_text,  
+              <label className="offer-input">    
 
 
 
-    button:item.button_text||"Book a Free Consultation",  
 
 
+                <input    
 
-    image:item.image_url||FESTIVAL_IMAGES[item.name]||DEFAULT_PROMO.image_url,  
 
 
 
-    isFestival:festival  
 
+                  value={location}    
 
 
-  };  
 
 
 
-}  
+                  onChange={(event) => setLocation(event.target.value)}    
 
 
 
-function OfferPopup({ open, promo, onClose }) {  
 
 
+                  placeholder="Property Location"    
 
-  const [propertyType, setPropertyType] = useState("1 BHK");  
 
 
 
-  const [location, setLocation] = useState("");  
 
+                  type="text"    
 
 
-  const [name, setName] = useState("");  
 
 
 
-  const [phone, setPhone] = useState("");  
+                />    
 
 
 
-  const [whatsappUpdates, setWhatsappUpdates] = useState(false);  
 
 
+              </label>    
 
-  const [submitted, setSubmitted] = useState(false);  
 
 
 
-  const currentPromo = promo || promoToPopup(DEFAULT_PROMO);  
 
+              <label className="offer-input">    
 
 
-  useEffect(() => {  
 
 
 
-    if (!open) return;  
+                <input    
 
 
 
-    const previousOverflow = document.body.style.overflow;  
 
 
+                  value={name}    
 
-    document.body.style.overflow = "hidden";  
 
 
 
-    return () => {  
 
+                  onChange={(event) => setName(event.target.value)}    
 
 
-      document.body.style.overflow = previousOverflow;  
 
 
 
-    };  
+                  placeholder="Name"    
 
 
 
-  }, [open]);  
 
 
+                  type="text"    
 
-  useEffect(() => {  
 
 
 
-    if (!open) return;  
 
+                  required    
 
 
-    setSubmitted(false);  
 
 
 
-  }, [open]);  
+                />    
 
 
 
-  const submitLead = async (event) => {  
 
 
+              </label>    
 
-    event.preventDefault();  
 
 
 
-    const cleanName=name.trim(),cleanPhone=phone.trim(),cleanLocation=location.trim();  
 
+              <label className="offer-phone-input">    
 
 
-    if(!cleanName||cleanPhone.length<10)return;  
 
 
 
-    const booking={customer_name:cleanName,phone:cleanPhone,service:"Interior Consultation",preferred_date:null,message:`Offer: ${currentPromo.badge} | Property: ${propertyType} | Location: ${cleanLocation||"Not provided"} | WhatsApp Updates: ${whatsappUpdates?"Yes":"No"}`,source:"Offer Popup"};  
+                <span>+91</span>    
 
 
 
-    setSubmitted(true);  
 
 
+                <input    
 
-    try{const {data,error}=await supabase.from("bookings").insert(booking).select("*").single();if(!error){try{await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking:data||booking})});}catch{}}}catch{}  
 
 
 
-  };  
 
+                  value={phone}    
 
 
-  if (!open) return null;  
 
 
 
-  return (  
+                  onChange={(event) =>    
 
 
 
-    <AnimatePresence>  
 
 
+                    setPhone(    
 
-      <motion.div  
 
 
 
-        className="offer-popup-backdrop"  
 
+                      event.target.value.replace(/[^\d]/g, "").slice(0, 10)    
 
 
-        initial={{ opacity: 0 }}  
 
 
 
-        animate={{ opacity: 1 }}  
+                    )    
 
 
 
-        exit={{ opacity: 0 }}  
 
 
+                  }    
 
-        onMouseDown={(event) => {  
 
 
 
-          if (event.target === event.currentTarget) onClose();  
 
+                  placeholder="Mobile Number"    
 
 
-        }}  
 
 
 
-      >  
+                  type="tel"    
 
 
 
-        <motion.div  
 
 
+                  inputMode="numeric"    
 
-          className="offer-popup-card"  
 
 
 
-          initial={{ opacity: 0, y: 28, scale: 0.96 }}  
 
+                  required    
 
 
-          animate={{ opacity: 1, y: 0, scale: 1 }}  
 
 
 
-          exit={{ opacity: 0, y: 22, scale: 0.96 }}  
+                />    
 
 
 
-          transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}  
 
 
+              </label>    
 
-          role="dialog"  
 
 
 
-          aria-modal="true"  
 
+              <label className="offer-whatsapp-check">    
 
 
-          aria-label="Gururag Interior free consultation"  
 
 
 
-        >  
+                <input    
 
 
 
-          <button  
 
 
+                  type="checkbox"    
 
-            className="offer-popup-close"  
 
 
 
-            onClick={onClose}  
 
+                  checked={whatsappUpdates}    
 
 
-            aria-label="Close offer"  
 
 
 
-          >  
+                  onChange={(event) => setWhatsappUpdates(event.target.checked)}    
 
 
 
-            <X size={22} />  
 
 
+                />    
 
-          </button>  
 
 
 
-          <div className={`offer-popup-banner ${currentPromo.isFestival ? "festival-banner" : ""}`}>  
 
+                <span className={`offer-check-box ${whatsappUpdates ? "checked" : ""}`} aria-hidden="true" />    
 
 
-            <img src={currentPromo.image} alt="Gururag Interior interior" />  
 
 
 
-            <div className="offer-popup-banner-overlay" />  
+                <span>Yes, send me updates via WhatsApp.</span>    
 
 
 
-            <div className="offer-popup-brand">  
 
 
+                <WhatsAppIcon size={25} />    
 
-              <span className="offer-popup-brand-logo">  
 
 
 
-                <img src={logo} alt="Gururag Interior" />  
 
+              </label>    
 
 
-              </span>  
 
 
 
-              <span>  
+              {submitted ? (    
 
 
 
-                <strong>GURURAG</strong>  
 
 
+                <div className="offer-submit-success">    
 
-                <small>INTERIOR</small>  
 
 
 
-              </span>  
 
+                  <Check size={19} />    
 
 
-            </div>  
 
 
 
-            <div className="offer-popup-banner-copy">  
+                  Booking sent successfully. Thank you for booking with Gururag Interior! Our team will contact you shortly.    
 
 
 
-              <span>{currentPromo.eyebrow}</span>  
 
 
+                </div>    
 
-              <strong>{currentPromo.title}</strong>  
 
 
 
-              <em>{currentPromo.highlight}</em>  
 
+              ) : (    
 
 
-              <b className="offer-popup-dynamic-badge">{currentPromo.badge}</b>  
 
 
 
-            </div>  
+                <button className="offer-submit-button" type="submit">    
 
 
 
-          </div>  
 
 
+                  {currentPromo.button}    
 
-          <div className="offer-popup-consultation-title">  
 
 
 
-            Get a free design consultation  
 
+                  <ArrowUpRight size={20} />    
 
 
-          </div>  
 
 
 
-          <form className="offer-popup-form" onSubmit={submitLead}>  
+                </button>    
 
 
 
-            <div className="offer-popup-content">  
 
 
+              )}    
 
-              <div className="offer-popup-description">  
 
 
 
-                {currentPromo.description}  
 
+              <p className="offer-terms">    
 
 
-              </div>  
 
 
 
-              <div className="offer-popup-label">  
+                By submitting, you agree to be contacted by Gururag Interior    
 
 
 
-                Property type  
 
 
+                regarding your project requirement.    
 
-              </div>  
 
 
 
-              <div className="property-type-grid">  
 
+              </p>    
 
 
-                {["1 BHK", "2 BHK", "3 BHK", "4+ BHK / Duplex"].map(  
 
 
 
-                  (type) => (  
+            </div>    
 
 
 
-                    <button  
 
 
+          </form>    
 
-                      type="button"  
 
 
 
-                      key={type}  
 
+        </motion.div>    
 
 
-                      className={  
 
 
 
-                        propertyType === type  
+      </motion.div>    
 
 
 
-                          ? "property-type-button active"  
 
 
+    </AnimatePresence>    
 
-                          : "property-type-button"  
 
 
 
-                      }  
 
+  );    
 
 
-                      onClick={() => setPropertyType(type)}  
 
 
 
-                    >  
+}    
 
 
 
-                      {type}  
 
 
+function OfferPopupStyles() {    
 
-                    </button>  
 
 
 
-                  )  
 
+  return (    
 
 
-                )}  
 
 
 
-              </div>  
+    <style>{`    
 
 
 
-              <label className="offer-input">  
 
 
+      .offer-popup-backdrop{    
 
-                <input  
 
 
 
-                  value={location}  
 
+        position:fixed;    
 
 
-                  onChange={(event) => setLocation(event.target.value)}  
 
 
 
-                  placeholder="Property Location"  
+        inset:0;    
 
 
 
-                  type="text"  
 
 
+        z-index:5000;    
 
-                />  
 
 
 
-              </label>  
 
+        padding:18px;    
 
 
-              <label className="offer-input">  
 
 
 
-                <input  
+        display:flex;    
 
 
 
-                  value={name}  
 
 
+        align-items:center;    
 
-                  onChange={(event) => setName(event.target.value)}  
 
 
 
-                  placeholder="Name"  
 
+        justify-content:center;    
 
 
-                  type="text"  
 
 
 
-                  required  
+        background:rgba(3,10,17,.76);    
 
 
 
-                />  
 
 
+        backdrop-filter:blur(10px);    
 
-              </label>  
 
 
 
-              <label className="offer-phone-input">  
 
+        -webkit-backdrop-filter:blur(10px);    
 
 
-                <span>+91</span>  
 
 
 
-                <input  
+        overflow:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;    
 
 
 
-                  value={phone}  
 
 
+      }    
 
-                  onChange={(event) =>  
 
 
 
-                    setPhone(  
 
+      .offer-popup-card{    
 
 
-                      event.target.value.replace(/[^\d]/g, "").slice(0, 10)  
 
 
 
-                    )  
+        width:min(820px,100%);    
 
 
 
-                  }  
 
 
+        max-height:min(92dvh,820px);    
 
-                  placeholder="Mobile Number"  
 
 
 
-                  type="tel"  
 
+        overflow:auto;    
 
 
-                  inputMode="numeric"  
 
 
 
-                  required  
+        position:relative;    
 
 
 
-                />  
 
 
+        border-radius:30px;    
 
-              </label>  
 
 
 
-              <label className="offer-whatsapp-check">  
 
+        background:#f7f8f8;    
 
 
-                <input  
 
 
 
-                  type="checkbox"  
+        color:#17202a;    
 
 
 
-                  checked={whatsappUpdates}  
 
 
+        box-shadow:0 35px 100px rgba(0,0,0,.48);    
 
-                  onChange={(event) => setWhatsappUpdates(event.target.checked)}  
 
 
 
-                />  
 
+        border:1px solid rgba(255,255,255,.8); overscroll-behavior:contain; -webkit-overflow-scrolling:touch; scrollbar-gutter:stable;    
 
 
-                <span className={`offer-check-box ${whatsappUpdates ? "checked" : ""}`} aria-hidden="true" />  
 
 
 
-                <span>Yes, send me updates via WhatsApp.</span>  
+      }    
 
 
 
-                <WhatsAppIcon size={25} />  
 
 
+      .offer-popup-card::-webkit-scrollbar{width:5px}    
 
-              </label>  
 
 
 
-              {submitted ? (  
 
+      .offer-popup-card::-webkit-scrollbar-thumb{    
 
 
-                <div className="offer-submit-success">  
 
 
 
-                  <Check size={19} />  
+        background:rgba(7,24,39,.22);    
 
 
 
-                  Booking sent successfully. Thank you for booking with Gururag Interior! Our team will contact you shortly.  
 
 
+        border-radius:20px;    
 
-                </div>  
 
 
 
-              ) : (  
 
+      }    
 
 
-                <button className="offer-submit-button" type="submit">  
 
 
 
-                  {currentPromo.button}  
+      .offer-popup-close{    
 
 
 
-                  <ArrowUpRight size={20} />  
 
 
+        position:absolute;    
 
-                </button>  
 
 
 
-              )}  
 
+        z-index:8;    
 
 
-              <p className="offer-terms">  
 
 
 
-                By submitting, you agree to be contacted by Gururag Interior  
+        top:13px;    
 
 
 
-                regarding your project requirement.  
 
 
+        right:13px;    
 
-              </p>  
 
 
 
-            </div>  
 
+        width:42px;    
 
 
-          </form>  
 
 
 
-        </motion.div>  
+        height:42px;    
 
 
 
-      </motion.div>  
 
 
+        border:0;    
 
-    </AnimatePresence>  
 
 
 
-  );  
 
+        border-radius:50%;    
 
 
-}  
 
 
 
-function OfferPopupStyles() {  
+        display:grid;    
 
 
 
-  return (  
 
 
+        place-items:center;    
 
-    <style>{`  
 
 
 
-      .offer-popup-backdrop{  
 
+        background:rgba(255,255,255,.9);    
 
 
-        position:fixed;  
 
 
 
-        inset:0;  
+        color:#071827;    
 
 
 
-        z-index:5000;  
 
 
+        cursor:pointer;    
 
-        padding:18px;  
 
 
 
-        display:flex;  
 
+        box-shadow:0 8px 25px rgba(0,0,0,.16);    
 
 
-        align-items:center;  
 
 
 
-        justify-content:center;  
+        transition:.25s;    
 
 
 
-        background:rgba(3,10,17,.76);  
 
 
+      }    
 
-        backdrop-filter:blur(10px);  
 
 
 
-        -webkit-backdrop-filter:blur(10px);  
 
+      .offer-popup-close:hover{    
 
 
-        overflow:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;  
 
 
 
-      }  
+        transform:rotate(90deg);    
 
 
 
-      .offer-popup-card{  
 
 
+        background:#f3d36a;    
 
-        width:min(820px,100%);  
 
 
 
-        max-height:min(92dvh,820px);  
 
+      }    
 
 
-        overflow:auto;  
 
 
 
-        position:relative;  
+      .offer-popup-banner{    
 
 
 
-        border-radius:30px;  
 
 
+        height:285px;    
 
-        background:#f7f8f8;  
 
 
 
-        color:#17202a;  
 
+        position:relative;    
 
 
-        box-shadow:0 35px 100px rgba(0,0,0,.48);  
 
 
 
-        border:1px solid rgba(255,255,255,.8); overscroll-behavior:contain; -webkit-overflow-scrolling:touch; scrollbar-gutter:stable;  
+        overflow:hidden;    
 
 
 
-      }  
 
 
+        background:#071827;    
 
-      .offer-popup-card::-webkit-scrollbar{width:5px}  
 
 
 
-      .offer-popup-card::-webkit-scrollbar-thumb{  
 
+      }    
 
 
-        background:rgba(7,24,39,.22);  
 
 
 
-        border-radius:20px;  
+      .offer-popup-banner>img{    
 
 
 
-      }  
 
 
+        width:100%;    
 
-      .offer-popup-close{  
 
 
 
-        position:absolute;  
 
+        height:100%;    
 
 
-        z-index:8;  
 
 
 
-        top:13px;  
+        object-fit:cover;    
 
 
 
-        right:13px;  
 
 
+        display:block;    
 
-        width:42px;  
 
 
 
-        height:42px;  
 
+      }    
 
 
-        border:0;  
 
 
 
-        border-radius:50%;  
+      .offer-popup-banner-overlay{    
 
 
 
-        display:grid;  
 
 
+        position:absolute;    
 
-        place-items:center;  
 
 
 
-        background:rgba(255,255,255,.9);  
 
+        inset:0;    
 
 
-        color:#071827;  
 
 
 
-        cursor:pointer;  
+        background:    
 
 
 
-        box-shadow:0 8px 25px rgba(0,0,0,.16);  
 
 
+          linear-gradient(90deg,rgba(4,16,27,.88) 0%,rgba(4,16,27,.58) 45%,rgba(4,16,27,.18) 100%),    
 
-        transition:.25s;  
 
 
 
-      }  
 
+          linear-gradient(0deg,rgba(4,16,27,.55),transparent 50%);    
 
 
-      .offer-popup-close:hover{  
 
 
 
-        transform:rotate(90deg);  
+      }    
 
 
 
-        background:#f3d36a;  
 
 
+      .offer-popup-brand{    
 
-      }  
 
 
 
-      .offer-popup-banner{  
 
+        position:absolute;    
 
 
-        height:285px;  
 
 
 
-        position:relative;  
+        top:20px;    
 
 
 
-        overflow:hidden;  
 
 
+        left:24px;    
 
-        background:#071827;  
 
 
 
-      }  
 
+        display:flex;    
 
 
-      .offer-popup-banner>img{  
 
 
 
-        width:100%;  
+        align-items:center;    
 
 
 
-        height:100%;  
 
 
+        gap:9px;    
 
-        object-fit:cover;  
 
 
 
-        display:block;  
 
+        color:#fff;    
 
 
-      }  
 
 
 
-      .offer-popup-banner-overlay{  
+      }    
 
 
 
-        position:absolute;  
 
 
+      .offer-popup-brand-logo{    
 
-        inset:0;  
 
 
 
-        background:  
 
+        width:38px;    
 
 
-          linear-gradient(90deg,rgba(4,16,27,.88) 0%,rgba(4,16,27,.58) 45%,rgba(4,16,27,.18) 100%),  
 
 
 
-          linear-gradient(0deg,rgba(4,16,27,.55),transparent 50%);  
+        height:38px;    
 
 
 
-      }  
 
 
+        border-radius:10px;    
 
-      .offer-popup-brand{  
 
 
 
-        position:absolute;  
 
+        overflow:hidden;    
 
 
-        top:20px;  
 
 
 
-        left:24px;  
+        border:1px solid rgba(255,255,255,.28);    
 
 
 
-        display:flex;  
 
 
+        display:block;    
 
-        align-items:center;  
 
 
 
-        gap:9px;  
 
+        background:#fff;    
 
 
-        color:#fff;  
 
 
 
-      }  
+      }    
 
 
 
-      .offer-popup-brand-logo{  
 
 
+      .offer-popup-brand-logo img{    
 
-        width:38px;  
 
 
 
-        height:38px;  
 
+        width:100%;    
 
 
-        border-radius:10px;  
 
 
 
-        overflow:hidden;  
+        height:100%;    
 
 
 
-        border:1px solid rgba(255,255,255,.28);  
 
 
+        object-fit:cover;    
 
-        display:block;  
 
 
 
-        background:#fff;  
 
+      }    
 
 
-      }  
 
 
 
-      .offer-popup-brand-logo img{  
+      .offer-popup-brand>span:last-child{    
 
 
 
-        width:100%;  
 
 
+        display:flex;    
 
-        height:100%;  
 
 
 
-        object-fit:cover;  
 
+        flex-direction:column;    
 
 
-      }  
 
 
 
-      .offer-popup-brand>span:last-child{  
+      }    
 
 
 
-        display:flex;  
 
 
+      .offer-popup-brand strong{    
 
-        flex-direction:column;  
 
 
 
-      }  
 
+        font-size:14px;    
 
 
-      .offer-popup-brand strong{  
 
 
 
-        font-size:14px;  
+        letter-spacing:.18em;    
 
 
 
-        letter-spacing:.18em;  
 
 
+      }    
 
-      }  
 
 
 
-      .offer-popup-brand small{  
 
+      .offer-popup-brand small{    
 
 
-        margin-top:2px;  
 
 
 
-        color:#9ee7cf;  
+        margin-top:2px;    
 
 
 
-        font-size:8px;  
 
 
+        color:#9ee7cf;    
 
-        letter-spacing:.28em;  
 
 
 
-      }  
 
+        font-size:8px;    
 
 
-       .offer-popup-banner-copy{position:absolute;z-index:3;left:34px;right:34px;top:82px;bottom:22px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:end}  
 
 
 
-      .offer-popup-banner-copy>span{grid-column:1/-1;color:#9ee7cf;font-size:10px;font-weight:900;letter-spacing:.22em;margin-bottom:-4px}  
+        letter-spacing:.28em;    
 
 
 
-      .offer-popup-banner-copy>strong{grid-column:1;color:#fff;font-size:clamp(38px,6vw,66px);line-height:.9;letter-spacing:-.055em;font-weight:700;max-width:100%}  
 
 
+      }    
 
-      .offer-popup-banner-copy>em{grid-column:1;color:#f3d36a;font-family:Georgia,serif;font-size:clamp(20px,3vw,30px);font-style:italic;margin-top:-5px}  
 
 
 
-      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;align-self:center;position:relative;min-width:205px;min-height:118px;display:flex;align-items:center;justify-content:center;padding:14px 20px;border:3px solid #f7bd22;border-radius:18px;background:linear-gradient(145deg,#ef3f3a 0%,#dc2e2e 70%,#c92229 100%);color:#fff;text-align:center;font-size:clamp(34px,5vw,58px);line-height:.88;font-weight:950;letter-spacing:-.055em;text-shadow:3px 4px 0 rgba(119,25,25,.55);box-shadow:8px 10px 0 #f7bd22,0 18px 35px rgba(0,0,0,.3);transform:rotate(-2deg)}  
 
+       .offer-popup-banner-copy{position:absolute;z-index:3;left:34px;right:34px;top:82px;bottom:22px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:end}    
 
 
-      .offer-popup-banner-copy>b:before{content:"";position:absolute;left:-28px;top:14px;width:42px;height:18px;background:#f7bd22;transform:rotate(-16deg);box-shadow:0 55px 0 #f7bd22}  
 
 
 
-      .offer-popup-dynamic-badge{z-index:5;} 
+      .offer-popup-banner-copy>span{grid-column:1/-1;color:#9ee7cf;font-size:10px;font-weight:900;letter-spacing:.22em;margin-bottom:-4px}    
 
 
-      .offer-popup-banner-copy>b:after{content:"";position:absolute;right:-25px;bottom:18px;width:38px;height:16px;background:#f7bd22;transform:rotate(-12deg)}  
 
 
 
-      .offer-popup-consultation-title{position:relative;z-index:4;  
+      .offer-popup-banner-copy>strong{grid-column:1;color:#fff;font-size:clamp(38px,6vw,66px);line-height:.9;letter-spacing:-.055em;font-weight:700;max-width:100%}    
 
 
 
-        background:#9ee7cf;  
 
 
+      .offer-popup-banner-copy>em{grid-column:1;color:#f3d36a;font-family:Georgia,serif;font-size:clamp(20px,3vw,30px);font-style:italic;margin-top:-5px}    
 
-        color:#071827;  
 
 
 
-        text-align:center;  
 
+      .offer-popup-banner-copy>b{grid-column:2;grid-row:2 / span 2;justify-self:center;align-self:center;position:relative;min-width:205px;min-height:118px;display:flex;align-items:center;justify-content:center;padding:14px 20px;border:3px solid #f7bd22;border-radius:18px;background:linear-gradient(145deg,#ef3f3a 0%,#dc2e2e 70%,#c92229 100%);color:#fff;text-align:center;font-size:clamp(34px,5vw,58px);line-height:.88;font-weight:950;letter-spacing:-.055em;text-shadow:3px 4px 0 rgba(119,25,25,.55);box-shadow:8px 10px 0 #f7bd22,0 18px 35px rgba(0,0,0,.3);transform:rotate(-2deg)}    
 
 
-        padding:13px 20px;  
 
 
 
-        font-size:clamp(22px,4vw,31px);  
+      .offer-popup-banner-copy>b:before{content:"";position:absolute;left:-28px;top:14px;width:42px;height:18px;background:#f7bd22;transform:rotate(-16deg);box-shadow:0 55px 0 #f7bd22}    
 
 
 
-        font-weight:700;  
 
 
+      .offer-popup-dynamic-badge{z-index:5;}   
 
-        letter-spacing:-.025em; line-height:1.15;  
 
 
 
-      }  
+      .offer-popup-banner-copy>b:after{content:"";position:absolute;right:-25px;bottom:18px;width:38px;height:16px;background:#f7bd22;transform:rotate(-12deg)}    
 
 
 
-      .offer-popup-content{  
 
 
+      .offer-popup-consultation-title{position:relative;z-index:4;    
 
-        padding:28px 30px 25px;  
 
 
 
-      }  
 
+        background:#9ee7cf;    
 
 
-      .offer-popup-description{  
 
 
 
-        color:#5f6973;  
+        color:#071827;    
 
 
 
-        font-size:14px;  
 
 
+        text-align:center;    
 
-        line-height:1.65;  
 
 
 
-        margin-bottom:22px;  
 
+        padding:13px 20px;    
 
 
-      }  
 
 
 
-      .offer-popup-label{  
+        font-size:clamp(22px,4vw,31px);    
 
 
 
-        font-size:21px;  
 
 
+        font-weight:700;    
 
-        color:#3d4650;  
 
 
 
-        font-weight:600;  
 
+        letter-spacing:-.025em; line-height:1.15;    
 
 
-        margin-bottom:13px;  
 
 
 
-      }  
+      }    
 
 
 
-      .property-type-grid{  
 
 
+      .offer-popup-content{    
 
-        display:grid;  
 
 
 
-        grid-template-columns:repeat(4,1fr);  
 
+        padding:28px 30px 25px;    
 
 
-        gap:10px;  
 
 
 
-      }  
+      }    
 
 
 
-      .property-type-button{  
 
 
+      .offer-popup-description{    
 
-        min-height:56px;  
 
 
 
-        padding:9px 8px;  
 
+        color:#5f6973;    
 
 
-        border:1px solid #d4dbe0;  
 
 
 
-        border-radius:15px;  
+        font-size:14px;    
 
 
 
-        background:#fff;  
 
 
+        line-height:1.65;    
 
-        color:#69737d;  
 
 
 
-        font-size:14px;  
 
+        margin-bottom:22px;    
 
 
-        font-weight:600;  
 
 
 
-        cursor:pointer;  
+      }    
 
 
 
-        transition:.22s;  
 
 
+      .offer-popup-label{    
 
-      }  
 
 
 
-      .property-type-button:hover{  
 
+        font-size:21px;    
 
 
-        border-color:#72cdb3;  
 
 
 
-        transform:translateY(-1px);  
+        color:#3d4650;    
 
 
 
-      }  
 
 
+        font-weight:600;    
 
-      .property-type-button.active{  
 
 
 
-        background:#0c6f73;  
 
+        margin-bottom:13px;    
 
 
-        color:#fff;  
 
 
 
-        border-color:#0c6f73;  
+      }    
 
 
 
-        box-shadow:0 8px 20px rgba(12,111,115,.18);  
 
 
+      .property-type-grid{    
 
-      }  
 
 
 
-      .offer-input,  
 
+        display:grid;    
 
 
-      .offer-phone-input{  
 
 
 
-        display:flex;  
+        grid-template-columns:repeat(4,1fr);    
 
 
 
-        width:100%;  
 
 
+        gap:10px;    
 
-        min-height:58px;  
 
 
 
-        border:1px solid #cfd6dc;  
 
+      }    
 
 
-        background:#fff;  
 
 
 
-        border-radius:14px;  
+      .property-type-button{    
 
 
 
-        margin-bottom:13px;  
 
 
+        min-height:56px;    
 
-        overflow:hidden;  
 
 
 
-        transition:.2s;  
 
+        padding:9px 8px;    
 
 
-      }  
 
 
 
-      .offer-input:focus-within,  
+        border:1px solid #d4dbe0;    
 
 
 
-      .offer-phone-input:focus-within{  
 
 
+        border-radius:15px;    
 
-        border-color:#49a994;  
 
 
 
-        box-shadow:0 0 0 3px rgba(73,169,148,.1);  
 
+        background:#fff;    
 
 
-      }  
 
 
 
-      .offer-input input,  
+        color:#69737d;    
 
 
 
-      .offer-phone-input input{  
 
 
+        font-size:14px;    
 
-        width:100%;  
 
 
 
-        border:0;  
 
+        font-weight:600;    
 
 
-        outline:0;  
 
 
 
-        background:transparent;  
+        cursor:pointer;    
 
 
 
-        color:#27313b;  
 
 
+        transition:.22s;    
 
-        font:inherit;  
 
 
 
-        font-size:17px;  
 
+      }    
 
 
-        padding:0 18px;  
 
 
 
-      }  
+      .property-type-button:hover{    
 
 
 
-      .offer-input input::placeholder,  
 
 
+        border-color:#72cdb3;    
 
-      .offer-phone-input input::placeholder{  
 
 
 
-        color:#6d7782;  
 
+        transform:translateY(-1px);    
 
 
-      }  
 
 
 
-      .offer-phone-input{  
+      }    
 
 
 
-        align-items:center;  
 
 
+      .property-type-button.active{    
 
-      }  
 
 
 
-      .offer-phone-input>span{  
 
+        background:#0c6f73;    
 
 
-        padding:0 16px;  
 
 
 
-        height:36px;  
+        color:#fff;    
 
 
 
-        display:flex;  
 
 
+        border-color:#0c6f73;    
 
-        align-items:center;  
 
 
 
-        border-right:1px solid #e2e5e8;  
 
+        box-shadow:0 8px 20px rgba(12,111,115,.18);    
 
 
-        color:#65717b;  
 
 
 
-        font-weight:700;  
+      }    
 
 
 
-      }  
 
 
+      .offer-input,    
 
-      .offer-phone-input input{  
 
 
 
-        padding-left:14px;  
 
+      .offer-phone-input{    
 
 
-      }  
 
 
 
-      .offer-whatsapp-check{  
+        display:flex;    
 
 
 
-        display:flex;  
 
 
+        width:100%;    
 
-        align-items:center;  
 
 
 
-        gap:8px;  
 
+        min-height:58px;    
 
 
-        color:#5e6871;  
 
 
 
-        font-size:14px;  
+        border:1px solid #cfd6dc;    
 
 
 
-        font-weight:700;  
 
 
+        background:#fff;    
 
-        margin:4px 0 17px;  
 
 
 
-        cursor:pointer;  
 
+        border-radius:14px;    
 
 
-      }  
 
 
 
-      .offer-whatsapp-check input{  
+        margin-bottom:13px;    
 
 
 
-        position:absolute;  
 
 
+        overflow:hidden;    
 
-        opacity:0;  
 
 
 
-        pointer-events:none;  
 
+        transition:.2s;    
 
 
-      }  
 
 
 
-      .offer-check-box{  
+      }    
 
 
 
-        width:25px;  
 
 
+      .offer-input:focus-within,    
 
-        height:25px;  
 
 
 
-        border:2px solid #aeb8c0;  
 
+      .offer-phone-input:focus-within{    
 
 
-        border-radius:6px;  
 
 
 
-        display:grid;  
+        border-color:#49a994;    
 
 
 
-        place-items:center;  
 
 
+        box-shadow:0 0 0 3px rgba(73,169,148,.1);    
 
-        flex:none;  
 
 
 
-        background:#fff;  
 
+      }    
 
 
-        color:#fff;  
 
 
 
-        font-size:17px;  
+      .offer-input input,    
 
 
 
-        font-weight:900;  
 
 
+      .offer-phone-input input{    
 
-        line-height:1;  
 
 
 
-        transition:.2s;  
 
+        width:100%;    
 
 
-      }  
 
 
 
-      .offer-check-box.checked{  
+        border:0;    
 
 
 
-        border-color:#25D366;  
 
 
+        outline:0;    
 
-        background:#25D366;  
 
 
 
-        box-shadow:0 4px 12px rgba(37,211,102,.2);  
 
+        background:transparent;    
 
 
-      }  
 
 
 
-      .offer-check-box.checked::after{  
+        color:#27313b;    
 
 
 
-        content:"\\2713";  
 
 
+        font:inherit;    
 
-        color:#fff;  
 
 
 
-        font-size:17px;  
 
+        font-size:17px;    
 
 
-        font-weight:900;  
 
 
 
-        line-height:1;  
+        padding:0 18px;    
 
 
 
-      }  
 
 
+      }    
 
-      .offer-whatsapp-check>svg{  
 
 
 
-        flex:none;  
 
+      .offer-input input::placeholder,    
 
 
-      }  
 
 
 
-      .offer-submit-button{  
+      .offer-phone-input input::placeholder{    
 
 
 
-        width:100%;  
 
 
+        color:#6d7782;    
 
-        min-height:60px;  
 
 
 
-        border:0;  
 
+      }    
 
 
-        border-radius:12px;  
 
 
 
-        background:#071827;  
+      .offer-phone-input{    
 
 
 
-        color:#fff;  
 
 
+        align-items:center;    
 
-        display:flex;  
 
 
 
-        align-items:center;  
 
+      }    
 
 
-        justify-content:center;  
 
 
 
-        gap:10px;  
+      .offer-phone-input>span{    
 
 
 
-        font-size:19px;  
 
 
+        padding:0 16px;    
 
-        font-weight:700;  
 
 
 
-        cursor:pointer;  
 
+        height:36px;    
 
 
-        box-shadow:0 12px 28px rgba(7,24,39,.2);  
 
 
 
-        transition:.25s;  
+        display:flex;    
 
 
 
-      }  
 
 
+        align-items:center;    
 
-      .offer-submit-button:hover{  
 
 
 
-        background:#0c6f73;  
 
+        border-right:1px solid #e2e5e8;    
 
 
-        transform:translateY(-1px);  
 
 
 
-        box-shadow:0 16px 32px rgba(7,24,39,.25);  
+        color:#65717b;    
 
 
 
-      }  
 
 
+        font-weight:700;    
 
-      .offer-submit-success{  
 
 
 
-        width:100%;  
 
+      }    
 
 
-        min-height:60px;  
 
 
 
-        padding:14px 18px;  
+      .offer-phone-input input{    
 
 
 
-        border-radius:12px;  
 
 
+        padding-left:14px;    
 
-        background:#e5f8f0;  
 
 
 
-        color:#0b6251;  
 
+      }    
 
 
-        display:flex;  
 
 
 
-        align-items:center;  
+      .offer-whatsapp-check{    
 
 
 
-        justify-content:center;  
 
 
+        display:flex;    
 
-        gap:9px;  
 
 
 
-        text-align:center;  
 
+        align-items:center;    
 
 
-        font-size:14px;  
 
 
 
-        font-weight:800;  
+        gap:8px;    
 
 
 
-      }  
 
 
+        color:#5e6871;    
 
-      .offer-terms{  
 
 
 
-        margin:13px 0 0;  
 
+        font-size:14px;    
 
 
-        color:#727b84;  
 
 
 
-        font-size:12px;  
+        font-weight:700;    
 
 
 
-        line-height:1.55;  
 
 
+        margin:4px 0 17px;    
 
-        text-align:center;  
 
 
 
-      }  
 
+        cursor:pointer;    
 
 
-      .navbar-quote-button{  
 
 
 
-        min-height:40px;  
+      }    
 
 
 
-        padding:0 14px;  
 
 
+      .offer-whatsapp-check input{    
 
-        border:1px solid rgba(243,211,106,.5);  
 
 
 
-        border-radius:999px;  
 
+        position:absolute;    
 
 
-        background:#f3d36a;  
 
 
 
-        color:#071827;  
+        opacity:0;    
 
 
 
-        font-size:10px;  
 
 
+        pointer-events:none;    
 
-        font-weight:900;  
 
 
 
-        letter-spacing:.06em;  
 
+      }    
 
 
-        cursor:pointer;  
 
 
 
-        transition:.25s;  
+      .offer-check-box{    
 
 
 
-        white-space:nowrap;  
 
 
+        width:25px;    
 
-      }  
 
 
 
-      .navbar-quote-button:hover{  
 
+        height:25px;    
 
 
-        transform:translateY(-2px);  
 
 
 
-        box-shadow:0 10px 25px rgba(243,211,106,.22);  
+        border:2px solid #aeb8c0;    
 
 
 
-      }  
-      .warranty-floating-button{position:fixed;z-index:3001;right:54px;top:31vh;min-height:45px;width:208px;padding:0 16px;border:1px solid rgba(243,211,106,.48);border-radius:999px;background:rgba(7,24,39,.96);color:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:900;letter-spacing:.07em;box-shadow:0 12px 35px rgba(0,0,0,.24),0 0 25px rgba(243,211,106,.08);cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:.25s}.warranty-floating-badge{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;background:#f3d36a;color:#071827;clip-path:polygon(50% 0%,90% 15%,100% 52%,82% 86%,50% 100%,18% 86%,0 52%,10% 15%)}.warranty-floating-button:hover{transform:translateY(-3px);background:#9ee7cf;color:#071827;border-color:#9ee7cf;box-shadow:0 15px 40px rgba(0,0,0,.28)}
 
 
+        border-radius:6px;    
 
 
-      .quote-floating-button{  
 
 
 
-        position:fixed;  
+        display:grid;    
 
 
 
-        z-index:3000;  
 
 
+        place-items:center;    
 
-        right:24px;  
 
 
 
-        bottom:92px;  
 
+        flex:none;    
 
 
-        min-height:45px;  
 
 
 
-        padding:0 17px;  
+        background:#fff;    
 
 
 
-        border:1px solid rgba(158,231,207,.35);  
 
 
+        color:#fff;    
 
-        border-radius:999px;  
 
 
 
-        background:rgba(7,24,39,.94);  
 
+        font-size:17px;    
 
 
-        color:#fff;  
 
 
 
-        display:flex;  
+        font-weight:900;    
 
 
 
-        align-items:center;  
 
 
+        line-height:1;    
 
-        gap:8px;  
 
 
 
-        font-size:11px;  
 
+        transition:.2s;    
 
 
-        font-weight:900;  
 
 
 
-        letter-spacing:.06em;  
+      }    
 
 
 
-        box-shadow:0 12px 35px rgba(0,0,0,.24),0 0 25px rgba(158,231,207,.08);  
 
 
+      .offer-check-box.checked{    
 
-        cursor:pointer;  
 
 
 
-        backdrop-filter:blur(10px);  
 
+        border-color:#25D366;    
 
 
-        -webkit-backdrop-filter:blur(10px);  
 
 
 
-        transition:.25s;  
+        background:#25D366;    
 
 
 
-      }  
 
 
+        box-shadow:0 4px 12px rgba(37,211,102,.2);    
 
-      .quote-floating-button:before{  
 
 
 
-        content:"";  
 
+      }    
 
 
-        width:7px;  
 
 
 
-        height:7px;  
+      .offer-check-box.checked::after{    
 
 
 
-        border-radius:50%;  
 
 
+        content:"\\2713";    
 
-        background:#f3d36a;  
 
 
 
-        box-shadow:0 0 0 5px rgba(243,211,106,.1);  
 
+        color:#fff;    
 
 
-      }  
 
 
 
-      .quote-floating-button:hover{  
+        font-size:17px;    
 
 
 
-        transform:translateY(-3px);  
 
 
+        font-weight:900;    
 
-        background:#9ee7cf;  
 
 
 
-        color:#071827;  
 
+        line-height:1;    
 
 
-        border-color:#9ee7cf;  
 
 
 
-        box-shadow:0 15px 40px rgba(0,0,0,.28);  
+      }    
 
 
 
-      }  
 
 
+      .offer-whatsapp-check>svg{    
 
-      @media(max-width:650px){  
 
 
 
-        .offer-popup-backdrop{  
 
+        flex:none;    
 
 
-          padding:10px;  
 
 
 
-          align-items:center;  
+      }    
 
 
 
-        }  
 
 
+      .offer-submit-button{    
 
-        .offer-popup-card{  
 
 
 
-          max-height:calc(100dvh - 20px);  
 
+        width:100%;    
 
 
-          border-radius:22px;  
 
 
 
-        }  
+        min-height:60px;    
 
 
 
-        .offer-popup-banner{  
 
 
+        border:0;    
 
-          height: 250px;  
 
 
 
-        }  
 
+        border-radius:12px;    
 
 
-        .offer-popup-brand{  
 
 
 
-          top:13px;  
+        background:#071827;    
 
 
 
-          left:15px;  
 
 
+        color:#fff;    
 
-        }  
 
 
 
-        .offer-popup-brand-logo{  
 
+        display:flex;    
 
 
-          width:31px;  
 
 
 
-          height:31px;  
+        align-items:center;    
 
 
 
-          border-radius:8px;  
 
 
+        justify-content:center;    
 
-        }  
 
 
 
-        .offer-popup-brand strong{  
 
+        gap:10px;    
 
 
-          font-size:11px;  
 
 
 
-        }  
+        font-size:19px;    
 
 
 
-        .offer-popup-brand small{  
 
 
+        font-weight:700;    
 
-          font-size:6px;  
 
 
 
-        }  
 
+        cursor:pointer;    
 
 
-         .offer-popup-banner-copy{  
 
 
 
-          left:18px;  
+        box-shadow:0 12px 28px rgba(7,24,39,.2);    
 
 
 
-          right:18px;  
 
 
+        transition:.25s;    
 
-          top:63px;  
 
 
 
-          bottom:18px;  
 
+      }    
 
 
-          grid-template-columns:minmax(0,1fr) minmax(96px,.82fr);  
 
 
 
-          gap:9px; 
+      .offer-submit-button:hover{    
 
 
-          grid-template-rows:auto minmax(0,1fr) auto; 
 
 
-          gap:6px 9px; 
 
+        background:#0c6f73;    
 
-          align-items:center;  
 
 
 
-        }  
 
+        transform:translateY(-1px);    
 
 
-        .offer-popup-banner-copy>span{  
 
 
 
-          grid-column:1/-1;grid-row:1;font-size:7px;margin-bottom:0;  
+        box-shadow:0 16px 32px rgba(7,24,39,.25);    
 
 
 
-        }  
 
 
+      }    
 
-         .offer-popup-banner-copy>strong{ 
 
 
-          grid-column:1; 
 
 
-          grid-row:2; 
+      .offer-submit-success{    
 
 
-          align-self:center; 
 
 
-          min-width:0; 
 
+        width:100%;    
 
-          font-size:42px; 
 
 
-          line-height:.88; 
 
 
-          overflow-wrap:normal; word-break:normal; hyphens:none; 
+        min-height:60px;    
 
 
-        } 
 
 
-        .offer-popup-banner-copy>em{ 
 
+        padding:14px 18px;    
 
-          grid-column:1; 
 
 
-          grid-row:3; 
 
 
-          align-self:end; 
+        border-radius:12px;    
 
 
-          min-width:0; 
 
 
-          margin:0; 
 
+        background:#e5f8f0;    
 
-          font-size:18px; 
 
 
-          line-height:1; 
 
 
-          overflow-wrap:anywhere; 
+        color:#0b6251;    
 
 
-        } 
 
 
-        .offer-popup-banner-copy>b{ 
 
+        display:flex;    
 
-          grid-column:2; 
 
 
-          grid-row:2 / span 2; 
 
 
-          min-width:0; 
+        align-items:center;    
 
 
-          width:100%; 
 
 
-          min-height:78px; 
 
+        justify-content:center;    
 
-          padding:8px 10px; 
 
 
-          font-size:clamp(23px,7vw,34px); 
 
 
-          border-width:2px; 
+        gap:9px;    
 
 
-          border-radius:12px; 
 
 
-          box-shadow:5px 6px 0 #f7bd22,0 12px 24px rgba(0,0,0,.28); 
 
+        text-align:center;    
 
-        } 
 
 
 
 
-        .offer-popup-consultation-title{  
+        font-size:14px;    
 
 
 
-          padding:11px 13px;  
 
 
+        font-weight:800;    
 
-          font-size:21px;  
 
 
 
-        }  
 
+      }    
 
 
-        .offer-popup-content{  
 
 
 
-          padding:19px 15px 18px;  
+      .offer-terms{    
 
 
 
-        }  
 
 
+        margin:13px 0 0;    
 
-        .offer-popup-description{  
 
 
 
-          font-size:12px;  
 
+        color:#727b84;    
 
 
-          margin-bottom:15px;  
 
 
 
-        }  
+        font-size:12px;    
 
 
 
-        .offer-popup-label{  
 
 
+        line-height:1.55;    
 
-          font-size:18px;  
 
 
 
-          margin-bottom:10px;  
 
+        text-align:center;    
 
 
-        }  
 
 
 
-        .property-type-grid{  
+      }    
 
 
 
-          grid-template-columns:repeat(2,1fr);  
 
 
+      .navbar-quote-button{    
 
-          gap:8px;  
 
 
 
-        }  
 
+        min-height:40px;    
 
 
-        .property-type-button{  
 
 
 
-          min-height:48px;  
+        padding:0 14px;    
 
 
 
-          font-size:12px;  
 
 
+        border:1px solid rgba(243,211,106,.5);    
 
-          border-radius:11px;  
 
 
 
-        }  
 
+        border-radius:999px;    
 
 
-        .offer-input,  
 
 
 
-        .offer-phone-input{  
+        background:#f3d36a;    
 
 
 
-          min-height:51px;  
 
 
+        color:#071827;    
 
-          border-radius:11px;  
 
 
 
-          margin-bottom:9px;  
 
+        font-size:10px;    
 
 
-        }  
 
 
 
-        .offer-input input,  
+        font-weight:900;    
 
 
 
-        .offer-phone-input input{  
 
 
+        letter-spacing:.06em;    
 
-          font-size:15px;  
 
 
 
-          padding:0 14px;  
 
+        cursor:pointer;    
 
 
-        }  
 
 
 
-        .offer-phone-input>span{  
+        transition:.25s;    
 
 
 
-          padding:0 12px;  
 
 
+        white-space:nowrap;    
 
-        }  
 
 
 
-        .offer-whatsapp-check{  
 
+      }    
 
 
-          font-size:11px;  
 
 
 
-          margin:2px 0 13px;  
+      .navbar-quote-button:hover{    
 
 
 
-        }  
 
 
+        transform:translateY(-2px);    
 
-        .offer-check-box{  
 
 
 
-          width:22px;  
 
+        box-shadow:0 10px 25px rgba(243,211,106,.22);    
 
 
-          height:22px;  
 
 
 
-          font-size:14px;  
+      }    
 
 
 
-        }  
+      .home-warranty-badge{position:absolute;z-index:25;top:205px;right:5.5vw;width:292px;min-height:108px;padding:15px 22px;border:2px solid rgba(158,231,207,.55);border-radius:30px;background:#071827;color:#fff;display:flex;align-items:center;gap:17px;box-sizing:border-box;box-shadow:0 18px 45px rgba(0,0,0,.28),0 0 30px rgba(158,231,207,.08);pointer-events:none;}.home-warranty-shield{width:62px;height:74px;flex:0 0 62px;display:grid;place-items:center;background:#f3d36a;color:#071827;clip-path:polygon(50% 0%,92% 14%,100% 51%,82% 84%,50% 100%,18% 84%,0 51%,8% 14%);}.home-warranty-text{display:flex;flex-direction:column;align-items:flex-start;line-height:.94;white-space:nowrap;}.home-warranty-years{font-size:27px;font-weight:900;letter-spacing:.045em;color:#fff;}.home-warranty-label{margin-top:7px;font-size:15px;font-weight:900;letter-spacing:.20em;color:#9ee7cf;} 
 
 
+      @media (max-width: 900px){ 
 
-        .offer-submit-button,  
 
+        .home-warranty-badge{top:170px;right:18px;width:245px;min-height:92px;padding:12px 16px;border-radius:25px;gap:13px} 
 
 
-        .offer-submit-success{  
+        .home-warranty-shield{width:52px;height:62px;flex-basis:52px} 
 
 
+        .home-warranty-years{font-size:22px} 
 
-          min-height:54px;  
 
+        .home-warranty-label{margin-top:5px;font-size:12px;letter-spacing:.17em} 
 
 
-          font-size:15px;  
+      } 
 
 
+      @media (max-width: 560px){ 
 
-        }  
 
+        .home-warranty-badge{top:148px;right:12px;width:218px;min-height:82px;padding:10px 13px;border-radius:22px;gap:11px} 
 
 
-        .offer-terms{  
+        .home-warranty-shield{width:45px;height:54px;flex-basis:45px} 
 
 
+        .home-warranty-years{font-size:19px;letter-spacing:.035em} 
 
-          font-size:10px;  
 
+        .home-warranty-label{margin-top:4px;font-size:10px;letter-spacing:.14em} 
 
 
-          margin-top:9px;  
+      } 
 
 
 
-        }  
 
 
 
-        .offer-popup-close{  
+      .quote-floating-button{    
 
 
 
-          width:36px;  
 
 
+        position:fixed;    
 
-          height:36px;  
 
 
 
-          top:9px;  
 
+        z-index:3000;    
 
 
-          right:9px;  
 
 
 
-        }  
+        right:24px;    
 
 
 
-        .navbar-quote-button{  
 
 
+        bottom:92px;    
 
-          display:none;  
 
 
 
-        }  
 
+        min-height:45px;    
 
 
-        .warranty-floating-button{top:31vh;right:18px;width:190px;min-height:42px;padding:0 13px;font-size:10px}
 
-  
 
 
+        padding:0 17px;    
 
-        .quote-floating-button{
 
-          right:12px;  
 
 
 
-          bottom:82px;  
+        border:1px solid rgba(158,231,207,.35);    
 
 
 
-          min-height:42px;  
 
 
+        border-radius:999px;    
 
-          padding:0 14px;  
 
 
 
-          font-size:10px;  
 
+        background:rgba(7,24,39,.94);    
 
 
-        }  
 
 
 
-      }  
+        color:#fff;    
 
 
 
-      @media(max-width:390px){  
 
 
+        display:flex;    
 
-        .offer-popup-banner{  
 
 
 
-          height: 225px;  
 
+        align-items:center;    
 
 
-        }  
 
 
 
-        .offer-popup-banner-copy>strong{  
+        gap:8px;    
 
 
 
-          font-size:35px;  
 
 
+        font-size:11px;    
 
-        }  
 
 
 
-        .offer-popup-banner-copy>em{  
 
+        font-weight:900;    
 
 
-          font-size:16px;  
 
 
 
-        }  
+        letter-spacing:.06em;    
 
 
 
-        .offer-popup-content{  
 
 
+        box-shadow:0 12px 35px rgba(0,0,0,.24),0 0 25px rgba(158,231,207,.08);    
 
-          padding:16px 12px;  
 
 
 
-        }  
 
+        cursor:pointer;    
 
 
-        .offer-popup-description{  
 
 
 
-          font-size:11px;  
+        backdrop-filter:blur(10px);    
 
 
 
-        }  
 
 
+        -webkit-backdrop-filter:blur(10px);    
 
-        .property-type-button{  
 
 
 
-          font-size:11px;  
 
+        transition:.25s;    
 
 
-        }  
 
 
 
-      }  
+      }    
 
 
 
-    `}</style>  
 
 
+      .quote-floating-button:before{    
 
-  );  
 
 
 
-}  
 
+        content:"";    
 
 
-function App() {  
 
 
 
-  const [menu, setMenu] = useState(false);  
+        width:7px;    
 
 
 
-  const [service, setService] = useState(0);  
 
 
+        height:7px;    
 
-  const [newPage, setNewPage] = useState(null);  
 
 
 
-  const [ownerOpen, setOwnerOpen] = useState(false);  
 
+        border-radius:50%;    
 
 
-  const [offerOpen, setOfferOpen] = useState(false);  
 
 
 
-  const autoPopupStepRef = useRef(0);  
+        background:#f3d36a;    
 
 
 
-  const autoPopupTimerRef = useRef(null);  
 
 
+        box-shadow:0 0 0 5px rgba(243,211,106,.1);    
 
-  const [popupPromotion, setPopupPromotion] = useState(DEFAULT_PROMO);  
 
 
 
-  const [managedServices, setManagedServices] = useState(services);  
 
+      }    
 
 
-  const [managedProjects, setManagedProjects] = useState(projects);
-  const [managedProjectVideos, setManagedProjectVideos] = useState([]);
-  const [showcaseProjects, setShowcaseProjects] = useState([]);  
 
 
 
-  useEffect(() => {  
+      .quote-floating-button:hover{    
 
 
 
-    let mounted = true;  
 
 
+        transform:translateY(-3px);    
 
-    const loadManagedContent = async () => {  
 
 
 
-      try {  
 
+        background:#9ee7cf;    
 
 
-        const [servicesResult, projectsResult, promotionsResult, projectVideosResult] = await Promise.all([  
 
 
 
-          supabase.from("services").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),  
+        color:#071827;    
 
 
 
-          supabase.from("projects").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),  
 
 
+        border-color:#9ee7cf;    
 
-          supabase.from("promotions").select("*").eq("enabled", true).order("sort_order", { ascending: true }).order("created_at", { ascending: false }),
 
-          supabase.from("project_videos").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),  
 
 
 
-        ]);  
+        box-shadow:0 15px 40px rgba(0,0,0,.28);    
 
 
 
-        if (!mounted) return;  
 
 
+      }    
 
-        if (!servicesResult.error && servicesResult.data?.length) {  
 
 
 
-          setManagedServices(  
 
+      @media(max-width:650px){    
 
 
-            servicesResult.data.map((item) => ({  
 
 
 
-              ...item,  
+        .offer-popup-backdrop{    
 
 
 
-              title: item.title || "Untitled Service",  
 
 
+          padding:10px;    
 
-              text: item.description || item.text || "",  
 
 
 
-              image: item.image_url || item.image || "",  
 
+          align-items:center;    
 
 
-              items: Array.isArray(item.items) ? item.items : [],  
 
 
 
-              pros: Array.isArray(item.pros) ? item.pros : [],  
+        }    
 
 
 
-              considerations: Array.isArray(item.considerations)  
 
 
+        .offer-popup-card{    
 
-                ? item.considerations  
 
 
 
-                : [],  
 
+          max-height:calc(100dvh - 20px);    
 
 
-              chatbotDescription:  
 
 
 
-                item.chatbotDescription ||  
+          border-radius:22px;    
 
 
 
-                item.description ||  
 
 
+        }    
 
-                "Gururag Interior service solution.",  
 
 
 
-              keywords: Array.isArray(item.keywords) ? item.keywords : [],  
 
+        .offer-popup-banner{    
 
 
-            }))  
+
+
+
+          height: 250px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-brand{    
+
+
+
+
+
+          top:13px;    
+
+
+
+
+
+          left:15px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-brand-logo{    
+
+
+
+
+
+          width:31px;    
+
+
+
+
+
+          height:31px;    
+
+
+
+
+
+          border-radius:8px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-brand strong{    
+
+
+
+
+
+          font-size:11px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-brand small{    
+
+
+
+
+
+          font-size:6px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+         .offer-popup-banner-copy{    
+
+
+
+
+
+          left:18px;    
+
+
+
+
+
+          right:18px;    
+
+
+
+
+
+          top:63px;    
+
+
+
+
+
+          bottom:18px;    
+
+
+
+
+
+          grid-template-columns:minmax(0,1fr) minmax(96px,.82fr);    
+
+
+
+
+
+          gap:9px;   
+
+
+
+
+          grid-template-rows:auto minmax(0,1fr) auto;   
+
+
+
+
+          gap:6px 9px;   
+
+
+
+
+          align-items:center;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-banner-copy>span{    
+
+
+
+
+
+          grid-column:1/-1;grid-row:1;font-size:7px;margin-bottom:0;    
+
+
+
+
+
+        }    
+
+
+
+
+
+         .offer-popup-banner-copy>strong{   
+
+
+
+
+          grid-column:1;   
+
+
+
+
+          grid-row:2;   
+
+
+
+
+          align-self:center;   
+
+
+
+
+          min-width:0;   
+
+
+
+
+          font-size:42px;   
+
+
+
+
+          line-height:.88;   
+
+
+
+
+          overflow-wrap:normal; word-break:normal; hyphens:none;   
+
+
+
+
+        }   
+
+
+
+
+        .offer-popup-banner-copy>em{   
+
+
+
+
+          grid-column:1;   
+
+
+
+
+          grid-row:3;   
+
+
+
+
+          align-self:end;   
+
+
+
+
+          min-width:0;   
+
+
+
+
+          margin:0;   
+
+
+
+
+          font-size:18px;   
+
+
+
+
+          line-height:1;   
+
+
+
+
+          overflow-wrap:anywhere;   
+
+
+
+
+        }   
+
+
+
+
+        .offer-popup-banner-copy>b{   
+
+
+
+
+          grid-column:2;   
+
+
+
+
+          grid-row:2 / span 2;   
+
+
+
+
+          min-width:0;   
+
+
+
+
+          width:100%;   
+
+
+
+
+          min-height:78px;   
+
+
+
+
+          padding:8px 10px;   
+
+
+
+
+          font-size:clamp(23px,7vw,34px);   
+
+
+
+
+          border-width:2px;   
+
+
+
+
+          border-radius:12px;   
+
+
+
+
+          box-shadow:5px 6px 0 #f7bd22,0 12px 24px rgba(0,0,0,.28);   
+
+
+
+
+        }   
+
+
+
+
+
+
+        .offer-popup-consultation-title{    
+
+
+
+
+
+          padding:11px 13px;    
+
+
+
+
+
+          font-size:21px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-content{    
+
+
+
+
+
+          padding:19px 15px 18px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-description{    
+
+
+
+
+
+          font-size:12px;    
+
+
+
+
+
+          margin-bottom:15px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-label{    
+
+
+
+
+
+          font-size:18px;    
+
+
+
+
+
+          margin-bottom:10px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .property-type-grid{    
+
+
+
+
+
+          grid-template-columns:repeat(2,1fr);    
+
+
+
+
+
+          gap:8px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .property-type-button{    
+
+
+
+
+
+          min-height:48px;    
+
+
+
+
+
+          font-size:12px;    
+
+
+
+
+
+          border-radius:11px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-input,    
+
+
+
+
+
+        .offer-phone-input{    
+
+
+
+
+
+          min-height:51px;    
+
+
+
+
+
+          border-radius:11px;    
+
+
+
+
+
+          margin-bottom:9px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-input input,    
+
+
+
+
+
+        .offer-phone-input input{    
+
+
+
+
+
+          font-size:15px;    
+
+
+
+
+
+          padding:0 14px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-phone-input>span{    
+
+
+
+
+
+          padding:0 12px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-whatsapp-check{    
+
+
+
+
+
+          font-size:11px;    
+
+
+
+
+
+          margin:2px 0 13px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-check-box{    
+
+
+
+
+
+          width:22px;    
+
+
+
+
+
+          height:22px;    
+
+
+
+
+
+          font-size:14px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-submit-button,    
+
+
+
+
+
+        .offer-submit-success{    
+
+
+
+
+
+          min-height:54px;    
+
+
+
+
+
+          font-size:15px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-terms{    
+
+
+
+
+
+          font-size:10px;    
+
+
+
+
+
+          margin-top:9px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-close{    
+
+
+
+
+
+          width:36px;    
+
+
+
+
+
+          height:36px;    
+
+
+
+
+
+          top:9px;    
+
+
+
+
+
+          right:9px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .navbar-quote-button{    
+
+
+
+
+
+          display:none;    
+
+
+
+
+
+        }    
+
+
+
+
+
+
+
+
+
+
+
+        .quote-floating-button{  
+
+
+
+          right:12px;    
+
+
+
+
+
+          bottom:82px;    
+
+
+
+
+
+          min-height:42px;    
+
+
+
+
+
+          padding:0 14px;    
+
+
+
+
+
+          font-size:10px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+      }    
+
+
+
+
+
+      @media(max-width:390px){    
+
+
+
+
+
+        .offer-popup-banner{    
+
+
+
+
+
+          height: 225px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-banner-copy>strong{    
+
+
+
+
+
+          font-size:35px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-banner-copy>em{    
+
+
+
+
+
+          font-size:16px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-content{    
+
+
+
+
+
+          padding:16px 12px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .offer-popup-description{    
+
+
+
+
+
+          font-size:11px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+        .property-type-button{    
+
+
+
+
+
+          font-size:11px;    
+
+
+
+
+
+        }    
+
+
+
+
+
+      }    
+
+
+
+
+
+    `}</style>    
+
+
+
+
+
+  );    
+
+
+
+
+
+}    
+
+
+
+
+
+function App() {    
+
+
+
+
+
+  const [menu, setMenu] = useState(false);    
+
+
+
+
+
+  const [service, setService] = useState(0);    
+
+
+
+
+
+  const [newPage, setNewPage] = useState(null);    
+
+
+
+
+
+  const [ownerOpen, setOwnerOpen] = useState(false);    
+
+
+
+
+
+  const [offerOpen, setOfferOpen] = useState(false);    
+
+
+
+
+
+  const autoPopupStepRef = useRef(0);    
+
+
+
+
+
+  const autoPopupTimerRef = useRef(null);    
+
+
+
+
+
+  const [popupPromotion, setPopupPromotion] = useState(DEFAULT_PROMO);    
+
+
+
+
+
+  const [managedServices, setManagedServices] = useState(services);    
+
+
+
+
+
+  const [managedProjects, setManagedProjects] = useState(projects);  
+
+
+
+  const [managedProjectVideos, setManagedProjectVideos] = useState([]);  
+
+
+
+  const [showcaseProjects, setShowcaseProjects] = useState([]);    
+
+
+
+
+
+  useEffect(() => {    
+
+
+
+
+
+    let mounted = true;    
+
+
+
+
+
+    const loadManagedContent = async () => {    
+
+
+
+
+
+      try {    
+
+
+
+
+
+        const [servicesResult, projectsResult, promotionsResult, projectVideosResult] = await Promise.all([    
+
+
+
+
+
+          supabase.from("services").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),    
+
+
+
+
+
+          supabase.from("projects").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),    
+
+
+
+
+
+          supabase.from("promotions").select("*").eq("enabled", true).order("sort_order", { ascending: true }).order("created_at", { ascending: false }),  
+
+
+
+          supabase.from("project_videos").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: true }),    
+
+
+
+
+
+        ]);    
+
+
+
+
+
+        if (!mounted) return;    
+
+
+
+
+
+        if (!servicesResult.error && servicesResult.data?.length) {    
+
+
+
+
+
+          setManagedServices(    
+
+
+
+
+
+            servicesResult.data.map((item) => ({    
+
+
+
+
+
+              ...item,    
+
+
+
+
+
+              title: item.title || "Untitled Service",    
+
+
+
+
+
+              text: item.description || item.text || "",    
+
+
+
+
+
+              image: item.image_url || item.image || "",    
+
+
+
+
+
+              items: Array.isArray(item.items) ? item.items : [],    
+
+
+
+
+
+              pros: Array.isArray(item.pros) ? item.pros : [],    
+
+
+
+
+
+              considerations: Array.isArray(item.considerations)    
+
+
+
+
+
+                ? item.considerations    
+
+
+
+
+
+                : [],    
+
+
+
+
+
+              chatbotDescription:    
+
+
+
+
+
+                item.chatbotDescription ||    
+
+
+
+
+
+                item.description ||    
+
+
+
+
+
+                "Gururag Interior service solution.",    
+
+
+
+
+
+              keywords: Array.isArray(item.keywords) ? item.keywords : [],    
+
+
+
+
+
+            }))    
+
+
+
+
+
+          );    
+
+
+
+
+
+        }    
+
+
+
+
+
+        if (!projectsResult.error && projectsResult.data?.length) {    
+
+
+
+
+
+          setManagedProjects(    
+
+
+
+
+
+            projectsResult.data.map((item) => ({    
+
+
+
+
+
+              ...item,    
+
+
+
+
+
+              title: item.title || "Untitled Project",    
+
+
+
+
+
+              category: item.category || "Project",    
+
+
+
+
+
+              image: item.image_url || item.image || "",    
+
+
+
+
+
+            }))    
+
+
+
+
+
+          );    
+
+
+
+
+
+        }    
+
+
+
+
+
+
+        if (!projectsResult.error) {  
+
+
+
+          setShowcaseProjects(  
+
+
+
+            (projectsResult.data || [])  
+
+
+
+              .map((item) => ({  
+
+
+
+                ...item,  
+
+
+
+                title: item.title || "Untitled Project",  
+
+
+
+                image: item.image_url || item.image || "",  
+
+
+
+              }))  
+
+
+
+              .filter((item) => item.image)  
 
 
 
@@ -9068,39 +14067,31 @@ function App() {
 
 
 
-        if (!projectsResult.error && projectsResult.data?.length) {  
+if (!projectVideosResult.error && projectVideosResult.data?.length) {  
 
 
 
-          setManagedProjects(  
 
 
 
-            projectsResult.data.map((item) => ({  
+          setManagedProjectVideos(projectVideosResult.data);  
 
 
 
-              ...item,  
 
 
 
-              title: item.title || "Untitled Project",  
+        } else if (projectVideosResult.error) {  
 
 
 
-              category: item.category || "Project",  
 
 
 
-              image: item.image_url || item.image || "",  
+          setManagedProjectVideos([]);  
 
 
 
-            }))  
-
-
-
-          );  
 
 
 
@@ -9108,890 +14099,1427 @@ function App() {
 
 
 
-        
-        if (!projectsResult.error) {
-          setShowcaseProjects(
-            (projectsResult.data || [])
-              .map((item) => ({
-                ...item,
-                title: item.title || "Untitled Project",
-                image: item.image_url || item.image || "",
-              }))
-              .filter((item) => item.image)
-          );
-        }
 
-if (!projectVideosResult.error && projectVideosResult.data?.length) {
-  
 
 
 
-          setManagedProjectVideos(projectVideosResult.data);
-  
 
 
 
-        } else if (projectVideosResult.error) {
-  
 
+        const today = new Date().toISOString().slice(0,10);    
 
 
-          setManagedProjectVideos([]);
-  
 
 
 
-        }
-  
+        const dbFestival = !promotionsResult.error ? promotionsResult.data?.find(p => p.type === "festival" && p.start_date <= today && p.end_date >= today) : null;    
 
 
 
-        
-  
 
 
+        const dbNormal = !promotionsResult.error ? promotionsResult.data?.find(p => p.type === "normal") : null;    
 
-        const today = new Date().toISOString().slice(0,10);  
 
 
 
-        const dbFestival = !promotionsResult.error ? promotionsResult.data?.find(p => p.type === "festival" && p.start_date <= today && p.end_date >= today) : null;  
 
+        setPopupPromotion(dbFestival || autoFestivalPromo() || dbNormal || DEFAULT_PROMO);    
 
 
-        const dbNormal = !promotionsResult.error ? promotionsResult.data?.find(p => p.type === "normal") : null;  
 
 
 
-        setPopupPromotion(dbFestival || autoFestivalPromo() || dbNormal || DEFAULT_PROMO);  
+      } catch {    
 
 
 
-      } catch {  
 
 
+        // Keep the original static website content if Supabase is unavailable.    
 
-        // Keep the original static website content if Supabase is unavailable.  
 
 
 
-      }  
 
+      }    
 
 
-    };  
 
 
 
-    loadManagedContent();  
+    };    
 
 
 
-    const festivalTimer = setInterval(loadManagedContent, 60000);  
 
 
+    loadManagedContent();    
 
-    return () => {  
 
 
 
-      mounted = false;  
 
+    const festivalTimer = setInterval(loadManagedContent, 60000);    
 
 
-      clearInterval(festivalTimer);  
 
 
 
-    };  
+    return () => {    
 
 
 
-  }, []);  
 
 
+      mounted = false;    
 
-  useEffect(() => {  
 
 
 
-    autoPopupStepRef.current = 0;  
 
+      clearInterval(festivalTimer);    
 
 
-    const firstPopupTimer = setTimeout(() => {  
 
 
 
-      autoPopupStepRef.current = 1;  
+    };    
 
 
 
-      setOfferOpen(true);  
 
 
+  }, []);    
 
-    }, 5000);  
 
 
 
-    return () => {  
 
+  useEffect(() => {    
 
 
-      clearTimeout(firstPopupTimer);  
 
 
 
-      if (autoPopupTimerRef.current) {  
+    autoPopupStepRef.current = 0;    
 
 
 
-        clearTimeout(autoPopupTimerRef.current);  
 
 
+    const firstPopupTimer = setTimeout(() => {    
 
-        autoPopupTimerRef.current = null;  
 
 
 
-      }  
 
+      autoPopupStepRef.current = 1;    
 
 
-    };  
 
 
 
-  }, []);  
+      setOfferOpen(true);    
 
 
 
-  const closeOfferPopup = () => {  
 
 
+    }, 5000);    
 
-    setOfferOpen(false);  
 
 
 
-    if (autoPopupStepRef.current === 1) {  
 
+    return () => {    
 
 
-      autoPopupStepRef.current = 2;  
 
 
 
-      if (autoPopupTimerRef.current) {  
+      clearTimeout(firstPopupTimer);    
 
 
 
-        clearTimeout(autoPopupTimerRef.current);  
 
 
+      if (autoPopupTimerRef.current) {    
 
-      }  
 
 
 
-      autoPopupTimerRef.current = setTimeout(() => {  
 
+        clearTimeout(autoPopupTimerRef.current);    
 
 
-        setOfferOpen(true);  
 
 
 
-        autoPopupTimerRef.current = null;  
+        autoPopupTimerRef.current = null;    
 
 
 
-      }, 10000);  
 
 
+      }    
 
-    }  
 
 
 
-  };  
 
+    };    
 
 
-  useEffect(() => {  
 
 
 
-    const timer = setInterval(() => {  
+  }, []);    
 
 
 
-      setService(  
 
 
+  const closeOfferPopup = () => {    
 
-        (current) =>  
 
 
 
-          (current + 1) % services.length  
 
+    setOfferOpen(false);    
 
 
-      );  
 
 
 
-    }, 5000);  
+    if (autoPopupStepRef.current === 1) {    
 
 
 
-    return () => clearInterval(timer);  
 
 
+      autoPopupStepRef.current = 2;    
 
-  }, []);  
 
 
 
-  const openOfferPopup = () => setOfferOpen(true);  
 
+      if (autoPopupTimerRef.current) {    
 
 
-  const scrollTo = (id) => {  
 
 
 
-    setMenu(false);  
+        clearTimeout(autoPopupTimerRef.current);    
 
 
 
-    setTimeout(() => {  
 
 
+      }    
 
-      document  
 
 
 
-        .getElementById(id)  
 
+      autoPopupTimerRef.current = setTimeout(() => {    
 
 
-        ?.scrollIntoView({  
 
 
 
-          behavior: "smooth",  
+        setOfferOpen(true);    
 
 
 
-        });  
 
 
+        autoPopupTimerRef.current = null;    
 
-    }, 100);  
 
 
 
-  };  
 
+      }, 10000);    
 
 
-  const openPage = (page) => {  
 
 
 
-    setMenu(false);  
+    }    
 
 
 
-    setNewPage(page);  
 
 
+  };    
 
-    document.body.style.overflow = "hidden";  
 
 
 
-  };  
 
+  useEffect(() => {    
 
 
-  const closeNewPage = () => {  
 
 
 
-    setNewPage(null);  
+    const timer = setInterval(() => {    
 
 
 
-    document.body.style.overflow = "";  
 
 
+      setService(    
 
-  };  
 
 
 
-  const whatsapp = (message) => {  
 
+        (current) =>    
 
 
-    window.open(  
 
 
 
-      `${WHATSAPP}?text=${encodeURIComponent(  
+          (current + 1) % services.length    
 
 
 
-        message  
 
 
+      );    
 
-      )}`,  
 
 
 
-      "_blank"  
 
+    }, 5000);    
 
 
-    );  
 
 
 
-  };  
+    return () => clearInterval(timer);    
 
 
 
-  const nextService = () => {  
 
 
+  }, []);    
 
-    setService(  
 
 
 
-      (current) =>  
 
+  const openOfferPopup = () => setOfferOpen(true);    
 
 
-        (current + 1) % services.length  
 
 
 
-    );  
+  const scrollTo = (id) => {    
 
 
 
-  };  
 
 
+    setMenu(false);    
 
-  const previousService = () => {  
 
 
 
-    setService(  
 
+    setTimeout(() => {    
 
 
-      (current) =>  
 
 
 
-        (current - 1 + services.length) %  
+      document    
 
 
 
-        services.length  
 
 
+        .getElementById(id)    
 
-    );  
 
 
 
-  };  
 
+        ?.scrollIntoView({    
 
 
-  const currentService = services[service];  
 
 
 
-  return (  
+          behavior: "smooth",    
 
 
 
-    <div className="website">  
 
 
+        });    
 
-      <header className="navbar">  
 
 
 
-        <button  
 
+    }, 100);    
 
 
-          className="brand"  
 
 
 
-          onClick={() => scrollTo("home")}  
+  };    
 
 
 
-        >  
 
 
+  const openPage = (page) => {    
 
-          <span className="logo-box">  
 
 
 
-            <img  
 
+    setMenu(false);    
 
 
-              src={logo}  
 
 
 
-              alt="Gururag Interior"  
+    setNewPage(page);    
 
 
 
-            />  
 
 
+    document.body.style.overflow = "hidden";    
 
-          </span>  
 
 
 
-          <span className="brand-name">  
 
+  };    
 
 
-            <strong>GURURAG</strong>  
 
 
 
-            <small>INTERIOR</small>  
+  const closeNewPage = () => {    
 
 
 
-          </span>  
 
 
+    setNewPage(null);    
 
-        </button>  
 
 
 
-        <div className="nav-actions">  
 
+    document.body.style.overflow = "";    
 
 
-          <a  
 
 
 
-            className="whatsapp-button"  
+  };    
 
 
 
-            href={INSTAGRAM}  
 
 
+  const whatsapp = (message) => {    
 
-            target="_blank"  
 
 
 
-            rel="noreferrer"  
 
+    window.open(    
 
 
-            aria-label="Instagram"  
 
 
 
-          >  
+      `${WHATSAPP}?text=${encodeURIComponent(    
 
 
 
-            <InstagramBrandIcon size={22} />  
 
 
+        message    
 
-          </a>  
 
 
 
-          <a  
 
+      )}`,    
 
 
-            className="whatsapp-button"  
 
 
 
-            href={YOUTUBE}  
+      "_blank"    
 
 
 
-            target="_blank"  
 
 
+    );    
 
-            rel="noreferrer"  
 
 
 
-            aria-label="YouTube"  
 
+  };    
 
 
-          >  
 
 
 
-            <YouTubeBrandIcon size={22} />  
+  const nextService = () => {    
 
 
 
-          </a>  
 
 
+    setService(    
 
-          <button  
 
 
 
-            className="whatsapp-button"  
 
+      (current) =>    
 
 
-            aria-label="WhatsApp"  
 
 
 
-            onClick={() =>  
+        (current + 1) % services.length    
 
 
 
-              whatsapp(  
 
 
+    );    
 
-                "Hi Gururag Interior, I would like to get a free quote."  
 
 
 
-              )  
 
+  };    
 
 
-            }  
 
 
 
-          >  
+  const previousService = () => {    
 
 
 
-            <WhatsAppIcon size={22} />  
 
 
+    setService(    
 
-          </button>  
 
 
 
-          <button  
 
+      (current) =>    
 
 
-            className="navbar-quote-button"  
 
 
 
-            onClick={() => openOfferPopup()}  
+        (current - 1 + services.length) %    
 
 
 
-          >  
 
 
+        services.length    
 
-            Get Free Quote  
 
 
 
-          </button>  
 
+    );    
 
 
-          <button  
 
 
 
-            className="menu-button"  
+  };    
 
 
 
-            aria-label="Open menu"  
 
 
+  const currentService = services[service];    
 
-            onClick={() => setMenu(true)}  
 
 
 
-          >  
 
+  return (    
 
 
-            <span />  
 
 
 
-            <span />  
+    <div className="website">    
 
 
 
-            <span />  
 
 
+      <header className="navbar">    
 
-          </button>  
 
 
 
-        </div>  
 
+        <button    
 
 
-      </header>  
 
 
 
-      <AnimatePresence>  
+          className="brand"    
 
 
 
-        {menu && (  
 
 
+          onClick={() => scrollTo("home")}    
 
-          <motion.div  
 
 
 
-            className="menu-backdrop"  
 
+        >    
 
 
-            initial={{  
 
 
 
-              opacity: 0,  
+          <span className="logo-box">    
 
 
 
-            }}  
 
 
+            <img    
 
-            animate={{  
 
 
 
-              opacity: 1,  
 
+              src={logo}    
 
 
-            }}  
 
 
 
-            exit={{  
+              alt="Gururag Interior"    
 
 
 
-              opacity: 0,  
 
 
+            />    
 
-            }}  
 
 
 
-          >  
 
+          </span>    
 
 
-            <motion.div  
 
 
 
-              className="menu-panel"  
+          <span className="brand-name">    
 
 
 
-              initial={{  
 
 
+            <strong>GURURAG</strong>    
 
-                x: "100%",  
 
 
 
-              }}  
 
+            <small>INTERIOR</small>    
 
 
-              animate={{  
 
 
 
-                x: 0,  
+          </span>    
 
 
 
-              }}  
 
 
+        </button>    
 
-              exit={{  
 
 
 
-                x: "100%",  
 
+        <div className="nav-actions">    
 
 
-              }}  
 
 
 
-            >  
+          <a    
 
 
 
-              <div className="menu-header">  
 
 
+            className="whatsapp-button"    
 
-                <button  
 
 
 
-                  className="menu-owner-trigger"  
 
+            href={INSTAGRAM}    
 
 
-                  onClick={() => {  
 
 
 
-                    setMenu(false);  
+            target="_blank"    
 
 
 
-                    setOwnerOpen(true);  
 
 
+            rel="noreferrer"    
 
-                  }}  
 
 
 
-                  aria-label="Owner access"  
 
+            aria-label="Instagram"    
 
 
-                >  
 
 
 
-                  GURURAG INTERIOR  
+          >    
 
 
 
-                </button>  
 
 
+            <InstagramBrandIcon size={22} />    
 
-                <button  
 
 
 
-                  onClick={() =>  
 
+          </a>    
 
 
-                    setMenu(false)  
 
 
 
-                  }  
+          <a    
 
 
 
-                >  
 
 
+            className="whatsapp-button"    
 
-                  <X />  
 
 
 
-                </button>  
 
+            href={YOUTUBE}    
 
 
-              </div>  
 
 
 
-              <nav>  
+            target="_blank"    
 
 
 
-                <button  
 
 
+            rel="noreferrer"    
 
-                  onClick={() =>  
 
 
 
-                    scrollTo("home")  
 
+            aria-label="YouTube"    
 
 
-                  }  
 
 
 
-                >  
+          >    
 
 
 
-                  <small>01</small>  
 
 
+            <YouTubeBrandIcon size={22} />    
 
-                  Home  
+
+
+
+
+          </a>    
+
+
+
+
+
+          <button    
+
+
+
+
+
+            className="whatsapp-button"    
+
+
+
+
+
+            aria-label="WhatsApp"    
+
+
+
+
+
+            onClick={() =>    
+
+
+
+
+
+              whatsapp(    
+
+
+
+
+
+                "Hi Gururag Interior, I would like to get a free quote."    
+
+
+
+
+
+              )    
+
+
+
+
+
+            }    
+
+
+
+
+
+          >    
+
+
+
+
+
+            <WhatsAppIcon size={22} />    
+
+
+
+
+
+          </button>    
+
+
+
+
+
+          <button    
+
+
+
+
+
+            className="navbar-quote-button"    
+
+
+
+
+
+            onClick={() => openOfferPopup()}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            Get Free Quote    
+
+
+
+
+
+          </button>    
+
+
+
+
+
+          <button    
+
+
+
+
+
+            className="menu-button"    
+
+
+
+
+
+            aria-label="Open menu"    
+
+
+
+
+
+            onClick={() => setMenu(true)}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            <span />    
+
+
+
+
+
+            <span />    
+
+
+
+
+
+            <span />    
+
+
+
+
+
+          </button>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </header>    
+
+
+
+
+
+      <AnimatePresence>    
+
+
+
+
+
+        {menu && (    
+
+
+
+
+
+          <motion.div    
+
+
+
+
+
+            className="menu-backdrop"    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            animate={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            exit={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            <motion.div    
+
+
+
+
+
+              className="menu-panel"    
+
+
+
+
+
+              initial={{    
+
+
+
+
+
+                x: "100%",    
+
+
+
+
+
+              }}    
+
+
+
+
+
+              animate={{    
+
+
+
+
+
+                x: 0,    
+
+
+
+
+
+              }}    
+
+
+
+
+
+              exit={{    
+
+
+
+
+
+                x: "100%",    
+
+
+
+
+
+              }}    
+
+
+
+
+
+            >    
+
+
+
+
+
+              <div className="menu-header">    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  className="menu-owner-trigger"    
+
+
+
+
+
+                  onClick={() => {    
+
+
+
+
+
+                    setMenu(false);    
+
+
+
+
+
+                    setOwnerOpen(true);    
+
+
+
+
+
+                  }}    
+
+
+
+
+
+                  aria-label="Owner access"    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  GURURAG INTERIOR    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  onClick={() =>    
+
+
+
+
+
+                    setMenu(false)    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  <X />    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+              <nav>    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  onClick={() =>    
+
+
+
+
+
+                    scrollTo("home")    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  <small>01</small>    
+
+
+
+
+
+                  Home    
+
+
+
+
+
+                  <ArrowUpRight />    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  onClick={() => openPage("about")}    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  <small>02</small>    
+
+
+
+
+
+                  About Us    
+
+
+
+
+
+                  <ArrowUpRight />    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  onClick={() => openPage("services")}    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  <small>03</small>    
+
+
+
+
+
+                  Our Services    
+
+
+
+
+
+                  <ArrowUpRight />    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  onClick={() => openPage("projects")}    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  <small>04</small>    
+
+
+
+
+
+                  Our Projects    
+
+
+
+
+
+                  <ArrowUpRight />    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+                <button onClick={() => openPage("showcase")}>  
+
+
+
+                  <small>05</small>  
+
+
+
+                  Project Showcase  
 
 
 
@@ -10003,23 +15531,15 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                <button  
+                <button onClick={() => openPage("contact")}>  
 
 
 
-                  onClick={() => openPage("about")}  
+                  <small>06</small>  
 
 
 
-                >  
-
-
-
-                  <small>02</small>  
-
-
-
-                  About Us  
+                  Contact Us  
 
 
 
@@ -10027,148 +15547,3768 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-                </button>  
+                </button>    
 
 
 
-                <button  
 
 
+              </nav>    
 
-                  onClick={() => openPage("services")}  
 
 
 
-                >  
 
+              <div className="menu-footer">    
 
 
-                  <small>03</small>  
 
 
 
-                  Our Services  
+                <p>    
 
 
 
-                  <ArrowUpRight />  
 
 
+                  Thoughtful interiors.    
 
-                </button>  
 
 
 
-                <button  
 
+                  <br />    
 
 
-                  onClick={() => openPage("projects")}  
 
 
 
-                >  
+                  Crafted with character.    
 
 
 
-                  <small>04</small>  
 
 
+                </p>    
 
-                  Our Projects  
 
 
 
-                  <ArrowUpRight />  
 
+                <a href="tel:+919789695878">    
 
 
-                </button>  
 
 
 
-                <button onClick={() => openPage("showcase")}>
-                  <small>05</small>
-                  Project Showcase
-                  <ArrowUpRight />
-                </button>
-                <button onClick={() => openPage("contact")}>
-                  <small>06</small>
-                  Contact Us
-                  <ArrowUpRight />
-                </button>  
+                  +91 97896 95878    
 
 
 
-              </nav>  
 
 
+                </a>    
 
-              <div className="menu-footer">  
 
 
 
-                <p>  
 
+              </div>    
 
 
-                  Thoughtful interiors.  
 
 
 
-                  <br />  
+            </motion.div>    
 
 
 
-                  Crafted with character.  
 
 
+          </motion.div>    
 
-                </p>  
 
 
 
-                <a href="tel:+919789695878">  
 
+        )}    
 
 
-                  +91 97896 95878  
 
 
 
-                </a>  
+      </AnimatePresence>    
 
 
 
-              </div>  
 
 
+      <section    
 
-            </motion.div>  
 
 
 
-          </motion.div>  
 
+        id="home"    
 
 
-        )}  
 
 
 
-      </AnimatePresence>  
+        className="hero"    
 
 
 
-      <section  
 
 
+      >    
 
-        id="home"  
 
 
 
-        className="hero"  
+
+        <div className="hero-image" />    
+
+
+
+
+
+        <div className="hero-overlay" />    
+
+
+        <div className="home-warranty-badge" aria-label="10 years warranty"> 
+
+
+          <span className="home-warranty-shield" aria-hidden="true"> 
+
+
+            <Check size={34} strokeWidth={3.2} /> 
+
+
+          </span> 
+
+
+          <span className="home-warranty-text"> 
+
+
+            <span className="home-warranty-years">10 YEARS</span> 
+
+
+            <span className="home-warranty-label">WARRANTY</span> 
+
+
+          </span> 
+
+
+        </div> 
+
+
+
+
+
+        <div className="hero-content">    
+
+
+
+
+
+          <motion.div    
+
+
+
+
+
+            className="eyebrow"    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 25,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            animate={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            transition={{    
+
+
+
+
+
+              delay: 0.3,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            INTERIOR DESIGN | TURNKEY    
+
+
+
+
+
+            SOLUTIONS    
+
+
+
+
+
+          </motion.div>    
+
+
+
+
+
+          <motion.h1    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 45,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            animate={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            transition={{    
+
+
+
+
+
+              delay: 0.45,    
+
+
+
+
+
+              duration: 0.9,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            Spaces that    
+
+
+
+
+
+            <br />    
+
+
+
+
+
+            <em>feel like home.</em>    
+
+
+
+
+
+          </motion.h1>    
+
+
+
+
+
+          <motion.p    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 30,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            animate={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            transition={{    
+
+
+
+
+
+              delay: 0.65,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            We create refined residential and    
+
+
+
+
+
+            commercial interiors where thoughtful    
+
+
+
+
+
+            design, skilled craftsmanship and    
+
+
+
+
+
+            everyday functionality come    
+
+
+
+
+
+            together.    
+
+
+
+
+
+          </motion.p>    
+
+
+
+
+
+          <motion.div    
+
+
+
+
+
+            className="hero-buttons"    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 25,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            animate={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            transition={{    
+
+
+
+
+
+              delay: 0.8,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            <button    
+
+
+
+
+
+              className="yellow-button"    
+
+
+
+
+
+              onClick={() =>    
+
+
+
+
+
+                scrollTo("projects")    
+
+
+
+
+
+              }    
+
+
+
+
+
+            >    
+
+
+
+
+
+              Explore Projects    
+
+
+
+
+
+              <ArrowUpRight />    
+
+
+
+
+
+            </button>    
+
+
+
+
+
+            <button    
+
+
+
+
+
+              className="line-button"    
+
+
+
+
+
+              onClick={() =>    
+
+
+
+
+
+                whatsapp(    
+
+
+
+
+
+                  "Hi Gururag Interior, I would like to start an interior project."    
+
+
+
+
+
+                )    
+
+
+
+
+
+              }    
+
+
+
+
+
+            >    
+
+
+
+
+
+              Start a Project    
+
+
+
+
+
+              <ArrowUpRight />    
+
+
+
+
+
+            </button>    
+
+
+
+
+
+          </motion.div>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="hero-bottom">    
+
+
+
+
+
+          <span>SCROLL TO EXPLORE</span>    
+
+
+
+
+
+          <div />    
+
+
+
+
+
+          <span>CHENNAI | INDIA</span>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </section>    
+
+
+
+
+
+      <section className="intro section">    
+
+
+
+
+
+        <div className="label">    
+
+
+
+
+
+          01 - THE STUDIO    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="intro-grid">    
+
+
+
+
+
+          <motion.h2    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 45,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            whileInView={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            viewport={{    
+
+
+
+
+
+              once: true,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            Interiors with    
+
+
+
+
+
+            <br />    
+
+
+
+
+
+            <em>meaning.</em>    
+
+
+
+
+
+          </motion.h2>    
+
+
+
+
+
+          <motion.div    
+
+
+
+
+
+            className="intro-text"    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+              y: 45,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            whileInView={{    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            viewport={{    
+
+
+
+
+
+              once: true,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          >    
+
+
+
+
+
+            <p>    
+
+
+
+
+
+              At Gururag Interior, we believe    
+
+
+
+
+
+              a beautiful space should do more    
+
+
+
+
+
+              than look good. It should feel    
+
+
+
+
+
+              natural, work effortlessly and    
+
+
+
+
+
+              reflect the people who live or    
+
+
+
+
+
+              work inside it.    
+
+
+
+
+
+            </p>    
+
+
+
+
+
+            <p>    
+
+
+
+
+
+              From detailed carpentry and    
+
+
+
+
+
+              modern kitchens to civil works,    
+
+
+
+
+
+              finishing and complete turnkey    
+
+
+
+
+
+              solutions, we bring every layer    
+
+
+
+
+
+              together with one clear vision.    
+
+
+
+
+
+            </p>    
+
+
+
+
+
+            <button    
+
+
+
+
+
+              className="dark-link"    
+
+
+
+
+
+              onClick={() =>    
+
+
+
+
+
+                scrollTo("about")    
+
+
+
+
+
+              }    
+
+
+
+
+
+            >    
+
+
+
+
+
+              Discover our story    
+
+
+
+
+
+              <ArrowUpRight />    
+
+
+
+
+
+            </button>    
+
+
+
+
+
+          </motion.div>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="intro-images">    
+
+
+
+
+
+          <motion.img    
+
+
+
+
+
+            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90"    
+
+
+
+
+
+            alt="Luxury interior"    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              scale: 1.1,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            whileInView={{    
+
+
+
+
+
+              scale: 1,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            viewport={{    
+
+
+
+
+
+              once: true,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            transition={{    
+
+
+
+
+
+              duration: 1.1,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          />    
+
+
+
+
+
+          <motion.img    
+
+
+
+
+
+            className="small-image"    
+
+
+
+
+
+            src="https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&w=1000&q=90"    
+
+
+
+
+
+            alt="Interior detail"    
+
+
+
+
+
+            initial={{    
+
+
+
+
+
+              y: 80,    
+
+
+
+
+
+              opacity: 0,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            whileInView={{    
+
+
+
+
+
+              y: 0,    
+
+
+
+
+
+              opacity: 1,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+            viewport={{    
+
+
+
+
+
+              once: true,    
+
+
+
+
+
+            }}    
+
+
+
+
+
+          />    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </section>    
+
+
+
+
+
+      <section    
+
+
+
+
+
+        id="about"    
+
+
+
+
+
+        className="about section"    
+
+
+
+
+
+      >    
+
+
+
+
+
+        <div className="label light">    
+
+
+
+
+
+          02 - ABOUT US    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="about-heading">    
+
+
+
+
+
+          <h2>    
+
+
+
+
+
+            Designed around    
+
+
+
+
+
+            <br />    
+
+
+
+
+
+            <em>your life.</em>    
+
+
+
+
+
+          </h2>    
+
+
+
+
+
+          <p>    
+
+
+
+
+
+            Gururag Interior is built around    
+
+
+
+
+
+            a simple idea - every space    
+
+
+
+
+
+            deserves its own character.    
+
+
+
+
+
+          </p>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="founder">    
+
+
+
+
+
+          <div className="founder-photo">    
+
+
+
+
+
+            <img    
+
+
+
+
+
+              src={founder}    
+
+
+
+
+
+              alt="Saran Raj"    
+
+
+
+
+
+            />    
+
+
+
+
+
+            <div className="photo-gradient" />    
+
+
+
+
+
+            <span>    
+
+
+
+
+
+              FOUNDER    
+
+
+
+
+
+              <br />    
+
+
+
+
+
+              GURURAG INTERIOR    
+
+
+
+
+
+            </span>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+          <div className="founder-info">    
+
+
+
+
+
+            <div className="label mint">    
+
+
+
+
+
+              THE PERSON BEHIND THE VISION    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+            <h3 style={{ whiteSpace: "nowrap" }}>    
+
+
+
+
+
+              Saran Raj    
+
+
+
+
+
+            </h3>    
+
+
+
+
+
+            <div className="stats">    
+
+
+
+
+
+              <div>    
+
+
+
+
+
+                <strong>13+</strong>    
+
+
+
+
+
+                <span>    
+
+
+
+
+
+                  Years Experience    
+
+
+
+
+
+                </span>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+              <div>    
+
+
+
+
+
+                <strong>1,500+</strong>    
+
+
+
+
+
+                <span>    
+
+
+
+
+
+                  Completed Projects    
+
+
+
+
+
+                </span>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+            <p>    
+
+
+
+
+
+              With over 13 years of experience across interior, construction    
+
+
+
+
+
+              and renovation solutions, Saran Raj leads Gururag Interior with a    
+
+
+
+
+
+              strong focus on craftsmanship, detail and client satisfaction.    
+
+
+
+
+
+              The company, previously operating as Sri Guru Ragavendra Decors,    
+
+
+
+
+
+              has now evolved into Guru Rags Signature Homes - a new identity    
+
+
+
+
+
+              reflecting our continued growth and refined design approach. His    
+
+
+
+
+
+              approach brings design and practical execution together, creating    
+
+
+
+
+
+              spaces that feel distinctive, comfortable and personal.    
+
+
+
+
+
+            </p>    
+
+
+
+
+
+            <div className="signature">    
+
+
+
+
+
+              Saran Raj    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </section>    
+
+
+
+
+
+      <section    
+
+
+
+
+
+        id="services"    
+
+
+
+
+
+        className="services section"    
+
+
+
+
+
+      >    
+
+
+
+
+
+        <div className="label light">    
+
+
+
+
+
+          03 - OUR SERVICES    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="services-heading">    
+
+
+
+
+
+          <h2>    
+
+
+
+
+
+            From concept    
+
+
+
+
+
+            <br />    
+
+
+
+
+
+            to <em>completion.</em>    
+
+
+
+
+
+          </h2>    
+
+
+
+
+
+          <p>    
+
+
+
+
+
+            Complete interior, renovation,    
+
+
+
+
+
+            civil and allied solutions managed    
+
+
+
+
+
+            with one design vision.    
+
+
+
+
+
+          </p>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="service-carousel">    
+
+
+
+
+
+          <AnimatePresence mode="wait">    
+
+
+
+
+
+            <motion.div    
+
+
+
+
+
+              key={currentService.title}    
+
+
+
+
+
+              className="service-card"    
+
+
+
+
+
+              initial={{    
+
+
+
+
+
+                opacity: 0,    
+
+
+
+
+
+                x: 60,    
+
+
+
+
+
+              }}    
+
+
+
+
+
+              animate={{    
+
+
+
+
+
+                opacity: 1,    
+
+
+
+
+
+                x: 0,    
+
+
+
+
+
+              }}    
+
+
+
+
+
+              exit={{    
+
+
+
+
+
+                opacity: 0,    
+
+
+
+
+
+                x: -60,    
+
+
+
+
+
+              }}    
+
+
+
+
+
+              transition={{    
+
+
+
+
+
+                duration: 0.5,    
+
+
+
+
+
+              }}    
+
+
+
+
+
+            >    
+
+
+
+
+
+              <div className="service-image">    
+
+
+
+
+
+                <img    
+
+
+
+
+
+                  src={currentService.image}    
+
+
+
+
+
+                  alt={    
+
+
+
+
+
+                    currentService.title    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                />    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+              <div className="service-content">    
+
+
+
+
+
+                <span className="service-number">    
+
+
+
+
+
+                  SERVICE 0{service + 1}    
+
+
+
+
+
+                </span>    
+
+
+
+
+
+                <h3>    
+
+
+
+
+
+                  {currentService.title}    
+
+
+
+
+
+                </h3>    
+
+
+
+
+
+                <p>    
+
+
+
+
+
+                  {currentService.text}    
+
+
+
+
+
+                </p>    
+
+
+
+
+
+                <div className="service-list">    
+
+
+
+
+
+                  {currentService.items.map(    
+
+
+
+
+
+                    (item) => (    
+
+
+
+
+
+                      <div key={item}>    
+
+
+
+
+
+                        <Check />    
+
+
+
+
+
+                        {item}    
+
+
+
+
+
+                      </div>    
+
+
+
+
+
+                    )    
+
+
+
+
+
+                  )}    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+                <button    
+
+
+
+
+
+                  className="service-link"    
+
+
+
+
+
+                  onClick={() =>    
+
+
+
+
+
+                    whatsapp(    
+
+
+
+
+
+                      `Hi Gururag Interior, I am interested in ${currentService.title}.`    
+
+
+
+
+
+                    )    
+
+
+
+
+
+                  }    
+
+
+
+
+
+                >    
+
+
+
+
+
+                  Enquire About This Service    
+
+
+
+
+
+                  <ArrowUpRight />    
+
+
+
+
+
+                </button>    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+            </motion.div>    
+
+
+
+
+
+          </AnimatePresence>    
+
+
+
+
+
+          <div className="carousel-controls">    
+
+
+
+
+
+            <button    
+
+
+
+
+
+              onClick={previousService}    
+
+
+
+
+
+            >    
+
+
+
+
+
+              <ArrowLeft />    
+
+
+
+
+
+            </button>    
+
+
+
+
+
+            <div className="dots">    
+
+
+
+
+
+              {services.map(    
+
+
+
+
+
+                (item, index) => (    
+
+
+
+
+
+                  <button    
+
+
+
+
+
+                    key={item.title}    
+
+
+
+
+
+                    className={    
+
+
+
+
+
+                      index === service    
+
+
+
+
+
+                        ? "active"    
+
+
+
+
+
+                        : ""    
+
+
+
+
+
+                    }    
+
+
+
+
+
+                    onClick={() =>    
+
+
+
+
+
+                      setService(index)    
+
+
+
+
+
+                    }    
+
+
+
+
+
+                  />    
+
+
+
+
+
+                )    
+
+
+
+
+
+              )}    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+            <button    
+
+
+
+
+
+              onClick={nextService}    
+
+
+
+
+
+            >    
+
+
+
+
+
+              <ArrowRight />    
+
+
+
+
+
+            </button>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </section>    
+
+
+
+
+
+      <section    
+
+
+
+
+
+        id="projects"    
+
+
+
+
+
+        className="projects section"    
+
+
+
+
+
+      >    
+
+
+
+
+
+        <div className="label">    
+
+
+
+
+
+          04 - OUR PROJECTS    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="projects-heading">    
+
+
+
+
+
+          <h2>    
+
+
+
+
+
+            Spaces made    
+
+
+
+
+
+            <br />    
+
+
+
+
+
+            to be <em>lived in.</em>    
+
+
+
+
+
+          </h2>    
+
+
+
+
+
+          <p>    
+
+
+
+
+
+            A collection of modern interior    
+
+
+
+
+
+            directions shaped by comfort,    
+
+
+
+
+
+            proportion and timeless detailing.    
+
+
+
+
+
+          </p>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="project-grid">    
+
+
+
+
+
+          {projects.map(    
+
+
+
+
+
+            (project, index) => (    
+
+
+
+
+
+              <motion.article    
+
+
+
+
+
+                className={    
+
+
+
+
+
+                  index === 0    
+
+
+
+
+
+                    ? "project project-large"    
+
+
+
+
+
+                    : "project"    
+
+
+
+
+
+                }    
+
+
+
+
+
+                key={project.title}    
+
+
+
+
+
+                initial={{    
+
+
+
+
+
+                  opacity: 0,    
+
+
+
+
+
+                  y: 50,    
+
+
+
+
+
+                }}    
+
+
+
+
+
+                whileInView={{    
+
+
+
+
+
+                  opacity: 1,    
+
+
+
+
+
+                  y: 0,    
+
+
+
+
+
+                }}    
+
+
+
+
+
+                viewport={{    
+
+
+
+
+
+                  once: true,    
+
+
+
+
+
+                }}    
+
+
+
+
+
+                transition={{    
+
+
+
+
+
+                  delay: index * 0.08,    
+
+
+
+
+
+                }}    
+
+
+
+
+
+              >    
+
+
+
+
+
+                <div className="project-image">    
+
+
+
+
+
+                  <img    
+
+
+
+
+
+                    src={project.image}    
+
+
+
+
+
+                    alt={    
+
+
+
+
+
+                      project.title    
+
+
+
+
+
+                    }    
+
+
+
+
+
+                  />    
+
+
+
+
+
+                  <div className="project-arrow">    
+
+
+
+
+
+                    <ArrowUpRight />    
+
+
+
+
+
+                  </div>    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+                <div className="project-info">    
+
+
+
+
+
+                  <span>    
+
+
+
+
+
+                    {project.category}    
+
+
+
+
+
+                  </span>    
+
+
+
+
+
+                  <h3>    
+
+
+
+
+
+                    {project.title}    
+
+
+
+
+
+                  </h3>    
+
+
+
+
+
+                </div>    
+
+
+
+
+
+              </motion.article>    
+
+
+
+
+
+            )    
+
+
+
+
+
+          )}    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </section>    
+
+
+
+
+
+      <section className="cta">    
+
+
+
+
+
+        <div className="cta-image" />    
+
+
+
+
+
+        <div className="cta-overlay" />    
+
+
+
+
+
+        <div className="cta-content">    
+
+
+
+
+
+          <span className="label mint">    
+
+
+
+
+
+            YOUR SPACE. YOUR STORY.    
+
+
+
+
+
+          </span>    
+
+
+
+
+
+          <h2>    
+
+
+
+
+
+            Let's create    
+
+
+
+
+
+            <br />    
+
+
+
+
+
+            something{" "}    
+
+
+
+
+
+            <em>beautiful.</em>    
+
+
+
+
+
+          </h2>    
+
+
+
+
+
+          <button    
+
+
+
+
+
+            className="yellow-button"    
+
+
+
+
+
+            onClick={() =>    
+
+
+
+
+
+              whatsapp(    
+
+
+
+
+
+                "Hi Gururag Interior, I would like to discuss my interior project."    
+
+
+
+
+
+              )    
+
+
+
+
+
+            }    
+
+
+
+
+
+          >    
+
+
+
+
+
+            Start Your Project    
+
+
+
+
+
+            <ArrowUpRight />    
+
+
+
+
+
+          </button>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </section>    
+
+
+
+
+
+      <section    
+
+
+
+
+
+        id="contact"    
+
+
+
+
+
+        className="contact section"    
+
+
+
+
+
+      >    
+
+
+
+
+
+        <div className="label">    
+
+
+
+
+
+          05 - CONTACT    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="contact-grid">    
+
+
+
+
+
+          <div>    
+
+
+
+
+
+            <h2>    
+
+
+
+
+
+              Let's talk    
+
+
+
+
+
+              <br />    
+
+
+
+
+
+              <em>interiors.</em>    
+
+
+
+
+
+            </h2>    
+
+
+
+
+
+            <p>    
+
+
+
+
+
+              Have a home, office or renovation    
+
+
+
+
+
+              project in mind? Tell us what you    
+
+
+
+
+
+              are planning and let's build    
+
+
+
+
+
+              something around it.    
+
+
+
+
+
+            </p>    
+
+
+
+
+
+            <div className="contact-details">    
+
+
+
+
+
+              <a href="tel:+919789695878">    
+
+
+
+
+
+                <Phone />    
+
+
+
+
+
+                +91 97896 95878    
+
+
+
+
+
+              </a>    
+
+
+
+
+
+              <a    
+
+
+
+
+
+                href={WHATSAPP}    
+
+
+
+
+
+                target="_blank"    
+
+
+
+
+
+                rel="noreferrer"    
+
+
+
+
+
+              >    
+
+
+
+
+
+                <WhatsAppIcon size={22} />    
+
+
+
+
+
+                WhatsApp    
+
+
+
+
+
+              </a>    
+
+
+
+
+
+              <a    
+
+
+
+
+
+                href={YOUTUBE}    
+
+
+
+
+
+                target="_blank"    
+
+
+
+
+
+                rel="noreferrer"    
+
+
+
+
+
+              >    
+
+
+
+
+
+                <YouTubeBrandIcon size={22} />    
+
+
+
+
+
+                YouTube    
+
+
+
+
+
+              </a>    
+
+
+
+
+
+              <div>    
+
+
+
+
+
+                <MapPin />    
+
+
+
+
+
+                Chennai, Tamil Nadu    
+
+
+
+
+
+              </div>    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+          <div className="quote-card">    
+
+
+
+
+
+            <span className="label mint">    
+
+
+
+
+
+              GET A FREE QUOTE    
+
+
+
+
+
+            </span>    
+
+
+
+
+
+            <h3>    
+
+
+
+
+
+              Tell us about    
+
+
+
+
+
+              <br />    
+
+
+
+
+
+              your project.    
+
+
+
+
+
+            </h3>    
+
+
+
+
+
+            <p>    
+
+
+
+
+
+              Send your project type, location    
+
+
+
+
+
+              and reference images directly    
+
+
+
+
+
+              through WhatsApp.    
+
+
+
+
+
+            </p>    
+
+
+
+
+
+            <button    
+
+
+
+
+
+              className="yellow-button"    
+
+
+
+
+
+              onClick={() =>    
+
+
+
+
+
+                whatsapp(    
+
+
+
+
+
+                  "Hi Gururag Interior, I would like a free quote."    
+
+
+
+
+
+                )    
+
+
+
+
+
+              }    
+
+
+
+
+
+            >    
+
+
+
+
+
+              WhatsApp Us    
+
+
+
+
+
+              <ArrowUpRight />    
+
+
+
+
+
+            </button>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </section>    
+
+
+
+
+
+      <footer>    
+
+
+
+
+
+        <div className="footer-top">    
+
+
+
+
+
+          <div className="footer-brand">    
+
+
+
+
+
+            <span className="footer-logo">    
+
+
+
+
+
+              <img    
+
+
+
+
+
+                src={logo}    
+
+
+
+
+
+                alt="Gururag Interior"    
+
+
+
+
+
+              />    
+
+
+
+
+
+            </span>    
+
+
+
+
+
+            <div>    
+
+
+
+
+
+              <strong>GURURAG</strong>    
+
+
+
+
+
+              <small>INTERIOR</small>    
+
+
+
+
+
+            </div>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+          <p>    
+
+
+
+
+
+            Thoughtful interiors,    
+
+
+
+
+
+            <br />    
+
+
+
+
+
+            crafted with character.    
+
+
+
+
+
+          </p>    
+
+
+
+
+
+          <div className="socials">    
+
+
+
+
+
+            <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram">    
+
+
+
+
+
+              <InstagramBrandIcon size={21} />    
+
+
+
+
+
+            </a>    
+
+
+
+
+
+            <a    
+
+
+
+
+
+              href={WHATSAPP}    
+
+
+
+
+
+              target="_blank"    
+
+
+
+
+
+              rel="noreferrer"    
+
+
+
+
+
+              aria-label="WhatsApp"    
+
+
+
+
+
+            >    
+
+
+
+
+
+              <WhatsAppIcon size={21} />    
+
+
+
+
+
+            </a>    
+
+
+
+
+
+            <a    
+
+
+
+
+
+              href={YOUTUBE}    
+
+
+
+
+
+              target="_blank"    
+
+
+
+
+
+              rel="noreferrer"    
+
+
+
+
+
+              aria-label="YouTube"    
+
+
+
+
+
+            >    
+
+
+
+
+
+              <YouTubeBrandIcon size={21} />    
+
+
+
+
+
+            </a>    
+
+
+
+
+
+          </div>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+        <div className="footer-bottom">    
+
+
+
+
+
+          <span>    
+
+
+
+
+
+            (c) 2026 Gururag Interior    
+
+
+
+
+
+          </span>    
+
+
+
+
+
+          <span>    
+
+
+
+
+
+            Saran Raj | Founder    
+
+
+
+
+
+          </span>    
+
+
+
+
+
+        </div>    
+
+
+
+
+
+      </footer>    
+
+
+
+
+
+      <NewPageStyles />    
+
+
+
+
+
+      <OfferPopupStyles />  
+
+
+
+
+
+      <motion.button  
+
+
+
+        className="quote-floating-button"  
+
+
+
+        onClick={() => openOfferPopup()}  
+
+
+
+        initial={{ opacity: 0, y: 20 }}  
+
+
+
+        animate={{ opacity: 1, y: 0 }}  
+
+
+
+        transition={{ delay: 1.5, duration: 0.4 }}  
 
 
 
@@ -10176,2535 +19316,185 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
 
-        <div className="hero-image" />  
+        Get Free Quote  
 
 
 
-        <div className="hero-overlay" />  
+        <ArrowUpRight size={16} />  
 
 
 
-        <div className="hero-content">  
+      </motion.button>  
 
 
 
-          <motion.div  
+      {newPage && (    
 
 
 
-            className="eyebrow"  
 
 
+        <NewPageOverlay    
 
-            initial={{  
 
 
 
-              opacity: 0,  
 
+          page={newPage}    
 
 
-              y: 25,  
 
 
 
-            }}  
+          onClose={closeNewPage}    
 
 
 
-            animate={{  
 
 
+          onWhatsApp={whatsapp}    
 
-              opacity: 1,  
 
 
 
-              y: 0,  
 
+          managedServices={managedServices}    
 
 
-            }}  
 
 
 
-            transition={{  
+          managedProjects={managedProjects}    
 
 
 
-              delay: 0.3,  
 
 
+        managedProjectVideos={managedProjectVideos}  
 
-            }}  
 
 
+          showcaseProjects={showcaseProjects}  
 
-          >  
 
 
+        />    
 
-            INTERIOR DESIGN | TURNKEY  
 
 
 
-            SOLUTIONS  
 
+      )}    
 
 
-          </motion.div>  
 
 
 
-          <motion.h1  
+      {ownerOpen && (    
 
 
 
-            initial={{  
 
 
+        <OwnerDashboard    
 
-              opacity: 0,  
 
 
 
-              y: 45,  
 
+          onClose={() => setOwnerOpen(false)}    
 
 
-            }}  
 
 
 
-            animate={{  
+        />    
 
 
 
-              opacity: 1,  
 
 
+      )}    
 
-              y: 0,  
 
 
 
-            }}  
 
+      <OfferPopup    
 
 
-            transition={{  
 
 
 
-              delay: 0.45,  
+        open={offerOpen}    
 
 
 
-              duration: 0.9,  
 
 
+        promo={promoToPopup(popupPromotion)}    
 
-            }}  
 
 
 
-          >  
 
+        onClose={closeOfferPopup}    
 
 
-            Spaces that  
 
 
 
-            <br />  
+      />    
 
 
 
-            <em>feel like home.</em>  
 
 
+      <Chatbot    
 
-          </motion.h1>  
 
 
 
-          <motion.p  
 
+        onWhatsApp={whatsapp}    
 
 
-            initial={{  
 
 
 
-              opacity: 0,  
+      />    
 
 
 
-              y: 30,  
 
 
+    </div>    
 
-            }}  
 
 
 
-            animate={{  
 
+  );    
 
 
-              opacity: 1,  
 
 
 
-              y: 0,  
+}    
 
 
 
-            }}  
 
 
+createRoot(    
 
-            transition={{  
 
 
 
-              delay: 0.65,  
 
+  document.getElementById("root")    
 
 
-            }}  
-
-
-
-          >  
-
-
-
-            We create refined residential and  
-
-
-
-            commercial interiors where thoughtful  
-
-
-
-            design, skilled craftsmanship and  
-
-
-
-            everyday functionality come  
-
-
-
-            together.  
-
-
-
-          </motion.p>  
-
-
-
-          <motion.div  
-
-
-
-            className="hero-buttons"  
-
-
-
-            initial={{  
-
-
-
-              opacity: 0,  
-
-
-
-              y: 25,  
-
-
-
-            }}  
-
-
-
-            animate={{  
-
-
-
-              opacity: 1,  
-
-
-
-              y: 0,  
-
-
-
-            }}  
-
-
-
-            transition={{  
-
-
-
-              delay: 0.8,  
-
-
-
-            }}  
-
-
-
-          >  
-
-
-
-            <button  
-
-
-
-              className="yellow-button"  
-
-
-
-              onClick={() =>  
-
-
-
-                scrollTo("projects")  
-
-
-
-              }  
-
-
-
-            >  
-
-
-
-              Explore Projects  
-
-
-
-              <ArrowUpRight />  
-
-
-
-            </button>  
-
-
-
-            <button  
-
-
-
-              className="line-button"  
-
-
-
-              onClick={() =>  
-
-
-
-                whatsapp(  
-
-
-
-                  "Hi Gururag Interior, I would like to start an interior project."  
-
-
-
-                )  
-
-
-
-              }  
-
-
-
-            >  
-
-
-
-              Start a Project  
-
-
-
-              <ArrowUpRight />  
-
-
-
-            </button>  
-
-
-
-          </motion.div>  
-
-
-
-        </div>  
-
-
-
-        <div className="hero-bottom">  
-
-
-
-          <span>SCROLL TO EXPLORE</span>  
-
-
-
-          <div />  
-
-
-
-          <span>CHENNAI | INDIA</span>  
-
-
-
-        </div>  
-
-
-
-      </section>  
-
-
-
-      <section className="intro section">  
-
-
-
-        <div className="label">  
-
-
-
-          01 - THE STUDIO  
-
-
-
-        </div>  
-
-
-
-        <div className="intro-grid">  
-
-
-
-          <motion.h2  
-
-
-
-            initial={{  
-
-
-
-              opacity: 0,  
-
-
-
-              y: 45,  
-
-
-
-            }}  
-
-
-
-            whileInView={{  
-
-
-
-              opacity: 1,  
-
-
-
-              y: 0,  
-
-
-
-            }}  
-
-
-
-            viewport={{  
-
-
-
-              once: true,  
-
-
-
-            }}  
-
-
-
-          >  
-
-
-
-            Interiors with  
-
-
-
-            <br />  
-
-
-
-            <em>meaning.</em>  
-
-
-
-          </motion.h2>  
-
-
-
-          <motion.div  
-
-
-
-            className="intro-text"  
-
-
-
-            initial={{  
-
-
-
-              opacity: 0,  
-
-
-
-              y: 45,  
-
-
-
-            }}  
-
-
-
-            whileInView={{  
-
-
-
-              opacity: 1,  
-
-
-
-              y: 0,  
-
-
-
-            }}  
-
-
-
-            viewport={{  
-
-
-
-              once: true,  
-
-
-
-            }}  
-
-
-
-          >  
-
-
-
-            <p>  
-
-
-
-              At Gururag Interior, we believe  
-
-
-
-              a beautiful space should do more  
-
-
-
-              than look good. It should feel  
-
-
-
-              natural, work effortlessly and  
-
-
-
-              reflect the people who live or  
-
-
-
-              work inside it.  
-
-
-
-            </p>  
-
-
-
-            <p>  
-
-
-
-              From detailed carpentry and  
-
-
-
-              modern kitchens to civil works,  
-
-
-
-              finishing and complete turnkey  
-
-
-
-              solutions, we bring every layer  
-
-
-
-              together with one clear vision.  
-
-
-
-            </p>  
-
-
-
-            <button  
-
-
-
-              className="dark-link"  
-
-
-
-              onClick={() =>  
-
-
-
-                scrollTo("about")  
-
-
-
-              }  
-
-
-
-            >  
-
-
-
-              Discover our story  
-
-
-
-              <ArrowUpRight />  
-
-
-
-            </button>  
-
-
-
-          </motion.div>  
-
-
-
-        </div>  
-
-
-
-        <div className="intro-images">  
-
-
-
-          <motion.img  
-
-
-
-            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90"  
-
-
-
-            alt="Luxury interior"  
-
-
-
-            initial={{  
-
-
-
-              scale: 1.1,  
-
-
-
-            }}  
-
-
-
-            whileInView={{  
-
-
-
-              scale: 1,  
-
-
-
-            }}  
-
-
-
-            viewport={{  
-
-
-
-              once: true,  
-
-
-
-            }}  
-
-
-
-            transition={{  
-
-
-
-              duration: 1.1,  
-
-
-
-            }}  
-
-
-
-          />  
-
-
-
-          <motion.img  
-
-
-
-            className="small-image"  
-
-
-
-            src="https://images.unsplash.com/photo-1617104678098-de229db51175?auto=format&fit=crop&w=1000&q=90"  
-
-
-
-            alt="Interior detail"  
-
-
-
-            initial={{  
-
-
-
-              y: 80,  
-
-
-
-              opacity: 0,  
-
-
-
-            }}  
-
-
-
-            whileInView={{  
-
-
-
-              y: 0,  
-
-
-
-              opacity: 1,  
-
-
-
-            }}  
-
-
-
-            viewport={{  
-
-
-
-              once: true,  
-
-
-
-            }}  
-
-
-
-          />  
-
-
-
-        </div>  
-
-
-
-      </section>  
-
-
-
-      <section  
-
-
-
-        id="about"  
-
-
-
-        className="about section"  
-
-
-
-      >  
-
-
-
-        <div className="label light">  
-
-
-
-          02 - ABOUT US  
-
-
-
-        </div>  
-
-
-
-        <div className="about-heading">  
-
-
-
-          <h2>  
-
-
-
-            Designed around  
-
-
-
-            <br />  
-
-
-
-            <em>your life.</em>  
-
-
-
-          </h2>  
-
-
-
-          <p>  
-
-
-
-            Gururag Interior is built around  
-
-
-
-            a simple idea - every space  
-
-
-
-            deserves its own character.  
-
-
-
-          </p>  
-
-
-
-        </div>  
-
-
-
-        <div className="founder">  
-
-
-
-          <div className="founder-photo">  
-
-
-
-            <img  
-
-
-
-              src={founder}  
-
-
-
-              alt="Saran Raj"  
-
-
-
-            />  
-
-
-
-            <div className="photo-gradient" />  
-
-
-
-            <span>  
-
-
-
-              FOUNDER  
-
-
-
-              <br />  
-
-
-
-              GURURAG INTERIOR  
-
-
-
-            </span>  
-
-
-
-          </div>  
-
-
-
-          <div className="founder-info">  
-
-
-
-            <div className="label mint">  
-
-
-
-              THE PERSON BEHIND THE VISION  
-
-
-
-            </div>  
-
-
-
-            <h3 style={{ whiteSpace: "nowrap" }}>  
-
-
-
-              Saran Raj  
-
-
-
-            </h3>  
-
-
-
-            <div className="stats">  
-
-
-
-              <div>  
-
-
-
-                <strong>13+</strong>  
-
-
-
-                <span>  
-
-
-
-                  Years Experience  
-
-
-
-                </span>  
-
-
-
-              </div>  
-
-
-
-              <div>  
-
-
-
-                <strong>1,500+</strong>  
-
-
-
-                <span>  
-
-
-
-                  Completed Projects  
-
-
-
-                </span>  
-
-
-
-              </div>  
-
-
-
-            </div>  
-
-
-
-            <p>  
-
-
-
-              With over 13 years of experience across interior, construction  
-
-
-
-              and renovation solutions, Saran Raj leads Gururag Interior with a  
-
-
-
-              strong focus on craftsmanship, detail and client satisfaction.  
-
-
-
-              The company, previously operating as Sri Guru Ragavendra Decors,  
-
-
-
-              has now evolved into Guru Rags Signature Homes - a new identity  
-
-
-
-              reflecting our continued growth and refined design approach. His  
-
-
-
-              approach brings design and practical execution together, creating  
-
-
-
-              spaces that feel distinctive, comfortable and personal.  
-
-
-
-            </p>  
-
-
-
-            <div className="signature">  
-
-
-
-              Saran Raj  
-
-
-
-            </div>  
-
-
-
-          </div>  
-
-
-
-        </div>  
-
-
-
-      </section>  
-
-
-
-      <section  
-
-
-
-        id="services"  
-
-
-
-        className="services section"  
-
-
-
-      >  
-
-
-
-        <div className="label light">  
-
-
-
-          03 - OUR SERVICES  
-
-
-
-        </div>  
-
-
-
-        <div className="services-heading">  
-
-
-
-          <h2>  
-
-
-
-            From concept  
-
-
-
-            <br />  
-
-
-
-            to <em>completion.</em>  
-
-
-
-          </h2>  
-
-
-
-          <p>  
-
-
-
-            Complete interior, renovation,  
-
-
-
-            civil and allied solutions managed  
-
-
-
-            with one design vision.  
-
-
-
-          </p>  
-
-
-
-        </div>  
-
-
-
-        <div className="service-carousel">  
-
-
-
-          <AnimatePresence mode="wait">  
-
-
-
-            <motion.div  
-
-
-
-              key={currentService.title}  
-
-
-
-              className="service-card"  
-
-
-
-              initial={{  
-
-
-
-                opacity: 0,  
-
-
-
-                x: 60,  
-
-
-
-              }}  
-
-
-
-              animate={{  
-
-
-
-                opacity: 1,  
-
-
-
-                x: 0,  
-
-
-
-              }}  
-
-
-
-              exit={{  
-
-
-
-                opacity: 0,  
-
-
-
-                x: -60,  
-
-
-
-              }}  
-
-
-
-              transition={{  
-
-
-
-                duration: 0.5,  
-
-
-
-              }}  
-
-
-
-            >  
-
-
-
-              <div className="service-image">  
-
-
-
-                <img  
-
-
-
-                  src={currentService.image}  
-
-
-
-                  alt={  
-
-
-
-                    currentService.title  
-
-
-
-                  }  
-
-
-
-                />  
-
-
-
-              </div>  
-
-
-
-              <div className="service-content">  
-
-
-
-                <span className="service-number">  
-
-
-
-                  SERVICE 0{service + 1}  
-
-
-
-                </span>  
-
-
-
-                <h3>  
-
-
-
-                  {currentService.title}  
-
-
-
-                </h3>  
-
-
-
-                <p>  
-
-
-
-                  {currentService.text}  
-
-
-
-                </p>  
-
-
-
-                <div className="service-list">  
-
-
-
-                  {currentService.items.map(  
-
-
-
-                    (item) => (  
-
-
-
-                      <div key={item}>  
-
-
-
-                        <Check />  
-
-
-
-                        {item}  
-
-
-
-                      </div>  
-
-
-
-                    )  
-
-
-
-                  )}  
-
-
-
-                </div>  
-
-
-
-                <button  
-
-
-
-                  className="service-link"  
-
-
-
-                  onClick={() =>  
-
-
-
-                    whatsapp(  
-
-
-
-                      `Hi Gururag Interior, I am interested in ${currentService.title}.`  
-
-
-
-                    )  
-
-
-
-                  }  
-
-
-
-                >  
-
-
-
-                  Enquire About This Service  
-
-
-
-                  <ArrowUpRight />  
-
-
-
-                </button>  
-
-
-
-              </div>  
-
-
-
-            </motion.div>  
-
-
-
-          </AnimatePresence>  
-
-
-
-          <div className="carousel-controls">  
-
-
-
-            <button  
-
-
-
-              onClick={previousService}  
-
-
-
-            >  
-
-
-
-              <ArrowLeft />  
-
-
-
-            </button>  
-
-
-
-            <div className="dots">  
-
-
-
-              {services.map(  
-
-
-
-                (item, index) => (  
-
-
-
-                  <button  
-
-
-
-                    key={item.title}  
-
-
-
-                    className={  
-
-
-
-                      index === service  
-
-
-
-                        ? "active"  
-
-
-
-                        : ""  
-
-
-
-                    }  
-
-
-
-                    onClick={() =>  
-
-
-
-                      setService(index)  
-
-
-
-                    }  
-
-
-
-                  />  
-
-
-
-                )  
-
-
-
-              )}  
-
-
-
-            </div>  
-
-
-
-            <button  
-
-
-
-              onClick={nextService}  
-
-
-
-            >  
-
-
-
-              <ArrowRight />  
-
-
-
-            </button>  
-
-
-
-          </div>  
-
-
-
-        </div>  
-
-
-
-      </section>  
-
-
-
-      <section  
-
-
-
-        id="projects"  
-
-
-
-        className="projects section"  
-
-
-
-      >  
-
-
-
-        <div className="label">  
-
-
-
-          04 - OUR PROJECTS  
-
-
-
-        </div>  
-
-
-
-        <div className="projects-heading">  
-
-
-
-          <h2>  
-
-
-
-            Spaces made  
-
-
-
-            <br />  
-
-
-
-            to be <em>lived in.</em>  
-
-
-
-          </h2>  
-
-
-
-          <p>  
-
-
-
-            A collection of modern interior  
-
-
-
-            directions shaped by comfort,  
-
-
-
-            proportion and timeless detailing.  
-
-
-
-          </p>  
-
-
-
-        </div>  
-
-
-
-        <div className="project-grid">  
-
-
-
-          {projects.map(  
-
-
-
-            (project, index) => (  
-
-
-
-              <motion.article  
-
-
-
-                className={  
-
-
-
-                  index === 0  
-
-
-
-                    ? "project project-large"  
-
-
-
-                    : "project"  
-
-
-
-                }  
-
-
-
-                key={project.title}  
-
-
-
-                initial={{  
-
-
-
-                  opacity: 0,  
-
-
-
-                  y: 50,  
-
-
-
-                }}  
-
-
-
-                whileInView={{  
-
-
-
-                  opacity: 1,  
-
-
-
-                  y: 0,  
-
-
-
-                }}  
-
-
-
-                viewport={{  
-
-
-
-                  once: true,  
-
-
-
-                }}  
-
-
-
-                transition={{  
-
-
-
-                  delay: index * 0.08,  
-
-
-
-                }}  
-
-
-
-              >  
-
-
-
-                <div className="project-image">  
-
-
-
-                  <img  
-
-
-
-                    src={project.image}  
-
-
-
-                    alt={  
-
-
-
-                      project.title  
-
-
-
-                    }  
-
-
-
-                  />  
-
-
-
-                  <div className="project-arrow">  
-
-
-
-                    <ArrowUpRight />  
-
-
-
-                  </div>  
-
-
-
-                </div>  
-
-
-
-                <div className="project-info">  
-
-
-
-                  <span>  
-
-
-
-                    {project.category}  
-
-
-
-                  </span>  
-
-
-
-                  <h3>  
-
-
-
-                    {project.title}  
-
-
-
-                  </h3>  
-
-
-
-                </div>  
-
-
-
-              </motion.article>  
-
-
-
-            )  
-
-
-
-          )}  
-
-
-
-        </div>  
-
-
-
-      </section>  
-
-
-
-      <section className="cta">  
-
-
-
-        <div className="cta-image" />  
-
-
-
-        <div className="cta-overlay" />  
-
-
-
-        <div className="cta-content">  
-
-
-
-          <span className="label mint">  
-
-
-
-            YOUR SPACE. YOUR STORY.  
-
-
-
-          </span>  
-
-
-
-          <h2>  
-
-
-
-            Let's create  
-
-
-
-            <br />  
-
-
-
-            something{" "}  
-
-
-
-            <em>beautiful.</em>  
-
-
-
-          </h2>  
-
-
-
-          <button  
-
-
-
-            className="yellow-button"  
-
-
-
-            onClick={() =>  
-
-
-
-              whatsapp(  
-
-
-
-                "Hi Gururag Interior, I would like to discuss my interior project."  
-
-
-
-              )  
-
-
-
-            }  
-
-
-
-          >  
-
-
-
-            Start Your Project  
-
-
-
-            <ArrowUpRight />  
-
-
-
-          </button>  
-
-
-
-        </div>  
-
-
-
-      </section>  
-
-
-
-      <section  
-
-
-
-        id="contact"  
-
-
-
-        className="contact section"  
-
-
-
-      >  
-
-
-
-        <div className="label">  
-
-
-
-          05 - CONTACT  
-
-
-
-        </div>  
-
-
-
-        <div className="contact-grid">  
-
-
-
-          <div>  
-
-
-
-            <h2>  
-
-
-
-              Let's talk  
-
-
-
-              <br />  
-
-
-
-              <em>interiors.</em>  
-
-
-
-            </h2>  
-
-
-
-            <p>  
-
-
-
-              Have a home, office or renovation  
-
-
-
-              project in mind? Tell us what you  
-
-
-
-              are planning and let's build  
-
-
-
-              something around it.  
-
-
-
-            </p>  
-
-
-
-            <div className="contact-details">  
-
-
-
-              <a href="tel:+919789695878">  
-
-
-
-                <Phone />  
-
-
-
-                +91 97896 95878  
-
-
-
-              </a>  
-
-
-
-              <a  
-
-
-
-                href={WHATSAPP}  
-
-
-
-                target="_blank"  
-
-
-
-                rel="noreferrer"  
-
-
-
-              >  
-
-
-
-                <WhatsAppIcon size={22} />  
-
-
-
-                WhatsApp  
-
-
-
-              </a>  
-
-
-
-              <a  
-
-
-
-                href={YOUTUBE}  
-
-
-
-                target="_blank"  
-
-
-
-                rel="noreferrer"  
-
-
-
-              >  
-
-
-
-                <YouTubeBrandIcon size={22} />  
-
-
-
-                YouTube  
-
-
-
-              </a>  
-
-
-
-              <div>  
-
-
-
-                <MapPin />  
-
-
-
-                Chennai, Tamil Nadu  
-
-
-
-              </div>  
-
-
-
-            </div>  
-
-
-
-          </div>  
-
-
-
-          <div className="quote-card">  
-
-
-
-            <span className="label mint">  
-
-
-
-              GET A FREE QUOTE  
-
-
-
-            </span>  
-
-
-
-            <h3>  
-
-
-
-              Tell us about  
-
-
-
-              <br />  
-
-
-
-              your project.  
-
-
-
-            </h3>  
-
-
-
-            <p>  
-
-
-
-              Send your project type, location  
-
-
-
-              and reference images directly  
-
-
-
-              through WhatsApp.  
-
-
-
-            </p>  
-
-
-
-            <button  
-
-
-
-              className="yellow-button"  
-
-
-
-              onClick={() =>  
-
-
-
-                whatsapp(  
-
-
-
-                  "Hi Gururag Interior, I would like a free quote."  
-
-
-
-                )  
-
-
-
-              }  
-
-
-
-            >  
-
-
-
-              WhatsApp Us  
-
-
-
-              <ArrowUpRight />  
-
-
-
-            </button>  
-
-
-
-          </div>  
-
-
-
-        </div>  
-
-
-
-      </section>  
-
-
-
-      <footer>  
-
-
-
-        <div className="footer-top">  
-
-
-
-          <div className="footer-brand">  
-
-
-
-            <span className="footer-logo">  
-
-
-
-              <img  
-
-
-
-                src={logo}  
-
-
-
-                alt="Gururag Interior"  
-
-
-
-              />  
-
-
-
-            </span>  
-
-
-
-            <div>  
-
-
-
-              <strong>GURURAG</strong>  
-
-
-
-              <small>INTERIOR</small>  
-
-
-
-            </div>  
-
-
-
-          </div>  
-
-
-
-          <p>  
-
-
-
-            Thoughtful interiors,  
-
-
-
-            <br />  
-
-
-
-            crafted with character.  
-
-
-
-          </p>  
-
-
-
-          <div className="socials">  
-
-
-
-            <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram">  
-
-
-
-              <InstagramBrandIcon size={21} />  
-
-
-
-            </a>  
-
-
-
-            <a  
-
-
-
-              href={WHATSAPP}  
-
-
-
-              target="_blank"  
-
-
-
-              rel="noreferrer"  
-
-
-
-              aria-label="WhatsApp"  
-
-
-
-            >  
-
-
-
-              <WhatsAppIcon size={21} />  
-
-
-
-            </a>  
-
-
-
-            <a  
-
-
-
-              href={YOUTUBE}  
-
-
-
-              target="_blank"  
-
-
-
-              rel="noreferrer"  
-
-
-
-              aria-label="YouTube"  
-
-
-
-            >  
-
-
-
-              <YouTubeBrandIcon size={21} />  
-
-
-
-            </a>  
-
-
-
-          </div>  
-
-
-
-        </div>  
-
-
-
-        <div className="footer-bottom">  
-
-
-
-          <span>  
-
-
-
-            (c) 2026 Gururag Interior  
-
-
-
-          </span>  
-
-
-
-          <span>  
-
-
-
-            Saran Raj | Founder  
-
-
-
-          </span>  
-
-
-
-        </div>  
-
-
-
-      </footer>  
-
-
-
-      <NewPageStyles />  
-
-
-
-      <OfferPopupStyles />
-
-      {!newPage && (
-        <motion.button
-          className="warranty-floating-button"
-          onClick={() => openOfferPopup()}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.35, duration: 0.4 }}
-        >
-          <span className="warranty-floating-badge" aria-hidden="true">
-            <Check size={17} strokeWidth={3} />
-          </span>
-          <span>10 YEARS WARRANTY</span>
-        </motion.button>
-      )}
-
-      <motion.button
-        className="quote-floating-button"
-        onClick={() => openOfferPopup()}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.4 }}
-      >
-        Get Free Quote
-        <ArrowUpRight size={16} />
-      </motion.button>
-
-      {newPage && (  
-
-
-
-        <NewPageOverlay  
-
-
-
-          page={newPage}  
-
-
-
-          onClose={closeNewPage}  
-
-
-
-          onWhatsApp={whatsapp}  
-
-
-
-          managedServices={managedServices}  
-
-
-
-          managedProjects={managedProjects}  
-
-
-
-        managedProjectVideos={managedProjectVideos}
-
-          showcaseProjects={showcaseProjects}
-
-        />  
-
-
-
-      )}  
-
-
-
-      {ownerOpen && (  
-
-
-
-        <OwnerDashboard  
-
-
-
-          onClose={() => setOwnerOpen(false)}  
-
-
-
-        />  
-
-
-
-      )}  
-
-
-
-      <OfferPopup  
-
-
-
-        open={offerOpen}  
-
-
-
-        promo={promoToPopup(popupPromotion)}  
-
-
-
-        onClose={closeOfferPopup}  
-
-
-
-      />  
-
-
-
-      <Chatbot  
-
-
-
-        onWhatsApp={whatsapp}  
-
-
-
-      />  
-
-
-
-    </div>  
-
-
-
-  );  
-
-
-
-}  
-
-
-
-createRoot(  
-
-
-
-  document.getElementById("root")  
 
 
 
