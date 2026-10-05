@@ -31,7 +31,43 @@ const phone = (value) =>
     .replace(/\D/g, "")
     .slice(0, 20);
 
-async function sendTemplate(to, name, language, parameters) {
+/* -------------------------------------------------------
+   Extract value from booking.message
+   Example:
+   Offer: 15% OFF | Property: Apartment | Location: Chennai
+   | WhatsApp Updates: Yes
+------------------------------------------------------- */
+
+const extractMessageValue = (
+  message,
+  label,
+  fallback = "Not provided"
+) => {
+  const text = String(message ?? "");
+
+  const regex = new RegExp(
+    `${label}\\s*:\\s*([^|]+)`,
+    "i"
+  );
+
+  const match = text.match(regex);
+
+  return clean(
+    match?.[1] || fallback,
+    200
+  );
+};
+
+/* -------------------------------------------------------
+   Send WhatsApp Template
+------------------------------------------------------- */
+
+async function sendTemplate(
+  to,
+  name,
+  language,
+  parameters
+) {
   const url =
     `https://graph.facebook.com/${GRAPH_VERSION}/${WA_PHONE_ID}/messages`;
 
@@ -101,6 +137,10 @@ async function sendTemplate(to, name, language, parameters) {
   };
 }
 
+/* -------------------------------------------------------
+   API Handler
+------------------------------------------------------- */
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({
@@ -114,26 +154,23 @@ export default async function handler(req, res) {
       req.body ||
       {};
 
+    /* -----------------------------
+       Basic booking details
+    ----------------------------- */
+
     const name = clean(
       booking.customer_name || booking.name,
       100
     );
 
-    const customerPhone = phone(booking.phone);
+    const customerPhone = phone(
+      booking.phone
+    );
 
     const service = clean(
-      booking.service || "Interior Consultation",
+      booking.service ||
+        "Interior Consultation",
       120
-    );
-
-    const property = clean(
-      booking.property_type || "Not provided",
-      80
-    );
-
-    const location = clean(
-      booking.location || "Not provided",
-      150
     );
 
     const message = clean(
@@ -141,13 +178,31 @@ export default async function handler(req, res) {
       1000
     );
 
-    const offer = clean(
-      booking.offer || "15% OFF",
-      80
+    /* -----------------------------
+       Extract actual values from
+       current main.tsx message
+    ----------------------------- */
+
+    const property = extractMessageValue(
+      message,
+      "Property",
+      booking.property_type ||
+        "Not provided"
     );
 
-    const wantsWhatsApp =
-      /whatsapp\s*updates\s*:\s*yes/i.test(message);
+    const location = extractMessageValue(
+      message,
+      "Location",
+      booking.location ||
+        "Not provided"
+    );
+
+    const offer = extractMessageValue(
+      message,
+      "Offer",
+      booking.offer ||
+        "15% OFF"
+    );
 
     if (!name || customerPhone.length < 10) {
       return res.status(400).json({
@@ -156,12 +211,25 @@ export default async function handler(req, res) {
       });
     }
 
-    if (!WA_TOKEN || !WA_PHONE_ID || !OWNER_PHONE) {
-      console.error("WhatsApp configuration missing:", {
-        hasToken: Boolean(WA_TOKEN),
-        hasPhoneId: Boolean(WA_PHONE_ID),
-        hasOwnerPhone: Boolean(OWNER_PHONE),
-      });
+    /* -----------------------------
+       WhatsApp configuration check
+    ----------------------------- */
+
+    if (
+      !WA_TOKEN ||
+      !WA_PHONE_ID ||
+      !OWNER_PHONE
+    ) {
+      console.error(
+        "WhatsApp configuration missing:",
+        {
+          hasToken: Boolean(WA_TOKEN),
+          hasPhoneId: Boolean(WA_PHONE_ID),
+          hasOwnerPhone: Boolean(
+            OWNER_PHONE
+          ),
+        }
+      );
 
       return res.status(202).json({
         ok: true,
@@ -169,9 +237,9 @@ export default async function handler(req, res) {
       });
     }
 
-    // --------------------------------------------------
-    // 1. SEND BOOKING NOTIFICATION TO OWNER
-    // --------------------------------------------------
+    /* ===================================================
+       1. OWNER / BOSS NOTIFICATION
+       =================================================== */
 
     const owner = await sendTemplate(
       OWNER_PHONE,
@@ -186,17 +254,17 @@ export default async function handler(req, res) {
       ]
     );
 
-    // --------------------------------------------------
-    // 2. SEND THANK-YOU MESSAGE TO CUSTOMER
-    // --------------------------------------------------
+    /* ===================================================
+       2. CUSTOMER THANK-YOU MESSAGE
 
-    let customer = {
-      ok: false,
-      skipped: true,
-    };
+       Customer will receive the approved
+       booking_thank_you template after booking.
 
-    if (wantsWhatsApp && CUSTOMER_TEMPLATE) {
-      customer = await sendTemplate(
+       No checkbox dependency here.
+       =================================================== */
+
+    const customer =
+      await sendTemplate(
         customerPhone,
         CUSTOMER_TEMPLATE,
         CUSTOMER_LANGUAGE,
@@ -207,37 +275,43 @@ export default async function handler(req, res) {
           "Gururag Interior",
         ]
       );
-    }
+
+    /* -----------------------------
+       Final result
+    ----------------------------- */
 
     console.log(
       "Booking WhatsApp notification result:",
       {
         ownerSent: owner.ok,
         customerSent: customer.ok,
-        customerSkipped: customer.skipped,
-        bookingId: booking.id || null,
+        bookingId:
+          booking.id || null,
       }
     );
 
     return res.status(200).json({
       ok: true,
 
-      founderNotification: owner.ok
-        ? "sent"
-        : "failed",
-
-      customerNotification: customer.skipped
-        ? "skipped"
-        : customer.ok
+      founderNotification:
+        owner.ok
           ? "sent"
           : "failed",
 
-      ownerMetaError: owner.ok
-        ? null
-        : owner.data?.error || owner.data || null,
+      customerNotification:
+        customer.ok
+          ? "sent"
+          : "failed",
+
+      ownerMetaError:
+        owner.ok
+          ? null
+          : owner.data?.error ||
+            owner.data ||
+            null,
 
       customerMetaError:
-        customer.skipped || customer.ok
+        customer.ok
           ? null
           : customer.data?.error ||
             customer.data ||
