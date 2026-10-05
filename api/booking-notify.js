@@ -32,10 +32,7 @@ const phone = (value) =>
     .slice(0, 20);
 
 /* -------------------------------------------------------
-   Extract value from booking.message
-   Example:
-   Offer: 15% OFF | Property: Apartment | Location: Chennai
-   | WhatsApp Updates: Yes
+   Extract values from booking.message
 ------------------------------------------------------- */
 
 const extractMessageValue = (
@@ -96,6 +93,7 @@ async function sendTemplate(
     to,
     template: name,
     language,
+    parameterCount: parameters.length,
   });
 
   const response = await fetch(url, {
@@ -155,7 +153,7 @@ export default async function handler(req, res) {
       {};
 
     /* -----------------------------
-       Basic booking details
+       Booking details
     ----------------------------- */
 
     const name = clean(
@@ -179,8 +177,7 @@ export default async function handler(req, res) {
     );
 
     /* -----------------------------
-       Extract actual values from
-       current main.tsx message
+       Get actual values from message
     ----------------------------- */
 
     const property = extractMessageValue(
@@ -212,7 +209,7 @@ export default async function handler(req, res) {
     }
 
     /* -----------------------------
-       WhatsApp configuration check
+       WhatsApp configuration
     ----------------------------- */
 
     if (
@@ -239,6 +236,13 @@ export default async function handler(req, res) {
 
     /* ===================================================
        1. OWNER / BOSS NOTIFICATION
+
+       Current owner template expects 5 parameters:
+       1. Customer name
+       2. Customer phone
+       3. Property
+       4. Location
+       5. Offer
        =================================================== */
 
     const owner = await sendTemplate(
@@ -255,12 +259,14 @@ export default async function handler(req, res) {
     );
 
     /* ===================================================
-       2. CUSTOMER THANK-YOU MESSAGE
+       2. CUSTOMER THANK-YOU
 
-       Customer will receive the approved
-       booking_thank_you template after booking.
+       booking_thank_you template screenshot shows
+       exactly 3 variables:
 
-       No checkbox dependency here.
+       {{1}} = Customer Name
+       {{2}} = Property Type
+       {{3}} = Location
        =================================================== */
 
     const customer =
@@ -272,7 +278,6 @@ export default async function handler(req, res) {
           name,
           property,
           location,
-          "Gururag Interior",
         ]
       );
 
