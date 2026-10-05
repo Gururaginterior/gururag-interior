@@ -2031,3 +2031,90 @@ footer {
     bottom: 30px !important;
   }
 }
+
+/* ========================================================= FINAL LAPTOP / TABLET ALIGNMENT FIX Phone layout is intentionally untouched. ========================================================= */
+@media (min-width: 651px) {
+  /* Menu: keep every item on one clean horizontal line. */
+  .menu-panel nav button {
+    display: grid !important;
+    grid-template-columns: 42px minmax(0, 1fr) 24px !important;
+    align-items: center !important;
+    justify-items: start !important;
+    column-gap: 10px !important;
+    white-space: nowrap !important;
+    line-height: 1.1 !important;
+    min-height: 64px !important;
+    min-width: 0 !important;
+  }
+
+  .menu-panel nav button small {
+    grid-column: 1 !important;
+    width: 42px !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+  }
+
+  .menu-panel nav button svg {
+    grid-column: 3 !important;
+    justify-self: end !important;
+    width: 20px !important;
+    height: 20px !important;
+    flex: none !important;
+  }
+
+  /* Popup banner: keep the complete editable offer badge visible above the consultation title on laptop/tablet. */
+  .offer-popup-banner {
+    height: clamp(350px, 31vw, 390px) !important;
+    overflow: hidden !important;
+  }
+
+  .offer-popup-banner-copy {
+    top: 76px !important;
+    bottom: 18px !important;
+    align-items: center !important;
+  }
+
+  .offer-popup-banner-copy > strong {
+    font-size: clamp(42px, 4.8vw, 64px) !important;
+    line-height: 0.92 !important;
+  }
+
+  .offer-popup-banner-copy > em {
+    font-size: clamp(21px, 2.5vw, 29px) !important;
+    line-height: 1 !important;
+  }
+
+  .offer-popup-banner-copy > b {
+    width: min(205px, 100%) !important;
+    min-width: 0 !important;
+    min-height: 106px !important;
+    padding: 10px 14px !important;
+    gap: 3px !important;
+    align-self: center !important;
+    justify-self: center !important;
+    transform: translateY(-8px) rotate(-2deg) !important;
+  }
+
+  .offer-popup-dynamic-badge-value {
+    font-size: clamp(34px, 4vw, 52px) !important;
+    line-height: 0.9 !important;
+  }
+
+  .offer-popup-dynamic-badge-note {
+    display: block !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .offer-popup-banner {
+    height: 370px !important;
+  }
+
+  .offer-popup-banner-copy {
+    top: 82px !important;
+    bottom: 18px !important;
+  }
+}
