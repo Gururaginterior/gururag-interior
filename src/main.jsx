@@ -5427,10 +5427,139 @@ function OfferPopup({ open, promo, onClose }) {
     const booking={customer_name:cleanName,phone:cleanPhone,service:"Interior Consultation",preferred_date:null,message:`Offer: ${currentPromo.badge} | Property: ${propertyType} | Location: ${cleanLocation||"Not provided"} | WhatsApp Updates: ${whatsappUpdates?"Yes":"No"}`,source:"Offer Popup"};       
 
 
-    setSubmitted(true);       
+    try {       
 
 
-    try{const {data,error}=await supabase.from("bookings").insert(booking).select("*").single();if(!error){try{await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking:data||booking})});}catch{}}}catch{}       
+      const { data, error } = await supabase       
+
+
+        .from("bookings")       
+
+
+        .insert(booking)       
+
+
+        .select("*")       
+
+
+        .single();       
+
+
+
+
+
+      if (error) {       
+
+
+        console.error("Booking insert error:", error);       
+
+
+        return;       
+
+
+      }       
+
+
+
+
+
+      try {       
+
+
+        const notificationResponse = await fetch("/api/booking-notify", {       
+
+
+          method: "POST",       
+
+
+          headers: { "Content-Type": "application/json" },       
+
+
+          body: JSON.stringify({ booking: data || booking }),       
+
+
+        });       
+
+
+
+
+
+        const notificationResult = await notificationResponse.json().catch(() => ({}));       
+
+
+        console.log("Booking WhatsApp API response:", {       
+
+
+          httpStatus: notificationResponse.status,       
+
+
+          ok: notificationResponse.ok,       
+
+
+          result: notificationResult,       
+
+
+        });       
+
+
+
+
+
+        if (!notificationResponse.ok) {       
+
+
+          console.error("Booking WhatsApp API HTTP error:", notificationResult);       
+
+
+        }       
+
+
+
+
+
+        if (notificationResult?.founderNotification === "failed") {       
+
+
+          console.error("WhatsApp owner notification failed:", notificationResult?.ownerMetaError || notificationResult);       
+
+
+        }       
+
+
+
+
+
+        if (notificationResult?.customerNotification === "failed") {       
+
+
+          console.error("WhatsApp customer notification failed:", notificationResult?.customerMetaError || notificationResult);       
+
+
+        }       
+
+
+      } catch (notificationError) {       
+
+
+        console.error("Booking WhatsApp notification request failed:", notificationError);       
+
+
+      }       
+
+
+
+
+
+      setSubmitted(true);       
+
+
+    } catch (bookingError) {       
+
+
+      console.error("Booking submission error:", bookingError);       
+
+
+    }       
 
 
   };       
