@@ -26,10 +26,43 @@ const clean = (value, max = 500) =>
     .trim()
     .slice(0, max);
 
-const phone = (value) =>
-  String(value ?? "")
-    .replace(/\D/g, "")
-    .slice(0, 20);
+/* -------------------------------------------------------
+   Convert customer phone to WhatsApp international format
+
+   8248058536
+   -> 918248058536
+
+   918248058536
+   -> 918248058536
+
+   +918248058536
+   -> 918248058536
+
+   08248058536
+   -> 918248058536
+------------------------------------------------------- */
+
+const normalizeIndianPhone = (value) => {
+  let digits = String(value ?? "").replace(/\D/g, "");
+
+  if (digits.startsWith("00")) {
+    digits = digits.slice(2);
+  }
+
+  if (digits.startsWith("91") && digits.length === 12) {
+    return digits;
+  }
+
+  if (digits.startsWith("0") && digits.length === 11) {
+    digits = digits.slice(1);
+  }
+
+  if (digits.length === 10) {
+    return `91${digits}`;
+  }
+
+  return digits;
+};
 
 /* -------------------------------------------------------
    Extract values from booking.message
@@ -161,14 +194,8 @@ export default async function handler(req, res) {
       100
     );
 
-    const customerPhone = phone(
+    const customerPhone = normalizeIndianPhone(
       booking.phone
-    );
-
-    const service = clean(
-      booking.service ||
-        "Interior Consultation",
-      120
     );
 
     const message = clean(
@@ -177,7 +204,7 @@ export default async function handler(req, res) {
     );
 
     /* -----------------------------
-       Get actual values from message
+       Extract booking values
     ----------------------------- */
 
     const property = extractMessageValue(
@@ -201,10 +228,26 @@ export default async function handler(req, res) {
         "15% OFF"
     );
 
-    if (!name || customerPhone.length < 10) {
+    /* -----------------------------
+       Validate
+    ----------------------------- */
+
+    if (
+      !name ||
+      customerPhone.length !== 12 ||
+      !customerPhone.startsWith("91")
+    ) {
+      console.error(
+        "Invalid customer phone:",
+        {
+          original: booking.phone,
+          normalized: customerPhone,
+        }
+      );
+
       return res.status(400).json({
         error:
-          "Valid customer name and phone are required.",
+          "Valid Indian customer phone number is required.",
       });
     }
 
@@ -236,13 +279,6 @@ export default async function handler(req, res) {
 
     /* ===================================================
        1. OWNER / BOSS NOTIFICATION
-
-       Current owner template expects 5 parameters:
-       1. Customer name
-       2. Customer phone
-       3. Property
-       4. Location
-       5. Offer
        =================================================== */
 
     const owner = await sendTemplate(
@@ -259,27 +295,25 @@ export default async function handler(req, res) {
     );
 
     /* ===================================================
-       2. CUSTOMER THANK-YOU
+       2. CUSTOMER THANK-YOU MESSAGE
 
-       booking_thank_you template screenshot shows
-       exactly 3 variables:
+       booking_thank_you template:
 
        {{1}} = Customer Name
        {{2}} = Property Type
        {{3}} = Location
        =================================================== */
 
-    const customer =
-      await sendTemplate(
-        customerPhone,
-        CUSTOMER_TEMPLATE,
-        CUSTOMER_LANGUAGE,
-        [
-          name,
-          property,
-          location,
-        ]
-      );
+    const customer = await sendTemplate(
+      customerPhone,
+      CUSTOMER_TEMPLATE,
+      CUSTOMER_LANGUAGE,
+      [
+        name,
+        property,
+        location,
+      ]
+    );
 
     /* -----------------------------
        Final result
@@ -290,6 +324,7 @@ export default async function handler(req, res) {
       {
         ownerSent: owner.ok,
         customerSent: customer.ok,
+        customerPhone,
         bookingId:
           booking.id || null,
       }
@@ -307,6 +342,8 @@ export default async function handler(req, res) {
         customer.ok
           ? "sent"
           : "failed",
+
+      customerPhone,
 
       ownerMetaError:
         owner.ok
