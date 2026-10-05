@@ -10,7 +10,8 @@ const OWNER_TEMPLATE =
   "new_booking_notification";
 
 const OWNER_LANGUAGE =
-  process.env.WHATSAPP_TEMPLATE_LANGUAGE || "en_US";
+  process.env.WHATSAPP_TEMPLATE_LANGUAGE ||
+  "en_US";
 
 const CUSTOMER_TEMPLATE =
   process.env.WHATSAPP_CUSTOMER_TEMPLATE ||
@@ -20,128 +21,90 @@ const CUSTOMER_LANGUAGE =
   process.env.WHATSAPP_CUSTOMER_TEMPLATE_LANGUAGE ||
   OWNER_LANGUAGE;
 
-// Helpers
-const clean = (value, max = 500) => {
-  return String(value ?? "")
+const clean = (value, max = 500) =>
+  String(value ?? "")
     .trim()
     .slice(0, max);
-};
 
-const phone = (value) => {
-  return String(value ?? "")
+const phone = (value) =>
+  String(value ?? "")
     .replace(/\D/g, "")
     .slice(0, 20);
-};
 
-const customerWhatsAppPhone = (value) => {
-  const digits = phone(value);
-
-  if (digits.length === 10) {
-    return `91${digits}`;
-  }
-
-  if (digits.startsWith("91") && digits.length >= 12) {
-    return digits;
-  }
-
-  return digits;
-};
-
-const extractBookingDetails = (message) => {
-  const text = String(message || "");
-
-  const propertyMatch =
-    text.match(/Property:\s*([^|]+)/i);
-
-  const locationMatch =
-    text.match(/Location:\s*([^|]+)/i);
-
-  const offerMatch =
-    text.match(/Offer:\s*([^|]+)/i);
-
-  const whatsappMatch =
-    text.match(/WhatsApp Updates:\s*(Yes|No)/i);
-
-  return {
-    property: clean(
-      propertyMatch?.[1] || "Not provided",
-      100
-    ),
-
-    location: clean(
-      locationMatch?.[1] || "Not provided",
-      150
-    ),
-
-    offer: clean(
-      offerMatch?.[1] || "15% OFF",
-      80
-    ),
-
-    wantsWhatsApp:
-      whatsappMatch?.[1]?.toLowerCase() === "yes"
-  };
-};
-
-async function sendTemplate(
-  to,
-  templateName,
-  language,
-  parameters
-) {
+async function sendTemplate(to, name, language, parameters) {
   const url =
     `https://graph.facebook.com/${GRAPH_VERSION}/${WA_PHONE_ID}/messages`;
 
-  const response = await fetch(url, {
-    method: "POST",
-
-    headers: {
-      Authorization: `Bearer ${WA_TOKEN}`,
-      "Content-Type": "application/json"
-    },
-
-    body: JSON.stringify({
-      messaging_product: "whatsapp",
-
-      to,
-
-      type: "template",
-
-      template: {
-        name: templateName,
-
-        language: {
-          code: language
+  const payload = {
+    messaging_product: "whatsapp",
+    to,
+    type: "template",
+    template: {
+      name,
+      language: {
+        code: language,
+      },
+      components: [
+        {
+          type: "body",
+          parameters: parameters.map((value) => ({
+            type: "text",
+            text: clean(value, 1000),
+          })),
         },
+      ],
+    },
+  };
 
-        components: [
-          {
-            type: "body",
-
-            parameters: parameters.map((value) => ({
-              type: "text",
-              text: clean(value, 1000)
-            }))
-          }
-        ]
-      }
-    })
+  console.log("WhatsApp request:", {
+    to,
+    template: name,
+    language,
   });
 
-  const data = await response
-    .json()
-    .catch(() => ({}));
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${WA_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    console.error("WhatsApp API ERROR:", {
+      status: response.status,
+      template: name,
+      recipient: to,
+      response: data,
+    });
+
+    return {
+      ok: false,
+      status: response.status,
+      data,
+    };
+  }
+
+  console.log("WhatsApp API SUCCESS:", {
+    template: name,
+    recipient: to,
+    response: data,
+  });
 
   return {
-    ok: response.ok,
-    data
+    ok: true,
+    status: response.status,
+    data,
   };
 }
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({
-      error: "Method not allowed."
+      error: "Method not allowed.",
     });
   }
 
@@ -152,20 +115,25 @@ export default async function handler(req, res) {
       {};
 
     const name = clean(
-      booking.customer_name ||
-      booking.name,
+      booking.customer_name || booking.name,
       100
     );
 
-    const customerPhone =
-      customerWhatsAppPhone(
-        booking.phone
-      );
+    const customerPhone = phone(booking.phone);
 
     const service = clean(
-      booking.service ||
-      "Interior Consultation",
+      booking.service || "Interior Consultation",
       120
+    );
+
+    const property = clean(
+      booking.property_type || "Not provided",
+      80
+    );
+
+    const location = clean(
+      booking.location || "Not provided",
+      150
     );
 
     const message = clean(
@@ -173,165 +141,118 @@ export default async function handler(req, res) {
       1000
     );
 
-    const details =
-      extractBookingDetails(message);
-
-    const property = clean(
-      booking.property_type ||
-      details.property ||
-      "Not provided",
-      100
-    );
-
-    const location = clean(
-      booking.location ||
-      details.location ||
-      "Not provided",
-      150
-    );
-
     const offer = clean(
-      booking.offer ||
-      details.offer ||
-      "15% OFF",
+      booking.offer || "15% OFF",
       80
     );
 
     const wantsWhatsApp =
-      details.wantsWhatsApp;
+      /whatsapp\s*updates\s*:\s*yes/i.test(message);
 
-    if (
-      !name ||
-      customerPhone.length < 10
-    ) {
+    if (!name || customerPhone.length < 10) {
       return res.status(400).json({
         error:
-          "Valid customer name and phone are required."
+          "Valid customer name and phone are required.",
       });
     }
 
-    if (
-      !WA_TOKEN ||
-      !WA_PHONE_ID ||
-      !OWNER_PHONE
-    ) {
-      console.log(
-        "WhatsApp notification is not configured."
-      );
+    if (!WA_TOKEN || !WA_PHONE_ID || !OWNER_PHONE) {
+      console.error("WhatsApp configuration missing:", {
+        hasToken: Boolean(WA_TOKEN),
+        hasPhoneId: Boolean(WA_PHONE_ID),
+        hasOwnerPhone: Boolean(OWNER_PHONE),
+      });
 
       return res.status(202).json({
         ok: true,
-        notification: "not_configured"
+        notification: "not_configured",
       });
     }
 
-    // ------------------------------------------------
-    // 1. SEND NEW BOOKING TO OWNER / BOSS
-    // ------------------------------------------------
+    // --------------------------------------------------
+    // 1. SEND BOOKING NOTIFICATION TO OWNER
+    // --------------------------------------------------
 
-    const owner =
-      await sendTemplate(
-        OWNER_PHONE,
-        OWNER_TEMPLATE,
-        OWNER_LANGUAGE,
-        [
-          name,
-          `+${customerPhone}`,
-          property,
-          location,
-          offer
-        ]
-      );
+    const owner = await sendTemplate(
+      OWNER_PHONE,
+      OWNER_TEMPLATE,
+      OWNER_LANGUAGE,
+      [
+        name,
+        `+${customerPhone}`,
+        property,
+        location,
+        offer,
+      ]
+    );
 
-    // ------------------------------------------------
+    // --------------------------------------------------
     // 2. SEND THANK-YOU MESSAGE TO CUSTOMER
-    // ------------------------------------------------
-    // Customer message is sent only when the customer
-    // has opted in for WhatsApp updates.
+    // --------------------------------------------------
 
     let customer = {
       ok: false,
-      skipped: true
+      skipped: true,
     };
 
-    if (
-      wantsWhatsApp &&
-      CUSTOMER_TEMPLATE
-    ) {
-      customer =
-        await sendTemplate(
-          customerPhone,
-          CUSTOMER_TEMPLATE,
-          CUSTOMER_LANGUAGE,
-          [
-            name,
-            property,
-            location,
-            "Gururag Interior"
-          ]
-        );
+    if (wantsWhatsApp && CUSTOMER_TEMPLATE) {
+      customer = await sendTemplate(
+        customerPhone,
+        CUSTOMER_TEMPLATE,
+        CUSTOMER_LANGUAGE,
+        [
+          name,
+          property,
+          location,
+          "Gururag Interior",
+        ]
+      );
     }
 
     console.log(
-      "Booking WhatsApp notification:",
+      "Booking WhatsApp notification result:",
       {
         ownerSent: owner.ok,
-
-        customerSent:
-          customer.ok,
-
-        customerSkipped:
-          customer.skipped,
-
-        bookingId:
-          booking.id || null,
-
-        customerName:
-          name,
-
-        customerPhone:
-          customerPhone,
-
-        property:
-          property,
-
-        location:
-          location,
-
-        offer:
-          offer,
-
-        service:
-          service
+        customerSent: customer.ok,
+        customerSkipped: customer.skipped,
+        bookingId: booking.id || null,
       }
     );
 
     return res.status(200).json({
       ok: true,
 
-      founderNotification:
-        owner.ok
+      founderNotification: owner.ok
+        ? "sent"
+        : "failed",
+
+      customerNotification: customer.skipped
+        ? "skipped"
+        : customer.ok
           ? "sent"
           : "failed",
 
-      customerNotification:
-        customer.skipped
-          ? "skipped"
-          : customer.ok
-            ? "sent"
-            : "failed"
+      ownerMetaError: owner.ok
+        ? null
+        : owner.data?.error || owner.data || null,
+
+      customerMetaError:
+        customer.skipped || customer.ok
+          ? null
+          : customer.data?.error ||
+            customer.data ||
+            null,
     });
 
   } catch (error) {
-
     console.error(
-      "Booking notification error:",
+      "Booking notification unexpected error:",
       error
     );
 
     return res.status(500).json({
       error:
-        "Notification service error."
+        "Notification service error.",
     });
   }
 }
