@@ -5427,10 +5427,88 @@ function OfferPopup({ open, promo, onClose }) {
     const booking={customer_name:cleanName,phone:cleanPhone,service:"Interior Consultation",preferred_date:null,message:`Offer: ${currentPromo.badge} | Property: ${propertyType} | Location: ${cleanLocation||"Not provided"} | WhatsApp Updates: ${whatsappUpdates?"Yes":"No"}`,source:"Offer Popup"};       
 
 
-    setSubmitted(true);       
+    try {       
 
 
-    try{const {data,error}=await supabase.from("bookings").insert(booking).select("*").single();if(!error){try{await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking:data||booking})});}catch{}}}catch{}       
+      const {data,error}=await supabase.from("bookings").insert(booking).select("*").single();       
+
+
+      if(error){       
+
+
+        console.error("BOOKING SUPABASE ERROR:",error);       
+
+
+        alert(`Booking database error: ${error.message}`);       
+
+
+        return;       
+
+
+      }       
+
+
+      console.log("BOOKING SAVED SUCCESSFULLY:",data);       
+
+
+      try {       
+
+
+        const notifyResponse=await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking:data||booking})});       
+
+
+        const notifyData=await notifyResponse.json().catch(()=>({}));       
+
+
+        console.log("WHATSAPP NOTIFICATION RESULT:",notifyData);       
+
+
+        if(!notifyResponse.ok){       
+
+
+          console.error("WHATSAPP NOTIFICATION HTTP ERROR:",notifyData);       
+
+
+          alert(`Booking saved, but WhatsApp notification failed: ${notifyData?.error||"Server error"}`);       
+
+
+        } else if(notifyData?.founderNotification==="failed" || notifyData?.customerNotification==="failed"){       
+
+
+          console.error("WHATSAPP NOTIFICATION FAILED:",notifyData);       
+
+
+          alert("Booking saved, but WhatsApp notification failed. Please check the Vercel Runtime Logs.");       
+
+
+        }       
+
+
+      } catch(notifyError) {       
+
+
+        console.error("WHATSAPP NOTIFICATION ERROR:",notifyError);       
+
+
+        alert("Booking saved, but WhatsApp notification could not be reached. Please check the Vercel Runtime Logs.");       
+
+
+      }       
+
+
+      setSubmitted(true);       
+
+
+    } catch(error) {       
+
+
+      console.error("BOOKING REQUEST ERROR:",error);       
+
+
+      alert(`Booking error: ${error?.message||"Unknown error"}`);       
+
+
+    }       
 
 
   };       
