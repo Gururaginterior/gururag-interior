@@ -269,18 +269,13 @@ img {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(
+  background: linear-gradient(
       90deg,
       rgba(2, 17, 25, 0.94),
       rgba(2, 17, 25, 0.5),
       rgba(2, 17, 25, 0.15)
     ),
-    linear-gradient(
-      to top,
-      rgba(2, 17, 25, 0.92),
-      transparent 65%
-    );
+    linear-gradient(to top, rgba(2, 17, 25, 0.92), transparent 65%);
 }
 
 .hero-content {
@@ -529,11 +524,7 @@ img {
 .photo-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(4, 20, 29, 0.8),
-    transparent 55%
-  );
+  background: linear-gradient(to top, rgba(4, 20, 29, 0.8), transparent 55%);
 }
 
 .founder-photo > span {
@@ -851,8 +842,7 @@ img {
 .cta-image {
   position: absolute;
   inset: 0;
-  background:
-    url("https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=2200&q=90")
+  background: url("https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=2200&q=90")
     center / cover;
 }
 
@@ -1024,9 +1014,7 @@ footer {
   font-size: 10px;
 }
 
-/* =========================================================
-   CONVERSATIONAL CHATBOT
-========================================================= */
+/* ========================================================= CONVERSATIONAL CHATBOT ========================================================= */
 
 .chatbot-launcher {
   position: fixed;
@@ -1047,8 +1035,7 @@ footer {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.03em;
-  box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.25),
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25),
     0 0 0 1px rgba(169, 229, 195, 0.05);
   backdrop-filter: blur(16px);
   transition: 0.3s ease;
@@ -1057,9 +1044,7 @@ footer {
 .chatbot-launcher:hover {
   transform: translateY(-4px);
   background: var(--navy2);
-  box-shadow:
-    0 22px 60px rgba(0, 0, 0, 0.3),
-    0 0 25px rgba(169, 229, 195, 0.12);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.3), 0 0 25px rgba(169, 229, 195, 0.12);
 }
 
 .chatbot-launcher svg {
@@ -1091,8 +1076,7 @@ footer {
   border-radius: 24px;
   background: #f7f7f2;
   color: var(--darktext);
-  box-shadow:
-    0 30px 90px rgba(0, 0, 0, 0.35),
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
@@ -1179,8 +1163,7 @@ footer {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 16px;
-  background:
-    radial-gradient(
+  background: radial-gradient(
       circle at top right,
       rgba(169, 229, 195, 0.16),
       transparent 36%
@@ -1467,8 +1450,7 @@ footer {
 
 .chat-input:focus {
   border-color: var(--mint);
-  box-shadow:
-    0 0 0 3px rgba(169, 229, 195, 0.18),
+  box-shadow: 0 0 0 3px rgba(169, 229, 195, 0.18),
     0 5px 18px rgba(6, 30, 43, 0.04);
 }
 
@@ -1844,5 +1826,208 @@ footer {
 
   .chat-quick-buttons button {
     font-size: 8.5px;
+  }
+}
+
+/* ========================================================= RESPONSIVE FIXES - LAPTOP / TABLET ONLY Phone styles above remain unchanged. ========================================================= */
+
+/* TABLET LANDSCAPE + LAPTOP */
+@media (min-width: 651px) {
+  /* Header: keep the top row clean and evenly aligned. The separate yellow floating quote action remains available. */
+  .navbar {
+    padding-left: clamp(28px, 5vw, 72px);
+    padding-right: clamp(28px, 5vw, 72px);
+  }
+
+  .nav-actions {
+    gap: clamp(8px, 0.8vw, 12px);
+    flex-shrink: 0;
+  }
+
+  .whatsapp-button {
+    flex: 0 0 auto;
+  }
+
+  /* The desktop yellow quote button was visually unrelated to the requested header arrangement, so keep it out of the top row. */
+  .navbar-quote-button {
+    display: none !important;
+  }
+
+  /* Menu items: fixed number/icon/text columns prevent About Us and the other labels from shifting or colliding on wider screens. */
+  .menu-panel nav button {
+    grid-template-columns: 42px minmax(0, 1fr) 24px !important;
+    column-gap: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .menu-panel nav button small {
+    width: 42px;
+    text-align: left;
+  }
+
+  .menu-panel nav button svg {
+    width: 20px;
+    height: 20px;
+    justify-self: end;
+    flex: none;
+  }
+
+  .menu-panel {
+    width: min(500px, 94vw);
+    padding-left: clamp(28px, 4vw, 58px);
+    padding-right: clamp(28px, 4vw, 58px);
+  }
+
+  /* Keep the founder card inside its available width. */
+  .founder,
+  .founder-photo,
+  .founder-info {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .founder-info h3 {
+    max-width: 100% !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    line-height: 0.98 !important;
+  }
+
+  .founder-info p {
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Tablet landscape: give the founder text enough horizontal room. */
+  @media (min-width: 651px) and (max-width: 1050px) {
+    .founder {
+      grid-template-columns: 1fr !important;
+    }
+
+    .founder-photo {
+      min-height: 500px;
+    }
+
+    .founder-info {
+      padding: 48px clamp(28px, 5vw, 55px);
+    }
+
+    .founder-info h3 {
+      font-size: clamp(42px, 7vw, 64px) !important;
+    }
+  }
+
+  /* Laptop / desktop founder name: keep the name visually together instead of forcing an awkward two-line split. */
+  @media (min-width: 1051px) {
+    .founder-info h3 {
+      font-size: clamp(48px, 4.25vw, 68px) !important;
+      white-space: nowrap !important;
+    }
+  }
+
+  /* Free-consultation popup: desktop banner gets enough vertical room for the title, highlight and editable offer badge. */
+  .offer-popup-backdrop {
+    padding: clamp(18px, 2.2vw, 32px) !important;
+  }
+
+  .offer-popup-card {
+    width: min(900px, calc(100vw - 64px)) !important;
+    max-height: min(90dvh, 860px) !important;
+    border-radius: 28px !important;
+  }
+
+  .offer-popup-banner {
+    height: clamp(310px, 29vw, 340px) !important;
+  }
+
+  .offer-popup-banner-copy {
+    left: clamp(30px, 4vw, 44px) !important;
+    right: clamp(30px, 4vw, 44px) !important;
+    top: 82px !important;
+    bottom: 28px !important;
+    grid-template-columns: minmax(0, 1.15fr) minmax(170px, 0.85fr) !important;
+    gap: 18px !important;
+    align-items: end !important;
+  }
+
+  .offer-popup-banner-copy > strong {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: clamp(44px, 5.1vw, 68px) !important;
+    line-height: 0.9 !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+  .offer-popup-banner-copy > em {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: clamp(22px, 2.6vw, 30px) !important;
+    line-height: 1 !important;
+  }
+
+  .offer-popup-banner-copy > b {
+    min-width: 0 !important;
+    width: min(205px, 100%) !important;
+    min-height: 108px !important;
+    padding: 12px 16px !important;
+    justify-self: center !important;
+    align-self: center !important;
+    transform: rotate(-2deg) !important;
+  }
+
+  .offer-popup-dynamic-badge-value {
+    font-size: clamp(32px, 4.5vw, 54px) !important;
+  }
+
+  .offer-popup-dynamic-badge-note {
+    font-size: 9px !important;
+  }
+
+  .offer-popup-consultation-title {
+    padding: 14px 22px !important;
+    font-size: clamp(22px, 2.7vw, 31px) !important;
+  }
+
+  .offer-popup-content {
+    padding: 28px clamp(24px, 3.2vw, 34px) 26px !important;
+  }
+
+  .property-type-grid {
+    min-width: 0;
+  }
+
+  .property-type-button {
+    min-width: 0;
+  }
+}
+
+/* EXTRA-WIDE LAPTOP / DESKTOP */
+@media (min-width: 1200px) {
+  .navbar {
+    height: 86px;
+  }
+
+  .nav-actions {
+    gap: 12px;
+  }
+
+  .menu-panel nav button {
+    font-size: 27px;
+    padding-top: 21px;
+    padding-bottom: 21px;
+  }
+
+  .offer-popup-card {
+    width: min(920px, calc(100vw - 80px)) !important;
+  }
+
+  .offer-popup-banner {
+    height: 330px !important;
+  }
+
+  .offer-popup-banner-copy {
+    top: 86px !important;
+    bottom: 30px !important;
   }
 }
