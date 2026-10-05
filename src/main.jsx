@@ -5430,7 +5430,7 @@ function OfferPopup({ open, promo, onClose }) {
     try {       
 
 
-      const {data,error}=await supabase.from("bookings").insert(booking).select("*").single();       
+      const {error}=await supabase.from("bookings").insert(booking);       
 
 
       if(error){       
@@ -5448,13 +5448,13 @@ function OfferPopup({ open, promo, onClose }) {
       }       
 
 
-      console.log("BOOKING SAVED SUCCESSFULLY:",data);       
+      console.log("BOOKING SAVED SUCCESSFULLY:",booking);       
 
 
       try {       
 
 
-        const notifyResponse=await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking:data||booking})});       
+        const notifyResponse=await fetch("/api/booking-notify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({booking})});       
 
 
         const notifyData=await notifyResponse.json().catch(()=>({}));       
