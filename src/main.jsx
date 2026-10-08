@@ -66,7 +66,8 @@ const WHATSAPP = "https://wa.me/919789695878";
 const INSTAGRAM = "https://www.instagram.com/sgr_decors_interior_designer?stkn=bDNyaWVleDY2dDI=";       
 
 
-const YOUTUBE = "https://www.youtube.com/@GuruRagSignaturehome";       
+const YOUTUBE = "https://www.youtube.com/@GuruRagSignaturehome";
+const EMAIL = "gururaginteriors@gmail.com";       
 
 
 const services = [       
@@ -1016,6 +1017,26 @@ function WhatsAppIcon({ size = 22 }) {
 
 }       
 
+
+function GmailBrandIcon({ size = 22 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Gmail"
+    >
+      <path d="M3 5.5C3 4.67 3.67 4 4.5 4H19.5C20.33 4 21 4.67 21 5.5V18.5C21 19.33 20.33 20 19.5 20H4.5C3.67 20 3 19.33 3 18.5V5.5Z" fill="white"/>
+      <path d="M4 6L12 12.2L20 6V8.9L12 15.1L4 8.9V6Z" fill="#EA4335"/>
+      <path d="M4 6V18.5C4 19.33 4.67 20 5.5 20H8V9.1L4 6Z" fill="#4285F4"/>
+      <path d="M20 6V18.5C20 19.33 19.33 20 18.5 20H16V9.1L20 6Z" fill="#34A853"/>
+      <path d="M4 6L12 12.2L20 6" stroke="#EA4335" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M4 6L8 9.1V12.3L4 15.4V6Z" fill="#FBBC04"/>
+    </svg>
+  );
+}
 
 function normalizeText(text = "") {       
 
@@ -4230,6 +4251,21 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
                     </a>       
 
 
+                    <a href={`mailto:${EMAIL}`}>       
+
+
+                      <GmailBrandIcon size={20} />       
+
+
+                      <span>{EMAIL}</span>       
+
+
+                      <ArrowUpRight size={17} />       
+
+
+                    </a>       
+
+
                   </div>       
 
 
@@ -4639,6 +4675,39 @@ function NewPageOverlay({ page, onClose, onWhatsApp, managedServices, managedPro
 
 
                       <strong>GuruRag Signature Home</strong>       
+
+
+                    </span>       
+
+
+                    <ArrowUpRight size={19} />       
+
+
+                  </a>       
+
+
+                  <a       
+
+
+                    className="new-contact-action email"       
+
+
+                    href={`mailto:${EMAIL}`}       
+
+
+                  >       
+
+
+                    <span className="new-action-icon"><GmailBrandIcon size={23} /></span>       
+
+
+                    <span className="new-action-copy">       
+
+
+                      <small>EMAIL US</small>       
+
+
+                      <strong>{EMAIL}</strong>       
 
 
                     </span>       
@@ -8982,6 +9051,18 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
                 </a>       
 
 
+                <a href={`mailto:${EMAIL}`}>       
+
+
+                  <GmailBrandIcon size={19} />       
+
+
+                  {EMAIL}       
+
+
+                </a>       
+
+
               </div>       
 
 
@@ -10596,6 +10677,18 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
               </a>       
 
 
+              <a href={`mailto:${EMAIL}`}>       
+
+
+                <GmailBrandIcon size={22} />       
+
+
+                {EMAIL}       
+
+
+              </a>       
+
+
               <div>       
 
 
@@ -10810,6 +10903,24 @@ if (!projectVideosResult.error && projectVideosResult.data?.length) {
 
 
               <YouTubeBrandIcon size={21} />       
+
+
+            </a>       
+
+
+            <a       
+
+
+              href={`mailto:${EMAIL}`}       
+
+
+              aria-label="Email Gururag Interior"       
+
+
+            >       
+
+
+              <GmailBrandIcon size={21} />       
 
 
             </a>       
